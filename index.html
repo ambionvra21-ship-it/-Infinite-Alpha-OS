@@ -504,6 +504,36 @@ setTimeout(getRandomTip, 250);
     </div>
   </div>
 </div>
+<!-- Smart Shopping Discount Calculator -->
+<div class="card" style="margin-top: 16px;">
+  <h2>🛒 Smart Shopping Discount Calculator</h2>
+  <p style="font-size: 0.75rem; color: #6b7280; margin: 0 0 12px 0;">Instantly calculate retail discounts and local checkout taxes together.</p>
+  
+  <!-- This inline style forces the inputs to sit side-by-side instead of stretching -->
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-top: 10px;">
+    <div class="field">
+      <label>Price ($)</label>
+      <input type="number" id="shopPrice" placeholder="100" style="width: 100%; box-sizing: border-box;">
+    </div>
+    <div class="field">
+      <label>Discount (%)</label>
+      <input type="number" id="shopDiscount" placeholder="20" style="width: 100%; box-sizing: border-box;">
+    </div>
+    <div class="field">
+      <label>Tax (%)</label>
+      <input type="number" id="shopTax" placeholder="8" style="width: 100%; box-sizing: border-box;">
+    </div>
+  </div>
+  
+  <button class="full" onclick="calculateShoppingDiscount()" style="margin-top: 16px;">Compute Checkout Cost</button>
+  
+  <div class="row" style="margin-top: 15px;">
+    <div class="field" style="width: 100%; text-align: center; background-color: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 4px; padding: 12px 0;">
+      <span style="font-size: 0.8rem; color: #2e7d32; display: block; font-weight: bold; margin-bottom: 2px;">Final Estimated Cost</span>
+      <strong id="shopTotalDisplay" style="font-size: 1.4rem; color: #2e7d32; font-weight: bold;">$0.00</strong>
+    </div>
+  </div>
+</div>
 
 <!-- REAL-TIME CRYPTO TICKER CHART CARD -->
 <div class="card" style="margin-top: 16px;">
