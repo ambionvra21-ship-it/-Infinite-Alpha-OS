@@ -459,7 +459,62 @@ setTimeout(getRandomTip, 250);
       <label for="expNote">Note (optional)</label>
       <input type="text" id="expNote" placeholder="e.g. lunch">
     </div>
-    <button class="full" style="margin-top:12px;" onclick="addExpense()">Add Expense</button>
+ <button class="full" style="margin-top:12px;" onclick="addExpense()">Add Expense</button>
+</div>
+<!-- LIVE CURRENCY CONVERTER CARD -->
+<div class="card" style="margin-top: 16px;">
+  <h2>💱 Real-Time Currency Converter</h2>
+
+  <p style="font-size: 0.75rem; color: #6b7280; margin: 0 0 12px 0;">Convert global currencies instantly using real-time market exchange rates.</p>
+  
+  <div class="row" style="margin-top: 10px;">
+    <div class="field" style="flex: 1;">
+      <label>Amount</label>
+      <input type="number" id="convertAmount" value="1" oninput="convertCurrency()">
+    </div>
+  </div>
+  
+  <div class="row" style="display: flex; gap: 10px; margin-top: 10px;">
+    <div class="field" style="flex: 1;">
+      <label>From</label>
+      <select id="fromCurrency" onchange="convertCurrency()" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc; background: white; font-size: 0.85rem;">
+        <option value="USD" selected>USD ($)</option>
+        <option value="PHP">PHP (₱)</option>
+        <option value="EUR">EUR (€)</option>
+        <option value="JPY">JPY (¥)</option>
+        <option value="GBP">GBP (£)</option>
+      </select>
+    </div>
+    <div class="field" style="flex: 1;">
+      <label>To</label>
+      <select id="toCurrency" onchange="convertCurrency()" style="width: 100%; padding: 8px; border-radius: 4px; border: 1px solid #ccc; background: white; font-size: 0.85rem;">
+        <option value="PHP" selected>PHP (₱)</option>
+        <option value="USD">USD ($)</option>
+        <option value="EUR">EUR (€)</option>
+        <option value="JPY">JPY (¥)</option>
+        <option value="GBP">GBP (£)</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="row" style="margin-top: 15px;">
+    <div class="field" style="width: 100%; text-align: center; background-color: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 4px; padding: 12px 0;">
+      <span style="font-size: 0.8rem; color: #4b5563; display: block; font-weight: bold; margin-bottom: 2px;">Converted Result</span>
+      <strong id="conversionResult" style="font-size: 1.4rem; color: #1f2937; font-weight: bold;">0.00</strong>
+    </div>
+  </div>
+</div>
+
+<!-- REAL-TIME CRYPTO TICKER CHART CARD -->
+<div class="card" style="margin-top: 16px;">
+  <h2>🪙 Crypto Market Ticker Chart</h2>
+  <p style="font-size: 0.75rem; color: #6b7280; margin: 0 0 12px 0;">Track live, streaming market prices for Bitcoin and major digital assets.</p>
+  
+  <!-- TradingView Live Widget Frame Container -->
+  <div style="width: 100%; height: 350px; border: 1px solid #e5e7eb; border-radius: 4px; overflow: hidden; background: #fff;">
+    <iframe src="https://tradingview.com" style="width:100%; height:100%; border:none; margin:0; padding:0;"></iframe>
+  </div>
+</div>
 
     <div class="exp-total"><span id="expTotal">0</span> <span class="muted" style="font-size:1rem;">total this month (mixed currencies shown separately if used)</span></div>
     <canvas id="expenseChart" height="180"></canvas>
