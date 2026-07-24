@@ -94,64 +94,73 @@ window.calculateShoppingDiscount = function() {
 
 async function convertCurrency() {
 
-    const amount = parseFloat(document.getElementById("convertAmount").value);
+    const amount = parseFloat(document.getElementById("convertAmount").value) || 0;
 
     const from = document.getElementById("fromCurrency").value;
 
     const to = document.getElementById("toCurrency").value;
 
-    const output = document.getElementById("conversionResult");
+    const result = document.getElementById("conversionResult");
 
-    if (isNaN(amount) || amount <= 0) {
-        output.textContent = "Enter an amount";
+    const rateDisplay = document.getElementById("exchangeRate");
+
+    if (amount <= 0) {
+        result.textContent = "0.00";
+        rateDisplay.textContent = "Exchange Rate: --";
         return;
     }
 
     if (from === to) {
-        output.textContent = amount.toFixed(2);
+        result.textContent = amount.toFixed(2);
+        rateDisplay.textContent = `Exchange Rate: 1 ${from} = 1 ${to}`;
         return;
     }
 
-    output.textContent = "Converting...";
+    result.textContent = "Loading...";
+    rateDisplay.textContent = "Fetching live rate...";
 
     try {
 
         const response = await fetch(
-            `https://api.frankfurter.app/latest?amount=${amount}&from=${from}&to=${to}`
+            `https://api.frankfurter.app/latest?from=${from}&to=${to}`
         );
 
         if (!response.ok) {
-            throw new Error("Network Error");
+            throw new Error("API Error");
         }
 
         const data = await response.json();
 
-        if (data.rates && data.rates[to]) {
+        const rate = data.rates[to];
 
-            output.textContent =
-                data.rates[to].toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2
-                });
-
-        } else {
-
-            output.textContent = "Conversion unavailable";
-
+        if (!rate) {
+            throw new Error("No rate found");
         }
 
-    } catch (error) {
+        const converted = amount * rate;
 
-        console.error(error);
+        result.textContent = converted.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
 
-        output.textContent = "Unable to fetch exchange rates";
+        rateDisplay.textContent =
+            `Exchange Rate: 1 ${from} = ${rate.toFixed(6)} ${to}`;
+
+    } catch (err) {
+
+        console.error(err);
+
+        result.textContent = "Error";
+        rateDisplay.textContent = "Unable to retrieve exchange rate";
 
     }
-
-}
 document.getElementById("convertAmount").addEventListener("input", convertCurrency);
+
 document.getElementById("fromCurrency").addEventListener("change", convertCurrency);
+
 document.getElementById("toCurrency").addEventListener("change", convertCurrency);
 
-// Initial conversion
+// Run once on page load
 convertCurrency();
+}
