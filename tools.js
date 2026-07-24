@@ -99,24 +99,27 @@ window.convertCurrency = async function() {
 
   if (amount <= 0 || !resultDisplay || !from || !to) return;
 
-  if (from === to) {
-    resultDisplay.textContent = `${amount.toFixed(2)} ${to}`;
+  // Clean the currency strings to grab just the 3-letter code (e.g. "USD ($)" -> "usd")
+  const fromCurrency = from.trim().substring(0, 3).toLowerCase();
+  const toCurrency = to.trim().substring(0, 3).toLowerCase();
+
+  if (fromCurrency === toCurrency) {
+    resultDisplay.textContent = `${amount.toFixed(2)} ${toCurrency.toUpperCase()}`;
     return;
   }
 
   try {
-    // Swapped to an unblocked public data node layout
-    const fromCurrency = from.toLowerCase();
-    const toCurrency = to.toLowerCase();
-
-    // ✅ FIXED: Corrected jsDelivr CDN endpoint path and variable syntax
-    const response = await fetch(`https://jsdelivr.net{fromCurrency}.json`);
+    // 1. Fetching from a guaranteed open production endpoint path 
+    const response = await fetch(`https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${fromCurrency}.json`);
     const data = await response.json();
 
+    // 2. Safely extracting and assessing the inner currency node keys
     if (data && data[fromCurrency] && data[fromCurrency][toCurrency]) {
       const rate = data[fromCurrency][toCurrency];
       const finalResult = amount * rate;
-      resultDisplay.textContent = `${finalResult.toFixed(2)} ${to}`;
+      
+      // 3. Printing the clean calculated result output layout
+      resultDisplay.textContent = `${finalResult.toFixed(2)} ${toCurrency.toUpperCase()}`;
     } else {
       resultDisplay.textContent = "Rate unavailable";
     }
@@ -124,11 +127,4 @@ window.convertCurrency = async function() {
     console.error("Exchange rate fetch error:", error);
     resultDisplay.textContent = "Rate Error (Retry)";
   }
-
-
-// Auto-run initial conversion when page opens up
-setTimeout(() => {
-  if (document.getElementById('convertAmount')) {
-    window.convertCurrency();
-  }
-}, 500);
+};
