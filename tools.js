@@ -88,3 +88,42 @@ window.calculateShoppingDiscount = function() {
     display.textContent = `$${finalTotal.toFixed(2)}`;
   }
 };
+// ==========================================
+// 💱 MODULE 4: REAL-TIME CURRENCY CONVERTER
+// ==========================================
+window.convertCurrency = async function() {
+  const amount = parseFloat(document.getElementById('convertAmount')?.value) || 0;
+  const from = document.getElementById('fromCurrency')?.value;
+  const to = document.getElementById('toCurrency')?.value;
+  const resultDisplay = document.getElementById('conversionResult');
+
+  if (amount <= 0 || !resultDisplay || !from || !to) return;
+
+  if (from === to) {
+    resultDisplay.textContent = `${amount.toFixed(2)} ${to}`;
+    return;
+  }
+
+  try {
+    const response = await fetch(`https://er-api.com{from}`);
+    const data = await response.json();
+    
+    if (data && data.rates && data.rates[to]) {
+      const rate = data.rates[to];
+      const finalResult = amount * rate;
+      resultDisplay.textContent = `${finalResult.toFixed(2)} ${to}`;
+    } else {
+      resultDisplay.textContent = "Rate unavailable";
+    }
+  } catch (error) {
+    console.error("Exchange rate fetch error:", error);
+    resultDisplay.textContent = "Network error";
+  }
+};
+
+// Auto-run initial conversion when page opens
+setTimeout(() => {
+  if (document.getElementById('convertAmount')) {
+    window.convertCurrency();
+  }
+}, 500);
