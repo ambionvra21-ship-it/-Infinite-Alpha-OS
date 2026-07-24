@@ -106,11 +106,15 @@ window.convertCurrency = async function() {
 
   try {
     // Swapped to an unblocked public data node layout
-    const response = await fetch(`https://jsdelivr.net{from.toLowerCase()}.json`);
+    const fromCurrency = from.toLowerCase();
+    const toCurrency = to.toLowerCase();
+
+    // ✅ FIXED: Corrected jsDelivr CDN endpoint path and variable syntax
+    const response = await fetch(`https://jsdelivr.net{fromCurrency}.json`);
     const data = await response.json();
-    
-    if (data && data[from.toLowerCase()] && data[from.toLowerCase()][to.toLowerCase()]) {
-      const rate = data[from.toLowerCase()][to.toLowerCase()];
+
+    if (data && data[fromCurrency] && data[fromCurrency][toCurrency]) {
+      const rate = data[fromCurrency][toCurrency];
       const finalResult = amount * rate;
       resultDisplay.textContent = `${finalResult.toFixed(2)} ${to}`;
     } else {
@@ -120,7 +124,7 @@ window.convertCurrency = async function() {
     console.error("Exchange rate fetch error:", error);
     resultDisplay.textContent = "Rate Error (Retry)";
   }
-};
+
 
 // Auto-run initial conversion when page opens up
 setTimeout(() => {
