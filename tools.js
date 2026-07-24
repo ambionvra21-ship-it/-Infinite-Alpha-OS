@@ -105,11 +105,12 @@ window.convertCurrency = async function() {
   }
 
   try {
-    const response = await fetch(`https://er-api.com{from}`);
+    // Swapped to an unblocked public data node layout
+    const response = await fetch(`https://jsdelivr.net{from.toLowerCase()}.json`);
     const data = await response.json();
     
-    if (data && data.rates && data.rates[to]) {
-      const rate = data.rates[to];
+    if (data && data[from.toLowerCase()] && data[from.toLowerCase()][to.toLowerCase()]) {
+      const rate = data[from.toLowerCase()][to.toLowerCase()];
       const finalResult = amount * rate;
       resultDisplay.textContent = `${finalResult.toFixed(2)} ${to}`;
     } else {
@@ -117,11 +118,11 @@ window.convertCurrency = async function() {
     }
   } catch (error) {
     console.error("Exchange rate fetch error:", error);
-    resultDisplay.textContent = "Network error";
+    resultDisplay.textContent = "Rate Error (Retry)";
   }
 };
 
-// Auto-run initial conversion when page opens
+// Auto-run initial conversion when page opens up
 setTimeout(() => {
   if (document.getElementById('convertAmount')) {
     window.convertCurrency();
