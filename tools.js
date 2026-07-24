@@ -89,42 +89,69 @@ window.calculateShoppingDiscount = function() {
   }
 };
 // ==========================================
-// 💱 MODULE 4: REAL-TIME CURRENCY CONVERTER
+// 💱 REAL-TIME CURRENCY CONVERTER
 // ==========================================
-window.convertCurrency = async function() {
-  const amount = parseFloat(document.getElementById('convertAmount')?.value) || 0;
-  const from = document.getElementById('fromCurrency')?.value;
-  const to = document.getElementById('toCurrency')?.value;
-  const resultDisplay = document.getElementById('conversionResult');
 
-  if (amount <= 0 || !resultDisplay || !from || !to) return;
+async function convertCurrency() {
 
-  // Clean the currency strings to grab just the 3-letter code (e.g. "USD ($)" -> "usd")
-  const fromCurrency = from.trim().substring(0, 3).toLowerCase();
-  const toCurrency = to.trim().substring(0, 3).toLowerCase();
+    const amount = parseFloat(document.getElementById("convertAmount").value);
 
-  if (fromCurrency === toCurrency) {
-    resultDisplay.textContent = `${amount.toFixed(2)} ${toCurrency.toUpperCase()}`;
-    return;
-  }
+    const from = document.getElementById("fromCurrency").value;
 
-  try {
-    // 1. Fetching from a guaranteed open production endpoint path 
-    const response = await fetch(`https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1/currencies/${fromCurrency}.json`);
-    const data = await response.json();
+    const to = document.getElementById("toCurrency").value;
 
-    // 2. Safely extracting and assessing the inner currency node keys
-    if (data && data[fromCurrency] && data[fromCurrency][toCurrency]) {
-      const rate = data[fromCurrency][toCurrency];
-      const finalResult = amount * rate;
-      
-      // 3. Printing the clean calculated result output layout
-      resultDisplay.textContent = `${finalResult.toFixed(2)} ${toCurrency.toUpperCase()}`;
-    } else {
-      resultDisplay.textContent = "Rate unavailable";
+    const output = document.getElementById("conversionResult");
+
+    if (isNaN(amount) || amount <= 0) {
+        output.textContent = "Enter an amount";
+        return;
     }
-  } catch (error) {
-    console.error("Exchange rate fetch error:", error);
-    resultDisplay.textContent = "Rate Error (Retry)";
-  }
-};
+
+    if (from === to) {
+        output.textContent = amount.toFixed(2);
+        return;
+    }
+
+    output.textContent = "Converting...";
+
+    try {
+
+        const response = await fetch(
+            `https://api.frankfurter.app/latest?amount=${amount}&from=${from}&to=${to}`
+        );
+
+        if (!response.ok) {
+            throw new Error("Network Error");
+        }
+
+        const data = await response.json();
+
+        if (data.rates && data.rates[to]) {
+
+            output.textContent =
+                data.rates[to].toLocaleString(undefined, {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
+
+        } else {
+
+            output.textContent = "Conversion unavailable";
+
+        }
+
+    } catch (error) {
+
+        console.error(error);
+
+        output.textContent = "Unable to fetch exchange rates";
+
+    }
+
+}
+document.getElementById("convertAmount").addEventListener("input", convertCurrency);
+document.getElementById("fromCurrency").addEventListener("change", convertCurrency);
+document.getElementById("toCurrency").addEventListener("change", convertCurrency);
+
+// Initial conversion
+convertCurrency();
