@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Direct link to point the Google AdSense crawler straight to your map file
+Sitemap: https://github.io
