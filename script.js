@@ -195,3 +195,97 @@ window.onload = function () {
     console.log("✅ Infinity Alpha v0.1 Loaded");
 
 };
+
+// ==========================================
+// 📝 SMART NOTES PRO
+// ==========================================
+
+let notes = JSON.parse(localStorage.getItem("alphaNotes")) || [];
+
+function saveNote() {
+
+    const title = document.getElementById("noteTitle").value.trim();
+    const content = document.getElementById("noteContent").value.trim();
+
+    if (!title || !content) {
+        alert("Please enter both a title and note.");
+        return;
+    }
+
+    notes.unshift({
+        title,
+        content,
+        date: new Date().toLocaleString()
+    });
+
+    localStorage.setItem("alphaNotes", JSON.stringify(notes));
+
+    displayNotes();
+
+    clearNote();
+}
+
+function displayNotes() {
+
+    const list = document.getElementById("notesList");
+
+    list.innerHTML = "";
+
+    notes.forEach((note, index) => {
+
+        list.innerHTML += `
+            <div class="note-item" onclick="loadNote(${index})">
+                <strong>${note.title}</strong><br>
+                <small>${note.date}</small>
+            </div>
+        `;
+
+    });
+
+}
+
+function loadNote(index) {
+
+    document.getElementById("noteTitle").value =
+        notes[index].title;
+
+    document.getElementById("noteContent").value =
+        notes[index].content;
+
+}
+
+function clearNote() {
+
+    document.getElementById("noteTitle").value = "";
+
+    document.getElementById("noteContent").value = "";
+
+}
+
+function searchNotes() {
+
+    const keyword =
+        document.getElementById("noteSearch")
+        .value
+        .toLowerCase();
+
+    const items =
+        document.querySelectorAll(".note-item");
+
+    items.forEach((item) => {
+
+        if (item.innerText.toLowerCase().includes(keyword)) {
+
+            item.style.display = "block";
+
+        } else {
+
+            item.style.display = "none";
+
+        }
+
+    });
+
+}
+
+displayNotes();
