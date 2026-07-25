@@ -270,9 +270,45 @@
     <h3 id="currencyResult">
         Result will appear here
     </h3>
+<!-- ==========================================
+     SMART NOTES PRO
+========================================== -->
+
+<div class="widget" id="notes">
+
+    <h2>📝 Smart Notes</h2>
+
+    <input
+        type="text"
+        id="noteTitle"
+        placeholder="Title">
+
+    <textarea
+        id="noteContent"
+        placeholder="Write your ideas here..."></textarea>
+
+    <button onclick="saveNote()">
+
+        Save Note
+
+    </button>
+
+    <button onclick="clearNote()">
+
+        New Note
+
+    </button>
+
+    <input
+        type="search"
+        id="noteSearch"
+        placeholder="Search notes..."
+        onkeyup="searchNotes()">
+
+    <div id="notesList"></div>
 
 </div>
-
+    
 <!-- ==========================================
      END OF DASHBOARD
 ========================================== -->
