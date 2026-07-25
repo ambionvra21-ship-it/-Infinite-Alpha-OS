@@ -1,115 +1,73 @@
 // ==========================================
-// ☀️ ALPHA WEATHER ENGINE V2
+// INFINITY ALPHA v0.2 STABLE
+// CORE ENGINE - BATCH 1
 // ==========================================
 
-async function loadWeather() {
+console.clear();
+console.log("🚀 Infinity Alpha v0.2 Stable Booting...");
 
-    const temp = document.getElementById("weatherTemp");
-    const city = document.getElementById("weatherCity");
-    const desc = document.getElementById("weatherDesc");
-    const humidity = document.getElementById("humidity");
-    const wind = document.getElementById("wind");
+// ==========================================
+// GLOBAL STATE
+// ==========================================
 
-    if (!temp) return;
+const Alpha = {
+    version: "0.2 Stable",
+    weatherLoaded: false,
+    notesLoaded: false,
+    tasksLoaded: false
+};
 
-    city.textContent = "Detecting location...";
-    desc.textContent = "Please wait...";
+// ==========================================
+// GREETING ENGINE
+// ==========================================
 
-    if (!navigator.geolocation) {
+function updateGreeting() {
 
-        city.textContent = "GPS not supported";
-        return;
+    const title = document.getElementById("greetingTitle");
+    const message = document.getElementById("greetingMessage");
+
+    if (!title || !message) return;
+
+    const hour = new Date().getHours();
+
+    if (hour >= 5 && hour < 12) {
+
+        title.textContent = "☀️ Good Morning";
+        message.textContent = "Ready to build something amazing today?";
 
     }
 
-    navigator.geolocation.getCurrentPosition(
+    else if (hour >= 12 && hour < 18) {
 
-        async function(position){
+        title.textContent = "🌤 Good Afternoon";
+        message.textContent = "Keep your momentum going.";
 
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
+    }
 
-            try{
+    else if (hour >= 18 && hour < 22) {
 
-                // Reverse Geocoding
-                const geoResponse = await fetch(
-                    `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`
-                );
+        title.textContent = "🌇 Good Evening";
+        message.textContent = "Let's finish today strong.";
 
-                const geo = await geoResponse.json();
+    }
 
-                const place =
-                    geo.city ||
-                    geo.locality ||
-                    geo.principalSubdivision ||
-                    "Current Location";
+    else {
 
-                // Weather
-                const weatherResponse = await fetch(
-                    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code`
-                );
+        title.textContent = "🌙 Working Late?";
+        message.textContent = "Don't forget to recharge.";
 
-                const weather = await weatherResponse.json();
-
-                temp.textContent =
-                    Math.round(weather.current.temperature_2m) + "°C";
-
-                city.textContent =
-                    "📍 " + place;
-
-                humidity.textContent =
-                    weather.current.relative_humidity_2m + "%";
-
-                wind.textContent =
-                    weather.current.wind_speed_10m + " km/h";
-
-                desc.textContent =
-                    getWeatherDescription(weather.current.weather_code);
-
-            }
-
-            catch(error){
-
-                console.error(error);
-
-                city.textContent = "Weather unavailable";
-
-            }
-
-        },
-
-        function(){
-
-            city.textContent = "Location permission denied";
-            desc.textContent = "Allow Location and refresh.";
-
-        },
-
-        {
-            enableHighAccuracy:true,
-            timeout:10000,
-            maximumAge:60000
-        }
-
-    );
+    }
 
 }
 
-function getWeatherDescription(code){
+// ==========================================
+// APPLICATION STARTUP
+// ==========================================
 
-    if(code===0) return "☀️ Clear Sky";
+window.onload = function () {
 
-    if(code<=3) return "⛅ Partly Cloudy";
+    console.log("✅ Core Engine Started");
 
-    if(code<=48) return "🌫 Fog";
+    updateGreeting();
 
-    if(code<=67) return "🌧 Rain";
-
-    if(code<=77) return "❄️ Snow";
-
-    if(code<=82) return "🌦 Showers";
-
-    if(code<=99) return "⛈ Thunderstorm";
-
-    return "Weather";
-}
+};
