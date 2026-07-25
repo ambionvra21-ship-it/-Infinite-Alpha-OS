@@ -1343,3 +1343,158 @@ updateFinanceDashboard();
 
 console.log("📈 Finance Alpha Loaded");
 
+// ==========================================
+// 🤖 ALPHA FINANCIAL INTELLIGENCE v1
+// ==========================================
+
+
+function runAlphaFinanceAI(){
+
+
+    const report =
+    document.getElementById("alphaFinanceReport");
+
+
+    if(!report) return;
+
+
+
+    let income = 0;
+
+    let expenses = 0;
+
+    let biggestExpense = null;
+
+
+
+    financeTransactions.forEach(item=>{
+
+
+        if(item.category === "Income"){
+
+            income += item.amount;
+
+        }
+
+        else{
+
+
+            expenses += item.amount;
+
+
+
+            if(
+                !biggestExpense ||
+                item.amount > biggestExpense.amount
+            ){
+
+                biggestExpense = item;
+
+            }
+
+
+        }
+
+
+    });
+
+
+
+    let balance =
+    income - expenses;
+
+
+
+    let message = "";
+
+
+
+    if(balance > 0){
+
+        message +=
+        "🟢 Financial status: Positive<br>";
+
+    }
+
+    else if(balance < 0){
+
+        message +=
+        "🔴 Financial status: Spending is higher than income<br>";
+
+    }
+
+    else{
+
+        message +=
+        "🟡 Financial status: No balance data yet<br>";
+
+    }
+
+
+
+    message +=
+    "<br>💵 Total Income: $" 
+    + income.toFixed(2);
+
+
+
+    message +=
+    "<br>💸 Total Expenses: $"
+    + expenses.toFixed(2);
+
+
+
+    message +=
+    "<br>📊 Balance: $"
+    + balance.toFixed(2);
+
+
+
+    message +=
+    "<br>📝 Transactions: "
+    + financeTransactions.length;
+
+
+
+    if(biggestExpense){
+
+        message +=
+        "<br><br>⚠️ Biggest expense: "
+        + biggestExpense.description
+        + " ($"
+        + biggestExpense.amount.toFixed(2)
+        + ")";
+
+    }
+
+
+
+    message +=
+    "<br><br>🤖 Alpha Suggestion: ";
+
+    
+    if(expenses > income){
+
+        message +=
+        "Consider reducing expenses and creating a savings goal.";
+
+    }
+
+    else{
+
+        message +=
+        "Your finances look stable. Keep tracking your progress.";
+
+    }
+
+
+
+    report.innerHTML = message;
+
+
+}
+
+
+
+console.log("🤖 Alpha Financial Intelligence Loaded");
+
