@@ -404,204 +404,136 @@
 
 </div>
                 
-// ==========================================
-// 📈 FINANCE ALPHA ENGINE v1
-// ==========================================
+<!-- ==========================================
+     📈 FINANCE ALPHA
+========================================== -->
 
+<div class="widget" id="finance">
 
-let financeTransactions =
-JSON.parse(localStorage.getItem("alphaFinance")) || [];
+    <h2>📈 Finance Alpha</h2>
 
 
-// ==========================================
-// ADD TRANSACTION
-// ==========================================
+    <!-- Finance Summary -->
 
-function addFinanceTransaction(){
+    <div class="finance-summary">
 
-    const description =
-    document.getElementById("financeDescription").value.trim();
 
+        <div class="finance-card">
 
-    const amount =
-    parseFloat(document.getElementById("financeAmount").value);
+            <h3>💵 Income</h3>
 
+            <h2 id="totalIncome">
+                $0.00
+            </h2>
 
-    const category =
-    document.getElementById("financeCategory").value;
+        </div>
 
 
+        <div class="finance-card">
 
-    if(description === "" || isNaN(amount)){
+            <h3>💸 Expenses</h3>
 
-        alert("Please enter description and amount.");
+            <h2 id="totalExpenses">
+                $0.00
+            </h2>
 
-        return;
+        </div>
 
-    }
 
+        <div class="finance-card">
 
+            <h3>📊 Balance</h3>
 
-    financeTransactions.push({
+            <h2 id="totalBalance">
+                $0.00
+            </h2>
 
-        description: description,
+        </div>
 
-        amount: amount,
 
-        category: category,
+    </div>
 
-        date: new Date().toLocaleString()
 
-    });
+    <hr>
 
 
+    <!-- Add Transaction -->
 
-    saveFinance();
+    <h3>
+        Add Transaction
+    </h3>
 
 
+    <input
+        type="text"
+        id="financeDescription"
+        placeholder="Description">
 
-    document.getElementById("financeDescription").value = "";
 
-    document.getElementById("financeAmount").value = "";
+    <input
+        type="number"
+        id="financeAmount"
+        placeholder="Amount">
 
-}
 
 
+    <select id="financeCategory">
 
-// ==========================================
-// SAVE FINANCE
-// ==========================================
 
-function saveFinance(){
+        <option value="Income">
+            💵 Income
+        </option>
 
-    localStorage.setItem(
-        "alphaFinance",
-        JSON.stringify(financeTransactions)
-    );
 
+        <option value="Food">
+            🍔 Food
+        </option>
 
-    updateFinanceDashboard();
 
-}
+        <option value="Bills">
+            📱 Bills
+        </option>
 
 
+        <option value="Transport">
+            🚗 Transport
+        </option>
 
-// ==========================================
-// UPDATE SUMMARY
-// ==========================================
 
-function updateFinanceDashboard(){
+        <option value="Shopping">
+            🛒 Shopping
+        </option>
 
-    let income = 0;
 
-    let expenses = 0;
+        <option value="Other">
+            📦 Other
+        </option>
 
 
+    </select>
 
-    financeTransactions.forEach(transaction => {
 
 
-        if(transaction.category === "Income"){
+    <button onclick="addFinanceTransaction()">
 
-            income += transaction.amount;
+        Add Transaction
 
-        }
+    </button>
 
-        else{
 
-            expenses += transaction.amount;
 
-        }
+    <h3>
+        Transaction History
+    </h3>
 
 
-    });
 
+    <ul id="financeList">
 
+    </ul>
 
-    document.getElementById("totalIncome").textContent =
-    "$" + income.toFixed(2);
 
-
-
-    document.getElementById("totalExpenses").textContent =
-    "$" + expenses.toFixed(2);
-
-
-
-    document.getElementById("totalBalance").textContent =
-    "$" + (income - expenses).toFixed(2);
-
-
-
-    renderFinanceHistory();
-
-}
-
-
-
-// ==========================================
-// TRANSACTION HISTORY
-// ==========================================
-
-function renderFinanceHistory(){
-
-    const list =
-    document.getElementById("financeList");
-
-
-    if(!list) return;
-
-
-    list.innerHTML = "";
-
-
-    financeTransactions
-    .slice()
-    .reverse()
-    .forEach(transaction => {
-
-
-        list.innerHTML += `
-
-        <li>
-
-        <strong>
-        ${transaction.description}
-        </strong>
-
-        <br>
-
-        ${transaction.category}
-        -
-        $${transaction.amount.toFixed(2)}
-
-        <br>
-
-        <small>
-        ${transaction.date}
-        </small>
-
-        </li>
-
-        `;
-
-
-    });
-
-
-}
-
-
-
-// ==========================================
-// LOAD FINANCE ON START
-// ==========================================
-
-updateFinanceDashboard();
-
-
-console.log("📈 Finance Alpha Engine Loaded");
-                
+</div>
                 
 <!-- ==========================================
      END OF DASHBOARD
