@@ -1,246 +1,171 @@
 // ==========================================
-// INFINITY ALPHA v0.2
-// CORE ENGINE - BATCH 1
+// ☀️ ALPHA WEATHER ENGINE V2
 // ==========================================
 
-console.log("🚀 Infinity Alpha Starting...");
+async function loadWeather() {
 
-// ==========================================
-// ⏱️ POMODORO TIMER
-// ==========================================
+    const temp = document.getElementById("weatherTemp");
+    const city = document.getElementById("weatherCity");
+    const desc = document.getElementById("weatherDesc");
+    const humidity = document.getElementById("humidity");
+    const wind = document.getElementById("wind");
 
-let pomodoroTime = 25 * 60;
-let pomodoroRunning = false;
-let pomodoroInterval = null;
+    city.textContent = "📍 Detecting location...";
+    desc.textContent = "Please wait...";
 
-function updatePomodoroDisplay() {
+    if (!navigator.geolocation) {
 
-    const display = document.getElementById("pomodoroTime");
-
-    if (!display) return;
-
-    const minutes = Math.floor(pomodoroTime / 60);
-    const seconds = pomodoroTime % 60;
-
-    display.textContent =
-        `${minutes}:${seconds.toString().padStart(2, "0")}`;
-
-}
-
-function togglePomodoro() {
-
-    const button = document.getElementById("pomoStartBtn");
-
-    if (!button) return;
-
-    if (!pomodoroRunning) {
-
-        pomodoroRunning = true;
-        button.textContent = "Pause";
-
-        pomodoroInterval = setInterval(() => {
-
-            if (pomodoroTime > 0) {
-
-                pomodoroTime--;
-                updatePomodoroDisplay();
-
-            } else {
-
-                clearInterval(pomodoroInterval);
-
-                pomodoroRunning = false;
-
-                button.textContent = "Start";
-
-                alert("🎉 Focus Session Complete!");
-
-            }
-
-        },1000);
-
-    }
-
-    else{
-
-        clearInterval(pomodoroInterval);
-
-        pomodoroRunning=false;
-
-        button.textContent="Start";
-
-    }
-
-}
-
-function resetPomodoro(){
-
-    clearInterval(pomodoroInterval);
-
-    pomodoroRunning=false;
-
-    pomodoroTime=25*60;
-
-    updatePomodoroDisplay();
-
-    const btn=document.getElementById("pomoStartBtn");
-
-    if(btn) btn.textContent="Start";
-
-}
-
-// ==========================================
-// 🧮 CALCULATOR
-// ==========================================
-
-function appendCalc(value){
-
-    document.getElementById("calcDisplay").value+=value;
-
-}
-
-function clearCalc(){
-
-    document.getElementById("calcDisplay").value="";
-
-}
-
-function deleteCalc(){
-
-    const display=document.getElementById("calcDisplay");
-
-    display.value=display.value.slice(0,-1);
-
-}
-
-function calculateCalc(){
-
-    const display=document.getElementById("calcDisplay");
-
-    try{
-
-        display.value=eval(display.value);
-
-    }
-
-    catch{
-
-        display.value="Error";
-
-    }
-
-}
-
-// ==========================================
-// 💱 CURRENCY CONVERTER
-// ==========================================
-
-async function convertCurrency(){
-
-    const amount=parseFloat(document.getElementById("amount").value);
-
-    const from=document.getElementById("fromCurrency").value;
-
-    const to=document.getElementById("toCurrency").value;
-
-    const result=document.getElementById("currencyResult");
-
-    if(isNaN(amount)){
-
-        result.textContent="Enter an amount.";
-
+        city.textContent = "GPS not supported";
         return;
 
     }
 
-    result.textContent="Converting...";
+    navigator.geolocation.getCurrentPosition(
 
-    try{
+        async (position) => {
 
-        const response=await fetch(
-            `https://open.er-api.com/v6/latest/${from}`
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            try {
+
+                // Reverse Geocoding
+                const geoResponse = await fetch(
+                    `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`
+                );
+
+                const geo = await geoResponse.json();
+
+                // Weather
+                const weatherResponse = await fetch(
+                    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m`
+                );
+
+                const weather = await weatherResponse.json();
+
+                temp.textContent =
+                    Math.round(weather.current.temperature_2m) + "°C";
+
+                city.textContent =
+                    "📍 " +
+                    (geo.city ||
+                    geo.locality ||
+                    geo.principalSubdivision ||
+                    "Current Location");
+
+                desc.textContent =
+                    "Live Weather";
+
+                humidity.textContent =
+                    weather.current.relative_humidity_2m + "%";
+
+                wind.textContent =
+                    weather.current.wind_speed_10m + " km/h";
+
+            }
+
+            catch (error) {
+
+                console.log(error);
+
+                city.textContent = "Unable to load weather";
+
+                desc.textContent = "";
+
+            }
+
+        },
+
+        () => {
+
+            city.textContent =
+                "Location permission denied";
+
+            desc.textContent =
+                "Please allow location access.";
+
+        },
+
+        {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
+        }
+
+    );
+
+}
+
+// ==========================================
+// 🔍 SEARCH WEATHER
+// ==========================================
+
+async function searchWeatherByCity() {
+
+    const cityInput =
+        document.getElementById("citySearch").value.trim();
+
+    if (cityInput === "") {
+
+        loadWeather();
+        return;
+
+    }
+
+    const temp = document.getElementById("weatherTemp");
+    const city = document.getElementById("weatherCity");
+    const desc = document.getElementById("weatherDesc");
+    const humidity = document.getElementById("humidity");
+    const wind = document.getElementById("wind");
+
+    city.textContent = "Searching...";
+
+    try {
+
+        const geoResponse = await fetch(
+            `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityInput)}&count=1`
         );
 
-        const data=await response.json();
+        const geoData = await geoResponse.json();
 
-        const converted=amount*data.rates[to];
+        if (!geoData.results) {
 
-        result.textContent=
-        `${amount} ${from} = ${converted.toFixed(2)} ${to}`;
+            city.textContent = "City not found";
+            return;
 
-    }
+        }
 
-    catch{
+        const place = geoData.results[0];
 
-        result.textContent=
-        "Exchange service unavailable.";
+        const weatherResponse = await fetch(
+            `https://api.open-meteo.com/v1/forecast?latitude=${place.latitude}&longitude=${place.longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m`
+        );
 
-    }
+        const weather = await weatherResponse.json();
 
-}
+        temp.textContent =
+            Math.round(weather.current.temperature_2m) + "°C";
 
-// ==========================================
-// 🧠 GREETING ENGINE
-// ==========================================
+        city.textContent =
+            "📍 " + place.name + ", " + place.country;
 
-function updateGreeting(){
+        desc.textContent =
+            "Live Weather";
 
-    const title=document.getElementById("greetingTitle");
+        humidity.textContent =
+            weather.current.relative_humidity_2m + "%";
 
-    const message=document.getElementById("greetingMessage");
-
-    if(!title || !message) return;
-
-    const hour=new Date().getHours();
-
-    if(hour<12){
-
-        title.innerHTML="☀️ Good Morning";
-
-        message.innerHTML=
-        "Ready to build something amazing today?";
+        wind.textContent =
+            weather.current.wind_speed_10m + " km/h";
 
     }
 
-    else if(hour<18){
+    catch (error) {
 
-        title.innerHTML="🌤 Good Afternoon";
+        console.log(error);
 
-        message.innerHTML=
-        "Keep your momentum going.";
-
-    }
-
-    else if(hour<22){
-
-        title.innerHTML="🌇 Good Evening";
-
-        message.innerHTML=
-        "Let's finish today strong.";
-
-    }
-
-    else{
-
-        title.innerHTML="🌙 Working Late?";
-
-        message.innerHTML=
-        "Don't forget to recharge.";
+        city.textContent = "Unable to search";
 
     }
 
 }
-
-// ==========================================
-// 🚀 INITIALIZE ALPHA
-// ==========================================
-
-window.onload=function(){
-
-    updatePomodoroDisplay();
-
-    updateGreeting();
-
-    console.log("✅ Infinity Alpha Ready");
-
-};
