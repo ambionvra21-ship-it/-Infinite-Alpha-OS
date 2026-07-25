@@ -152,3 +152,10 @@ button {
 .widget {
     overflow: hidden;
 }
+
+/* Currency Widget Size */
+
+#currency {
+    grid-column: span 2;
+    min-height: 220px;
+}
