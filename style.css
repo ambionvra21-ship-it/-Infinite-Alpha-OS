@@ -1,161 +1,413 @@
-/* ==========================================
-   INFINITY ALPHA DASHBOARD LAYOUT
-========================================== */
+/* ==========================================================
+   INFINITY ALPHA v0.1
+   STYLE.CSS - PART 1
+   Foundation + Layout
+========================================================== */
 
-* {
-    box-sizing: border-box;
+/* ===========================
+   RESET
+=========================== */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
 }
 
-body {
-    margin: 0;
-    font-family: 'Inter', sans-serif;
-    background: #0b1120;
-    color: white;
+html{
+    scroll-behavior:smooth;
 }
 
+body{
 
-.app {
-    display: flex;
-    min-height: 100vh;
-}
+    font-family:'Inter',sans-serif;
 
+    background:#0b1120;
 
-/* Sidebar */
+    color:#ffffff;
 
-.sidebar {
-    width: 260px;
-    padding: 25px;
-    background: rgba(255,255,255,0.05);
-}
-
-
-/* Main Area */
-
-.main-content {
-    flex: 1;
-    padding: 30px;
-}
-
-/* Widget Area */
-
-.dashboard-grid {
-    display: grid;
-    grid-template-columns: repeat(2, minmax(400px, 1fr));
-    gap: 25px;
-    margin-top: 25px;
-    width: 100%;
+    overflow-x:hidden;
 
 }
 
-/* Widgets */
 
-.widget {
-    background: rgba(255,255,255,0.08);
-    border-radius: 20px;
-    padding: 25px;
-    min-height: 220px;
-    overflow: hidden;
-}
+/* ===========================
+   APP LAYOUT
+=========================== */
 
-/* Pomodoro */
+.app{
 
-#pomodoroTime {
-    font-size: 45px;
-    font-weight: 700;
-    margin: 20px 0;
+    display:flex;
+
+    min-height:100vh;
+
 }
 
 
-/* Buttons */
+/* ===========================
+   SIDEBAR
+=========================== */
 
-button {
-    padding: 10px 18px;
-    border-radius: 10px;
-    border: none;
-    cursor: pointer;
-}
+.sidebar{
 
-/* ==========================================
-   CALCULATOR DESIGN
-========================================== */
+    width:260px;
 
-#calculator input {
-    width: 100%;
-    height: 50px;
-    font-size: 24px;
-    text-align: right;
-    border-radius: 12px;
-    padding: 10px;
-    margin-bottom: 15px;
-}
+    background:#111827;
 
+    border-right:1px solid rgba(255,255,255,.08);
 
-.calculator-buttons {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 10px;
-}
+    padding:30px 20px;
 
-/* ==========================================
-   INFINITY ALPHA WIDGET POLISH
-========================================== */
+    position:sticky;
 
-.widget h2 {
-    margin-top: 0;
-    font-size: 22px;
+    top:0;
+
+    height:100vh;
+
 }
 
 
-.widget input,
-.widget select {
-    background: rgba(255,255,255,0.1);
-    color: white;
-    border: 1px solid rgba(255,255,255,0.2);
-    padding: 12px;
-    border-radius: 10px;
+/* ===========================
+   BRAND
+=========================== */
+
+.brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    margin-bottom:40px;
+
+}
+
+.brand-logo{
+
+    width:58px;
+
+    height:58px;
+
+    border-radius:16px;
+
+    background:linear-gradient(135deg,#2563eb,#7c3aed);
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:28px;
+
+    font-weight:bold;
+
+}
+
+.brand-info h1{
+
+    font-size:22px;
+
+}
+
+.brand-info span{
+
+    color:#94a3b8;
+
+    font-size:14px;
+
 }
 
 
-.widget button {
-    background: rgba(255,255,255,0.15);
-    color: white;
+/* ===========================
+   SIDEBAR NAVIGATION
+=========================== */
+
+.sidebar-nav ul{
+
+    list-style:none;
+
+}
+
+.sidebar-nav li{
+
+    margin-bottom:10px;
+
+}
+
+.sidebar-nav a{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    text-decoration:none;
+
+    color:#cbd5e1;
+
+    padding:14px;
+
+    border-radius:12px;
+
+    transition:.25s;
+
+}
+
+.sidebar-nav a:hover{
+
+    background:#1e293b;
+
+    color:#fff;
+
+}
+
+.sidebar-nav .active{
+
+    background:#2563eb;
+
+    color:white;
+
 }
 
 
-.widget button:hover {
-    transform: translateY(-2px);
+/* ===========================
+   MAIN CONTENT
+=========================== */
+
+.main-content{
+
+    flex:1;
+
+    padding:35px;
+
 }
 
 
-/* Currency Layout */
+/* ===========================
+   TOPBAR
+=========================== */
 
-#currency select {
-    margin: 10px 5px;
+.topbar{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:35px;
+
+    gap:20px;
+
+}
+
+.topbar-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+}
+
+.topbar-right{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
 }
 
 
-#currencyResult {
-    margin-top: 20px;
+/* ===========================
+   SEARCH
+=========================== */
+
+#globalSearch{
+
+    width:260px;
+
+    padding:12px 16px;
+
+    border:none;
+
+    border-radius:12px;
+
+    outline:none;
+
+    background:#1e293b;
+
+    color:white;
+
 }
 
-.calculator-buttons button {
-    height: 45px;
-    font-size: 18px;
+
+/* ===========================
+   ICON BUTTONS
+=========================== */
+
+.icon-button{
+
+    width:45px;
+
+    height:45px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#1e293b;
+
+    color:white;
+
+    cursor:pointer;
+
+    transition:.25s;
+
 }
 
-/* Fix Calculator Widget Size */
+.icon-button:hover{
 
-#calculator {
-    min-width: 400px;
+    transform:translateY(-2px);
+
 }
 
-.widget {
-    overflow: hidden;
+
+/* ===========================
+   PROFILE
+=========================== */
+
+.profile-button{
+
+    width:46px;
+
+    height:46px;
+
+    border:none;
+
+    border-radius:50%;
+
+    background:#2563eb;
+
+    color:white;
+
+    font-weight:700;
+
+    cursor:pointer;
+
 }
 
-/* Currency Widget Size */
 
-#currency {
-    grid-column: span 2;
-    min-height: 220px;
+/* ===========================
+   HERO CARD
+=========================== */
+
+.hero-card{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:25px;
+
+    padding:35px;
+
+    border-radius:22px;
+
+    background:linear-gradient(135deg,#1d4ed8,#312e81);
+
+    margin-bottom:30px;
+
+}
+
+.hero-card h2{
+
+    font-size:34px;
+
+    margin:15px 0;
+
+}
+
+.hero-card p{
+
+    max-width:650px;
+
+    color:#dbeafe;
+
+    line-height:1.8;
+
+}
+
+
+/* ===========================
+   BADGE
+=========================== */
+
+.badge{
+
+    display:inline-block;
+
+    background:rgba(255,255,255,.15);
+
+    padding:8px 14px;
+
+    border-radius:999px;
+
+    font-size:14px;
+
+}
+
+
+/* ===========================
+   HERO BUTTONS
+=========================== */
+
+.hero-actions{
+
+    display:flex;
+
+    gap:15px;
+
+}
+
+.primary-btn{
+
+    background:white;
+
+    color:#1d4ed8;
+
+    border:none;
+
+    padding:14px 22px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-weight:700;
+
+}
+
+.secondary-btn{
+
+    background:transparent;
+
+    color:white;
+
+    border:1px solid rgba(255,255,255,.4);
+
+    padding:14px 22px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
 }
