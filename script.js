@@ -467,3 +467,48 @@ async function loadWeather() {
     );
 
 }
+
+// ==========================================
+// 🧠 ALPHA INTELLIGENCE
+// ==========================================
+
+function updateGreeting(){
+
+    const hour = new Date().getHours();
+
+    const title = document.getElementById("greetingTitle");
+    const message = document.getElementById("greetingMessage");
+
+    if(hour >= 5 && hour < 12){
+
+        title.innerHTML = "☀️ Good Morning";
+        message.innerHTML =
+        "Ready to build something amazing today?";
+
+    }
+
+    else if(hour >= 12 && hour < 18){
+
+        title.innerHTML = "🌤 Good Afternoon";
+        message.innerHTML =
+        "Keep your momentum going.";
+
+    }
+
+    else if(hour >= 18 && hour < 22){
+
+        title.innerHTML = "🌇 Good Evening";
+        message.innerHTML =
+        "Let's finish today strong.";
+
+    }
+
+    else{
+
+        title.innerHTML = "🌙 Working Late?";
+        message.innerHTML =
+        "Don't forget to recharge.";
+
+    }
+
+}
