@@ -36,16 +36,16 @@ body {
     padding: 30px;
 }
 
-
 /* Widget Area */
 
 .dashboard-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(400px, 1fr));
     gap: 25px;
     margin-top: 25px;
-}
+    width: 100%;
 
+}
 
 /* Widgets */
 
@@ -54,8 +54,8 @@ body {
     border-radius: 20px;
     padding: 25px;
     min-height: 220px;
+    overflow: hidden;
 }
-
 
 /* Pomodoro */
 
@@ -141,4 +141,14 @@ button {
 .calculator-buttons button {
     height: 45px;
     font-size: 18px;
+}
+
+/* Fix Calculator Widget Size */
+
+#calculator {
+    min-width: 400px;
+}
+
+.widget {
+    overflow: hidden;
 }
