@@ -403,6 +403,139 @@
     </div>
 
 </div>
+
+         <!-- ==========================================
+     📈 FINANCE ALPHA
+========================================== -->
+
+<div class="widget" id="finance">
+
+    <h2>📈 Finance Alpha</h2>
+
+
+    <!-- Finance Summary -->
+
+    <div class="finance-summary">
+
+
+        <div class="finance-card">
+
+            <h3>💵 Income</h3>
+
+            <h2 id="totalIncome">
+                $0
+            </h2>
+
+        </div>
+
+
+
+        <div class="finance-card">
+
+            <h3>💸 Expenses</h3>
+
+            <h2 id="totalExpenses">
+                $0
+            </h2>
+
+        </div>
+
+
+
+        <div class="finance-card">
+
+            <h3>📊 Balance</h3>
+
+            <h2 id="totalBalance">
+                $0
+            </h2>
+
+        </div>
+
+
+    </div>
+
+
+
+    <hr>
+
+
+
+    <h3>
+        Add Transaction
+    </h3>
+
+
+    <input
+        type="text"
+        id="financeDescription"
+        placeholder="Description">
+
+
+    <input
+        type="number"
+        id="financeAmount"
+        placeholder="Amount">
+
+
+
+    <select id="financeCategory">
+
+        <option value="Income">
+            💵 Income
+        </option>
+
+
+        <option value="Food">
+            🍔 Food
+        </option>
+
+
+        <option value="Bills">
+            📱 Bills
+        </option>
+
+
+        <option value="Transport">
+            🚗 Transport
+        </option>
+
+
+        <option value="Shopping">
+            🛒 Shopping
+        </option>
+
+
+        <option value="Other">
+            📦 Other
+        </option>
+
+
+    </select>
+
+
+
+    <button onclick="addFinanceTransaction()">
+
+        Add Transaction
+
+    </button>
+
+
+
+    <h3>
+        Transaction History
+    </h3>
+
+
+    <ul id="financeList">
+
+    </ul>
+
+
+</div>       
+                
+                
 <!-- ==========================================
      END OF DASHBOARD
 ========================================== -->
