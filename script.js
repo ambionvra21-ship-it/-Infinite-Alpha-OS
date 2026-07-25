@@ -403,6 +403,10 @@ renderTasks();
 // ☀️ WEATHER CENTER
 // ==========================================
 
+// ==========================================
+// ☀️ WEATHER CENTER V2
+// ==========================================
+
 async function loadWeather() {
 
     const temp = document.getElementById("weatherTemp");
@@ -411,62 +415,97 @@ async function loadWeather() {
     const humidity = document.getElementById("humidity");
     const wind = document.getElementById("wind");
 
+
     if (!navigator.geolocation) {
 
-        city.textContent = "Geolocation not supported";
+        city.textContent = "GPS not supported";
         return;
 
     }
 
-    city.textContent = "Getting location...";
+
+    city.textContent = "📍 Detecting location...";
+    desc.textContent = "Connecting...";
+
 
     navigator.geolocation.getCurrentPosition(
 
-        async (position) => {
+        async function(position) {
 
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
 
+
             try {
 
+
                 const response = await fetch(
-                    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m`
+                `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m`
                 );
+
 
                 const data = await response.json();
 
+
                 temp.textContent =
-                    Math.round(data.current.temperature_2m) + "°C";
+                Math.round(data.current.temperature_2m) + "°C";
+
 
                 city.textContent =
-                "Current Location Weather";
+                `📍 Location detected (${lat.toFixed(2)}, ${lon.toFixed(2)})`;
 
-                desc.textContent = "Live Weather";
+
+                desc.textContent =
+                "Live Weather";
+
 
                 humidity.textContent =
-                    data.current.relative_humidity_2m + "%";
+                data.current.relative_humidity_2m + "%";
+
 
                 wind.textContent =
-                    data.current.wind_speed_10m + " km/h";
+                data.current.wind_speed_10m + " km/h";
 
-            } catch (error) {
-
-                console.error(error);
-
-                city.textContent = "Weather unavailable";
-                desc.textContent = "Connection failed";
 
             }
 
+            catch(error){
+
+                console.log(error);
+
+                desc.textContent =
+                "Weather connection failed";
+
+            }
+
+
         },
 
-        () => {
 
-            city.textContent = "Location permission denied";
+        function(error){
 
+            console.log(error);
+
+
+            city.textContent =
+            "📍 Location blocked";
+
+
+            desc.textContent =
+            "Allow GPS permission and refresh";
+
+        },
+
+
+        {
+            enableHighAccuracy:true,
+            timeout:10000,
+            maximumAge:0
         }
 
+
     );
+
 
 }
 
