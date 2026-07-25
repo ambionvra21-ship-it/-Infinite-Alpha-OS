@@ -348,53 +348,61 @@
 
 </div>
 
-    <!-- ==========================================
+<!-- ==========================================
      WEATHER CENTER
 ========================================== -->
+
 <div class="widget" id="weather">
 
     <h2>☀️ Weather Center</h2>
 
-    <input
-        type="text"
-        id="citySearch"
-        placeholder="Search any city..."
-        onkeydown="if(event.key==='Enter'){searchWeatherByCity()}">
+    <div class="weather-search">
 
-    <br><br>
+        <input
+            type="text"
+            id="citySearch"
+            placeholder="Search any city..."
+            autocomplete="off">
+
+        <button onclick="searchWeatherByCity()">
+            Search
+        </button>
+
+    </div>
 
     <div id="weatherCard">
 
         <h1 id="weatherTemp">--°C</h1>
 
         <h3 id="weatherCity">
-            Detecting location...
+            📍 Detecting location...
         </h3>
 
         <p id="weatherDesc">
-            Waiting for weather...
+            Please wait...
         </p>
 
         <div class="weather-details">
 
             <div>
-                💧 <span id="humidity">--%</span>
+                💧
+                <span id="humidity">--%</span>
             </div>
 
             <div>
-                🌬 <span id="wind">-- km/h</span>
+                🌬
+                <span id="wind">-- km/h</span>
             </div>
 
         </div>
 
-        <button onclick="loadWeather()">
+        <button id="refreshWeatherBtn" onclick="loadWeather()">
             Refresh Weather
         </button>
 
     </div>
 
 </div>
-                
 <!-- ==========================================
      END OF DASHBOARD
 ========================================== -->
