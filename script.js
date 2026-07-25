@@ -514,3 +514,70 @@ function updateGreeting(){
     }
 
 }
+
+// ==========================================
+// 🔍 SEARCH WEATHER BY CITY
+// ==========================================
+
+async function searchWeatherByCity() {
+
+    const cityInput = document.getElementById("citySearch").value.trim();
+
+    if (cityInput === "") {
+        alert("Please enter a city name.");
+        return;
+    }
+
+    const temp = document.getElementById("weatherTemp");
+    const city = document.getElementById("weatherCity");
+    const desc = document.getElementById("weatherDesc");
+    const humidity = document.getElementById("humidity");
+    const wind = document.getElementById("wind");
+
+    city.textContent = "Searching...";
+
+    try {
+
+        // Get coordinates from city name
+        const geoResponse = await fetch(
+            `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityInput)}&count=1`
+        );
+
+        const geoData = await geoResponse.json();
+
+        if (!geoData.results || geoData.results.length === 0) {
+
+            city.textContent = "City not found";
+            desc.textContent = "";
+            return;
+
+        }
+
+        const place = geoData.results[0];
+
+        // Get weather using coordinates
+        const weatherResponse = await fetch(
+            `https://api.open-meteo.com/v1/forecast?latitude=${place.latitude}&longitude=${place.longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m`
+        );
+
+        const weatherData = await weatherResponse.json();
+
+        temp.textContent = Math.round(weatherData.current.temperature_2m) + "°C";
+
+        city.textContent = `${place.name}, ${place.country}`;
+
+        desc.textContent = "Live Weather";
+
+        humidity.textContent = weatherData.current.relative_humidity_2m + "%";
+
+        wind.textContent = weatherData.current.wind_speed_10m + " km/h";
+
+    } catch (error) {
+
+        console.error(error);
+
+        city.textContent = "Unable to load weather";
+
+    }
+
+}
