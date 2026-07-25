@@ -1134,8 +1134,9 @@ window.addEventListener(
 );
 
 // ==========================================
-// 📈 FINANCE ALPHA ENGINE v1
+// 📈 FINANCE ALPHA ENGINE v1.1
 // ==========================================
+
 
 let financeTransactions =
 JSON.parse(localStorage.getItem("alphaFinance")) || [];
@@ -1148,55 +1149,63 @@ JSON.parse(localStorage.getItem("alphaFinance")) || [];
 function addFinanceTransaction(){
 
     const description =
-    document.getElementById("financeDescription").value.trim();
+    document.getElementById("financeDescription");
+
+    const amountInput =
+    document.getElementById("financeAmount");
+
+    const categoryInput =
+    document.getElementById("financeCategory");
+
+
+    if(!description || !amountInput || !categoryInput){
+        console.log("Finance inputs missing");
+        return;
+    }
+
+
+    const name =
+    description.value.trim();
 
 
     const amount =
-    parseFloat(document.getElementById("financeAmount").value);
+    Number(amountInput.value);
 
 
     const category =
-    document.getElementById("financeCategory").value;
+    categoryInput.value;
 
 
+    if(name === "" || isNaN(amount) || amount <= 0){
 
-    if(description === "" || isNaN(amount)){
-
-        alert("Please enter description and amount.");
+        alert("Please enter valid transaction details.");
 
         return;
 
     }
 
 
-
-    const transaction = {
+    financeTransactions.push({
 
         id: Date.now(),
 
-        description: description,
+        description:name,
 
-        amount: amount,
+        amount:amount,
 
-        category: category,
+        category:category,
 
-        date: new Date().toLocaleString()
+        date:new Date().toLocaleString()
 
-    };
-
-
-
-    financeTransactions.push(transaction);
-
+    });
 
 
     saveFinance();
 
 
+    description.value="";
 
-    document.getElementById("financeDescription").value="";
-
-    document.getElementById("financeAmount").value="";
+    amountInput.value="";
 
 
 }
@@ -1204,7 +1213,7 @@ function addFinanceTransaction(){
 
 
 // ==========================================
-// SAVE FINANCE DATA
+// SAVE FINANCE
 // ==========================================
 
 function saveFinance(){
@@ -1217,13 +1226,12 @@ function saveFinance(){
 
     updateFinanceDashboard();
 
-
 }
 
 
 
 // ==========================================
-// UPDATE DASHBOARD
+// UPDATE FINANCE DASHBOARD
 // ==========================================
 
 function updateFinanceDashboard(){
@@ -1260,17 +1268,33 @@ function updateFinanceDashboard(){
 
 
 
-    document.getElementById("totalIncome").textContent =
+    const incomeBox =
+    document.getElementById("totalIncome");
+
+
+    const expenseBox =
+    document.getElementById("totalExpenses");
+
+
+    const balanceBox =
+    document.getElementById("totalBalance");
+
+
+
+    if(incomeBox)
+    incomeBox.textContent =
     "$" + income.toFixed(2);
 
 
 
-    document.getElementById("totalExpenses").textContent =
+    if(expenseBox)
+    expenseBox.textContent =
     "$" + expenses.toFixed(2);
 
 
 
-    document.getElementById("totalBalance").textContent =
+    if(balanceBox)
+    balanceBox.textContent =
     "$" + balance.toFixed(2);
 
 
@@ -1311,7 +1335,10 @@ function renderFinanceHistory(){
 
         <li>
 
-        <strong>${item.description}</strong>
+        <strong>
+        ${item.description}
+        </strong>
+
         <br>
 
         ${item.category}
@@ -1334,19 +1361,11 @@ function renderFinanceHistory(){
 
 }
 
-// ==========================================
-// START FINANCE ALPHA
-// ==========================================
 
-updateFinanceDashboard();
-
-
-console.log("📈 Finance Alpha Loaded");
 
 // ==========================================
-// 🤖 ALPHA FINANCIAL INTELLIGENCE v1
+// 🤖 ALPHA FINANCIAL INTELLIGENCE
 // ==========================================
-
 
 function runAlphaFinanceAI(){
 
@@ -1363,9 +1382,6 @@ function runAlphaFinanceAI(){
 
     let expenses = 0;
 
-    let biggestExpense = null;
-
-
 
     financeTransactions.forEach(item=>{
 
@@ -1378,20 +1394,7 @@ function runAlphaFinanceAI(){
 
         else{
 
-
             expenses += item.amount;
-
-
-
-            if(
-                !biggestExpense ||
-                item.amount > biggestExpense.amount
-            ){
-
-                biggestExpense = item;
-
-            }
-
 
         }
 
@@ -1400,101 +1403,73 @@ function runAlphaFinanceAI(){
 
 
 
-    let balance =
+    const balance =
     income - expenses;
 
 
 
-    let message = "";
+    let advice;
 
 
 
-    if(balance > 0){
-
-        message +=
-        "🟢 Financial status: Positive<br>";
-
-    }
-
-    else if(balance < 0){
-
-        message +=
-        "🔴 Financial status: Spending is higher than income<br>";
-
-    }
-
-    else{
-
-        message +=
-        "🟡 Financial status: No balance data yet<br>";
-
-    }
-
-
-
-    message +=
-    "<br>💵 Total Income: $" 
-    + income.toFixed(2);
-
-
-
-    message +=
-    "<br>💸 Total Expenses: $"
-    + expenses.toFixed(2);
-
-
-
-    message +=
-    "<br>📊 Balance: $"
-    + balance.toFixed(2);
-
-
-
-    message +=
-    "<br>📝 Transactions: "
-    + financeTransactions.length;
-
-
-
-    if(biggestExpense){
-
-        message +=
-        "<br><br>⚠️ Biggest expense: "
-        + biggestExpense.description
-        + " ($"
-        + biggestExpense.amount.toFixed(2)
-        + ")";
-
-    }
-
-
-
-    message +=
-    "<br><br>🤖 Alpha Suggestion: ";
-
-    
     if(expenses > income){
 
-        message +=
-        "Consider reducing expenses and creating a savings goal.";
+        advice =
+        "⚠️ Spending is higher than income. Consider reducing expenses.";
+
+    }
+
+    else if(balance > 0){
+
+        advice =
+        "🟢 Good job! Your financial position is positive.";
 
     }
 
     else{
 
-        message +=
-        "Your finances look stable. Keep tracking your progress.";
+        advice =
+        "🟡 Start adding transactions to generate insights.";
 
     }
 
 
 
-    report.innerHTML = message;
+    report.innerHTML = `
+
+    ${advice}
+
+    <br><br>
+
+    💵 Income:
+    $${income.toFixed(2)}
+
+    <br>
+
+    💸 Expenses:
+    $${expenses.toFixed(2)}
+
+    <br>
+
+    📊 Balance:
+    $${balance.toFixed(2)}
+
+    <br>
+
+    📝 Transactions:
+    ${financeTransactions.length}
+
+    `;
 
 
 }
 
 
+// ==========================================
+// START FINANCE ALPHA
+// ==========================================
 
-console.log("🤖 Alpha Financial Intelligence Loaded");
+updateFinanceDashboard();
 
+
+console.log("📈 Finance Alpha v1.1 Loaded");
