@@ -3,26 +3,53 @@
 
 <head>
 
-    <meta charset="UTF-8">
+  <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
 
-    <meta
-        name="viewport"
-        content="width=device-width, initial-scale=1.0">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0">
 
-    <title>Infinity Alpha v0.1</title>
+  <title>Infinity Alpha v0.1</title>
 
-    <meta
-        name="description"
-        content="Infinity Alpha is a modern productivity workspace featuring Pomodoro, Notes, Calculator, Weather, Currency Converter, Finance Dashboard, AI Assistant and more.">
+  <meta
+    name="description"
+    content="Infinity Alpha is a modern productivity workspace featuring Pomodoro, Notes, Calculator, Weather, Currency Converter, Finance Dashboard, AI Assistant and more">
 
-    <meta
-        name="theme-color"
-        content="#0b1120">
+  <meta
+    name="theme-color"
+    content="#0b1120">
 
-    <meta
-        name="color-scheme"
-        content="dark">
+  <meta
+    name="color-scheme"
+    content="dark">
 
+</head>
+<body>
+  <!-- ==========================================
+       ALPHA 1 MAIN CONTAINER
+  =========================================== -->
+
+  <div class="app-container">
+
+    <header class="app-header">
+      <h1>Infinity Alpha</h1>
+      <p>Your Personal Productivity Workspace</p>
+    </header>
+
+    <main class="dashboard">
+
+      <section class="card">
+        <h2>🚀 Welcome</h2>
+        <p>Alpha 1 system is starting...</p>
+      </section>
+
+    </main>
+
+  </div>
+</body>
+
+</html>
     <link
         rel="preconnect"
         href="https://fonts.googleapis.com">
@@ -288,3 +315,87 @@
 
             <!-- Widget Grid Starts -->
             <section class="dashboard-grid">
+
+                <!-- Pomodoro Timer Widget -->
+<div class="widget" id="pomodoro">
+    <h2>⏱️ Pomodoro Focus Timer</h2>
+
+    <div id="pomodoroTime">25:00</div>
+
+    <button onclick="togglePomodoro()" id="pomoStartBtn">
+        Start
+    </button>
+
+    <button onclick="resetPomodoro()">
+        Reset
+    </button>
+</div>
+
+                <!-- Calculator Widget -->
+<div class="widget" id="calculator">
+
+    <h2>🧮 Calculator</h2>
+
+    <input type="text" id="calcDisplay" readonly>
+
+    <div class="calculator-buttons">
+        <button onclick="clearCalc()">C</button>
+        <button onclick="deleteCalc()">DEL</button>
+        <button onclick="appendCalc('/')">÷</button>
+        <button onclick="appendCalc('*')">×</button>
+
+        <button onclick="appendCalc('7')">7</button>
+        <button onclick="appendCalc('8')">8</button>
+        <button onclick="appendCalc('9')">9</button>
+        <button onclick="appendCalc('-')">−</button>
+
+        <button onclick="appendCalc('4')">4</button>
+        <button onclick="appendCalc('5')">5</button>
+        <button onclick="appendCalc('6')">6</button>
+        <button onclick="appendCalc('+')">+</button>
+
+        <button onclick="appendCalc('1')">1</button>
+        <button onclick="appendCalc('2')">2</button>
+        <button onclick="appendCalc('3')">3</button>
+        <button onclick="calculate()">=</button>
+
+        <button onclick="appendCalc('0')">0</button>
+        <button onclick="appendCalc('.')">.</button>
+    </div>
+
+</div>
+
+                <!-- Currency Converter Widget -->
+<div class="widget" id="currency">
+
+    <h2>💱 Currency Converter</h2>
+
+    <input type="number" id="amount" value="1">
+
+    <select id="fromCurrency">
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="PHP">PHP</option>
+        <option value="JPY">JPY</option>
+        <option value="GBP">GBP</option>
+    </select>
+
+    <span>to</span>
+
+    <select id="toCurrency">
+        <option value="PHP">PHP</option>
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="JPY">JPY</option>
+        <option value="GBP">GBP</option>
+    </select>
+
+    <button onclick="convertCurrency()">
+        Convert
+    </button>
+
+    <h3 id="currencyResult">
+        Result will appear here
+    </h3>
+
+</div>
