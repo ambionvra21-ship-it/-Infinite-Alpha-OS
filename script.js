@@ -1361,26 +1361,29 @@ function renderFinanceHistory(){
 
 }
 
-
-
 // ==========================================
-// 🤖 ALPHA FINANCIAL INTELLIGENCE
+// 🤖 ALPHA FINANCIAL INTELLIGENCE v2
 // ==========================================
 
 function runAlphaFinanceAI(){
 
-
     const report =
     document.getElementById("alphaFinanceReport");
+
+    const scoreBox =
+    document.getElementById("alphaFinanceScore");
+
+    const adviceBox =
+    document.getElementById("alphaFinanceAdvice");
 
 
     if(!report) return;
 
 
-
     let income = 0;
-
     let expenses = 0;
+
+    let categories = {};
 
 
     financeTransactions.forEach(item=>{
@@ -1396,8 +1399,17 @@ function runAlphaFinanceAI(){
 
             expenses += item.amount;
 
-        }
 
+            if(!categories[item.category]){
+
+                categories[item.category] = 0;
+
+            }
+
+
+            categories[item.category] += item.amount;
+
+        }
 
     });
 
@@ -1408,28 +1420,53 @@ function runAlphaFinanceAI(){
 
 
 
-    let advice;
+    let score = 50;
 
 
+    if(income > expenses){
 
-    if(expenses > income){
-
-        advice =
-        "⚠️ Spending is higher than income. Consider reducing expenses.";
+        score += 30;
 
     }
 
-    else if(balance > 0){
 
-        advice =
-        "🟢 Good job! Your financial position is positive.";
+    if(expenses < income * 0.5){
+
+        score += 15;
 
     }
 
-    else{
 
-        advice =
-        "🟡 Start adding transactions to generate insights.";
+    if(balance > 0){
+
+        score += 5;
+
+    }
+
+
+    if(score > 100){
+
+        score = 100;
+
+    }
+
+
+
+    let biggestCategory = "None";
+
+    let biggestAmount = 0;
+
+
+
+    for(let category in categories){
+
+        if(categories[category] > biggestAmount){
+
+            biggestAmount = categories[category];
+
+            biggestCategory = category;
+
+        }
 
     }
 
@@ -1437,7 +1474,7 @@ function runAlphaFinanceAI(){
 
     report.innerHTML = `
 
-    ${advice}
+    🟢 Financial position is positive.
 
     <br><br>
 
@@ -1454,10 +1491,37 @@ function runAlphaFinanceAI(){
     📊 Balance:
     $${balance.toFixed(2)}
 
-    <br>
+    `;
 
-    📝 Transactions:
-    ${financeTransactions.length}
+
+
+    scoreBox.innerHTML = `
+
+    🧠 Financial Health Score:
+
+    <strong>${score}/100</strong>
+
+    `;
+
+
+
+    adviceBox.innerHTML = `
+
+    🍔 Biggest Spending Category:
+
+    ${biggestCategory}
+
+    <br><br>
+
+    🤖 Alpha Suggestion:
+
+    ${
+        expenses > income
+        ?
+        "Reduce spending and create a budget."
+        :
+        "Great control. Consider saving or investing your surplus."
+    }
 
     `;
 
@@ -1465,11 +1529,5 @@ function runAlphaFinanceAI(){
 }
 
 
-// ==========================================
-// START FINANCE ALPHA
-// ==========================================
+console.log("🤖 Alpha Financial Intelligence v2 Loaded");
 
-updateFinanceDashboard();
-
-
-console.log("📈 Finance Alpha v1.1 Loaded");
