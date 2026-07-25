@@ -289,3 +289,104 @@ function searchNotes() {
 }
 
 displayNotes();
+
+// ==========================================
+// ✅ SMART TASKS
+// ==========================================
+
+let tasks = JSON.parse(localStorage.getItem("alphaTasks")) || [];
+
+function addTask() {
+
+    const input = document.getElementById("taskInput");
+
+    const text = input.value.trim();
+
+    if (text === "") return;
+
+    tasks.push({
+        text: text,
+        completed: false
+    });
+
+    input.value = "";
+
+    saveTasks();
+
+}
+
+function saveTasks() {
+
+    localStorage.setItem(
+        "alphaTasks",
+        JSON.stringify(tasks)
+    );
+
+    renderTasks();
+
+}
+
+function renderTasks() {
+
+    const list = document.getElementById("taskList");
+
+    list.innerHTML = "";
+
+    let completed = 0;
+
+    tasks.forEach((task, index) => {
+
+        if (task.completed) completed++;
+
+        list.innerHTML += `
+        <li class="task-item ${task.completed ? "completed" : ""}">
+            <span>${task.text}</span>
+
+            <div class="task-actions">
+
+                <button onclick="toggleTask(${index})">
+                    ${task.completed ? "↩" : "✔"}
+                </button>
+
+                <button onclick="deleteTask(${index})">
+                    🗑
+                </button>
+
+            </div>
+
+        </li>
+        `;
+
+    });
+
+    const percent =
+        tasks.length === 0
+            ? 0
+            : (completed / tasks.length) * 100;
+
+    document.getElementById("taskProgressBar").style.width =
+        percent + "%";
+
+    document.getElementById("taskStats").innerHTML =
+        `${completed} of ${tasks.length} completed`;
+
+}
+
+function toggleTask(index) {
+
+    tasks[index].completed =
+        !tasks[index].completed;
+
+    saveTasks();
+
+}
+
+function deleteTask(index) {
+
+    tasks.splice(index, 1);
+
+    saveTasks();
+
+}
+
+renderTasks();
