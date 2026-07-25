@@ -1450,6 +1450,149 @@ function runAlphaFinanceAI(){
 
     }
 
+    // ==========================================
+// 🤖 ALPHA COMMAND CENTER v1
+// ==========================================
+
+function runAlphaCommand() {
+
+    const input = document.getElementById("alphaCommandInput");
+    const response = document.getElementById("alphaAssistantResponse");
+
+    if (!input || !response) return;
+
+    const command = input.value.trim().toLowerCase();
+
+    if (command === "") {
+
+        response.innerHTML =
+        "🤖 Please ask me something.";
+
+        return;
+
+    }
+
+    // ===============================
+    // BALANCE
+    // ===============================
+
+    if (
+        command.includes("balance") ||
+        command.includes("money")
+    ) {
+
+        const balance =
+        document.getElementById("totalBalance").textContent;
+
+        response.innerHTML =
+        `<strong>📊 Current Balance</strong><br>${balance}`;
+
+    }
+
+    // ===============================
+    // INCOME
+    // ===============================
+
+    else if (
+        command.includes("income") ||
+        command.includes("salary")
+    ) {
+
+        const income =
+        document.getElementById("totalIncome").textContent;
+
+        response.innerHTML =
+        `<strong>💵 Total Income</strong><br>${income}`;
+
+    }
+
+    // ===============================
+    // EXPENSES
+    // ===============================
+
+    else if (
+        command.includes("expense") ||
+        command.includes("expenses") ||
+        command.includes("spent")
+    ) {
+
+        const expenses =
+        document.getElementById("totalExpenses").textContent;
+
+        response.innerHTML =
+        `<strong>💸 Total Expenses</strong><br>${expenses}`;
+
+    }
+
+    // ===============================
+    // TRANSACTIONS
+    // ===============================
+
+    else if (
+        command.includes("transaction") ||
+        command.includes("history")
+    ) {
+
+        response.innerHTML =
+        `📜 You currently have <strong>${financeTransactions.length}</strong> transaction(s).`;
+
+    }
+
+    // ===============================
+    // FOOD
+    // ===============================
+
+    else if (
+        command.includes("food")
+    ) {
+
+        let totalFood = 0;
+
+        financeTransactions.forEach(item => {
+
+            if(item.category === "Food"){
+
+                totalFood += item.amount;
+
+            }
+
+        });
+
+        response.innerHTML =
+        `🍔 Food Spending<br><strong>$${totalFood.toFixed(2)}</strong>`;
+
+    }
+
+    // ===============================
+    // HELLO
+    // ===============================
+
+    else if (
+        command.includes("hello") ||
+        command.includes("hi")
+    ) {
+
+        response.innerHTML =
+        "👋 Hello! I'm Alpha. Ask me about your finances.";
+
+    }
+
+    // ===============================
+    // UNKNOWN
+    // ===============================
+
+    else {
+
+        response.innerHTML =
+        "🤖 I don't understand that yet.<br>Try asking:<br><br>• balance<br>• income<br>• expenses<br>• food<br>• transactions";
+
+    }
+
+    input.value = "";
+
+}
+
+console.log("🤖 Alpha Command Center Loaded");
 
 
     let biggestCategory = "None";
