@@ -10,7 +10,9 @@ async function loadWeather() {
     const humidity = document.getElementById("humidity");
     const wind = document.getElementById("wind");
 
-    city.textContent = "📍 Detecting location...";
+    if (!temp) return;
+
+    city.textContent = "Detecting location...";
     desc.textContent = "Please wait...";
 
     if (!navigator.geolocation) {
@@ -22,12 +24,12 @@ async function loadWeather() {
 
     navigator.geolocation.getCurrentPosition(
 
-        async (position) => {
+        async function(position){
 
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
 
-            try {
+            try{
 
                 // Reverse Geocoding
                 const geoResponse = await fetch(
@@ -36,9 +38,15 @@ async function loadWeather() {
 
                 const geo = await geoResponse.json();
 
+                const place =
+                    geo.city ||
+                    geo.locality ||
+                    geo.principalSubdivision ||
+                    "Current Location";
+
                 // Weather
                 const weatherResponse = await fetch(
-                    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m`
+                    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code`
                 );
 
                 const weather = await weatherResponse.json();
@@ -47,14 +55,7 @@ async function loadWeather() {
                     Math.round(weather.current.temperature_2m) + "°C";
 
                 city.textContent =
-                    "📍 " +
-                    (geo.city ||
-                    geo.locality ||
-                    geo.principalSubdivision ||
-                    "Current Location");
-
-                desc.textContent =
-                    "Live Weather";
+                    "📍 " + place;
 
                 humidity.textContent =
                     weather.current.relative_humidity_2m + "%";
@@ -62,110 +63,53 @@ async function loadWeather() {
                 wind.textContent =
                     weather.current.wind_speed_10m + " km/h";
 
+                desc.textContent =
+                    getWeatherDescription(weather.current.weather_code);
+
             }
 
-            catch (error) {
+            catch(error){
 
-                console.log(error);
+                console.error(error);
 
-                city.textContent = "Unable to load weather";
-
-                desc.textContent = "";
+                city.textContent = "Weather unavailable";
 
             }
 
         },
 
-        () => {
+        function(){
 
-            city.textContent =
-                "Location permission denied";
-
-            desc.textContent =
-                "Please allow location access.";
+            city.textContent = "Location permission denied";
+            desc.textContent = "Allow Location and refresh.";
 
         },
 
         {
-            enableHighAccuracy: true,
-            timeout: 10000,
-            maximumAge: 0
+            enableHighAccuracy:true,
+            timeout:10000,
+            maximumAge:60000
         }
 
     );
 
 }
 
-// ==========================================
-// 🔍 SEARCH WEATHER
-// ==========================================
+function getWeatherDescription(code){
 
-async function searchWeatherByCity() {
+    if(code===0) return "☀️ Clear Sky";
 
-    const cityInput =
-        document.getElementById("citySearch").value.trim();
+    if(code<=3) return "⛅ Partly Cloudy";
 
-    if (cityInput === "") {
+    if(code<=48) return "🌫 Fog";
 
-        loadWeather();
-        return;
+    if(code<=67) return "🌧 Rain";
 
-    }
+    if(code<=77) return "❄️ Snow";
 
-    const temp = document.getElementById("weatherTemp");
-    const city = document.getElementById("weatherCity");
-    const desc = document.getElementById("weatherDesc");
-    const humidity = document.getElementById("humidity");
-    const wind = document.getElementById("wind");
+    if(code<=82) return "🌦 Showers";
 
-    city.textContent = "Searching...";
+    if(code<=99) return "⛈ Thunderstorm";
 
-    try {
-
-        const geoResponse = await fetch(
-            `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityInput)}&count=1`
-        );
-
-        const geoData = await geoResponse.json();
-
-        if (!geoData.results) {
-
-            city.textContent = "City not found";
-            return;
-
-        }
-
-        const place = geoData.results[0];
-
-        const weatherResponse = await fetch(
-            `https://api.open-meteo.com/v1/forecast?latitude=${place.latitude}&longitude=${place.longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m`
-        );
-
-        const weather = await weatherResponse.json();
-
-        temp.textContent =
-            Math.round(weather.current.temperature_2m) + "°C";
-
-        city.textContent =
-            "📍 " + place.name + ", " + place.country;
-
-        desc.textContent =
-            "Live Weather";
-
-        humidity.textContent =
-            weather.current.relative_humidity_2m + "%";
-
-        wind.textContent =
-            weather.current.wind_speed_10m + " km/h";
-
-    }
-
-    catch (error) {
-
-        console.log(error);
-
-        city.textContent = "Unable to search";
-
-    }
-
+    return "Weather";
 }
