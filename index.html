@@ -337,6 +337,49 @@
     <ul id="taskList"></ul>
 
 </div>
+
+    <!-- ==========================================
+     WEATHER CENTER
+========================================== -->
+
+<div class="widget" id="weather">
+
+    <h2>☀️ Weather Center</h2>
+
+    <div id="weatherCard">
+
+        <h1 id="weatherTemp">--°C</h1>
+
+        <h3 id="weatherCity">
+            Detecting location...
+        </h3>
+
+        <p id="weatherDesc">
+            Waiting for weather...
+        </p>
+
+        <div class="weather-details">
+
+            <div>
+                💧 <span id="humidity">--%</span>
+            </div>
+
+            <div>
+                🌬 <span id="wind">-- km/h</span>
+            </div>
+
+        </div>
+
+        <button onclick="loadWeather()">
+
+            Refresh Weather
+
+        </button>
+
+    </div>
+
+</div>
+    
 <!-- ==========================================
      END OF DASHBOARD
 ========================================== -->
