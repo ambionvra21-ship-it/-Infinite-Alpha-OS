@@ -1137,29 +1137,30 @@ window.addEventListener(
 // 📈 FINANCE ALPHA ENGINE v1
 // ==========================================
 
-let transactions = JSON.parse(
-    localStorage.getItem("alphaFinance")
-) || [];
+let financeTransactions =
+JSON.parse(localStorage.getItem("alphaFinance")) || [];
 
 
-// Add Transaction
+// ==========================================
+// ADD TRANSACTION
+// ==========================================
 
-function addTransaction(){
+function addFinanceTransaction(){
 
-    const name =
-        document.getElementById("transactionName").value.trim();
+    const description =
+    document.getElementById("financeDescription").value.trim();
+
 
     const amount =
-        Number(document.getElementById("transactionAmount").value);
+    parseFloat(document.getElementById("financeAmount").value);
 
-    const type =
-        document.getElementById("transactionType").value;
 
     const category =
-        document.getElementById("transactionCategory").value;
+    document.getElementById("financeCategory").value;
 
 
-    if(!name || !amount){
+
+    if(description === "" || isNaN(amount)){
 
         alert("Please enter description and amount.");
 
@@ -1168,63 +1169,76 @@ function addTransaction(){
     }
 
 
-    transactions.push({
+
+    const transaction = {
 
         id: Date.now(),
 
-        name:name,
+        description: description,
 
-        amount:amount,
+        amount: amount,
 
-        type:type,
+        category: category,
 
-        category:category,
+        date: new Date().toLocaleString()
 
-        date:new Date().toLocaleDateString()
+    };
 
-    });
+
+
+    financeTransactions.push(transaction);
+
 
 
     saveFinance();
 
 
-    document.getElementById("transactionName").value="";
-    document.getElementById("transactionAmount").value="";
+
+    document.getElementById("financeDescription").value="";
+
+    document.getElementById("financeAmount").value="";
 
 
 }
 
 
 
-// Save Finance
+// ==========================================
+// SAVE FINANCE DATA
+// ==========================================
 
 function saveFinance(){
 
     localStorage.setItem(
         "alphaFinance",
-        JSON.stringify(transactions)
+        JSON.stringify(financeTransactions)
     );
 
 
-    updateFinance();
+    updateFinanceDashboard();
+
 
 }
 
 
 
-// Update Dashboard
+// ==========================================
+// UPDATE DASHBOARD
+// ==========================================
 
-function updateFinance(){
+function updateFinanceDashboard(){
+
 
     let income = 0;
 
-    let expense = 0;
+    let expenses = 0;
 
 
-    transactions.forEach(item=>{
+
+    financeTransactions.forEach(item=>{
 
 
-        if(item.type==="income"){
+        if(item.category === "Income"){
 
             income += item.amount;
 
@@ -1232,7 +1246,7 @@ function updateFinance(){
 
         else{
 
-            expense += item.amount;
+            expenses += item.amount;
 
         }
 
@@ -1241,63 +1255,78 @@ function updateFinance(){
 
 
 
+    const balance =
+    income - expenses;
+
+
+
     document.getElementById("totalIncome").textContent =
-        "$" + income.toFixed(2);
-
-
-    document.getElementById("totalExpense").textContent =
-        "$" + expense.toFixed(2);
-
-
-    document.getElementById("balance").textContent =
-        "$" + (income-expense).toFixed(2);
+    "$" + income.toFixed(2);
 
 
 
-    renderTransactions();
+    document.getElementById("totalExpenses").textContent =
+    "$" + expenses.toFixed(2);
+
+
+
+    document.getElementById("totalBalance").textContent =
+    "$" + balance.toFixed(2);
+
+
+
+    renderFinanceHistory();
 
 
 }
 
 
 
-// Transaction History
+// ==========================================
+// TRANSACTION HISTORY
+// ==========================================
 
-function renderTransactions(){
+function renderFinanceHistory(){
 
 
     const list =
-        document.getElementById("transactionList");
+    document.getElementById("financeList");
 
 
     if(!list) return;
 
 
+
     list.innerHTML="";
 
 
-    transactions.forEach(item=>{
+
+    financeTransactions
+    .slice()
+    .reverse()
+    .forEach(item=>{
 
 
-        const li=document.createElement("li");
+        list.innerHTML += `
 
+        <li>
 
-        li.innerHTML=`
+        <strong>${item.description}</strong>
+        <br>
 
-        ${item.name}
-        -
-        $${item.amount}
-        -
         ${item.category}
+        -
+        $${item.amount.toFixed(2)}
 
-        <button onclick="deleteTransaction(${item.id})">
-        🗑
-        </button>
+        <br>
+
+        <small>
+        ${item.date}
+        </small>
+
+        </li>
 
         `;
-
-
-        list.appendChild(li);
 
 
     });
@@ -1305,24 +1334,12 @@ function renderTransactions(){
 
 }
 
+// ==========================================
+// START FINANCE ALPHA
+// ==========================================
+
+updateFinanceDashboard();
 
 
-// Delete
+console.log("📈 Finance Alpha Loaded");
 
-function deleteTransaction(id){
-
-
-    transactions =
-    transactions.filter(item=>item.id !== id);
-
-
-    saveFinance();
-
-
-}
-
-
-
-// Start Finance
-
-updateFinance();
