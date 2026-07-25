@@ -701,3 +701,272 @@ body{
     background:#475569;
 
 }
+
+/* ==========================================================
+   INFINITY ALPHA v0.1
+   STYLE.CSS - PART 3
+   Responsive + Animations
+========================================================== */
+
+
+/* ===========================
+   FADE ANIMATION
+=========================== */
+
+@keyframes fadeUp{
+
+    from{
+
+        opacity:0;
+
+        transform:translateY(25px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:translateY(0);
+
+    }
+
+}
+
+.hero-card{
+
+    animation:fadeUp .7s ease;
+
+}
+
+.widget{
+
+    animation:fadeUp .8s ease;
+
+}
+
+
+/* ===========================
+   BUTTON EFFECTS
+=========================== */
+
+button{
+
+    transition:
+        transform .25s,
+        box-shadow .25s;
+
+}
+
+button:hover{
+
+    box-shadow:0 12px 25px rgba(37,99,235,.30);
+
+}
+
+button:active{
+
+    transform:scale(.96);
+
+}
+
+
+/* ===========================
+   INPUT FOCUS
+=========================== */
+
+input:focus,
+select:focus{
+
+    box-shadow:0 0 0 3px rgba(59,130,246,.35);
+
+}
+
+
+/* ===========================
+   TABLET
+=========================== */
+
+@media (max-width:1100px){
+
+    .sidebar{
+
+        width:220px;
+
+    }
+
+    .hero-card{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+}
+
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media (max-width:900px){
+
+    .app{
+
+        flex-direction:column;
+
+    }
+
+    .sidebar{
+
+        width:100%;
+
+        height:auto;
+
+        position:relative;
+
+        border-right:none;
+
+        border-bottom:1px solid rgba(255,255,255,.08);
+
+    }
+
+    .sidebar-nav ul{
+
+        display:flex;
+
+        flex-wrap:wrap;
+
+        gap:8px;
+
+    }
+
+    .sidebar-nav li{
+
+        margin:0;
+
+    }
+
+    .main-content{
+
+        padding:20px;
+
+    }
+
+    .topbar{
+
+        flex-direction:column;
+
+        align-items:flex-start;
+
+    }
+
+    .topbar-right{
+
+        width:100%;
+
+        flex-wrap:wrap;
+
+    }
+
+    #globalSearch{
+
+        width:100%;
+
+    }
+
+    .dashboard-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+}
+
+
+/* ===========================
+   SMALL PHONES
+=========================== */
+
+@media (max-width:600px){
+
+    .hero-card{
+
+        padding:22px;
+
+    }
+
+    .hero-card h2{
+
+        font-size:28px;
+
+    }
+
+    .widget{
+
+        padding:20px;
+
+    }
+
+    #pomodoroTime{
+
+        font-size:44px;
+
+    }
+
+    .calculator-buttons button{
+
+        height:54px;
+
+        font-size:18px;
+
+    }
+
+}
+
+
+/* ===========================
+   LARGE MONITORS
+=========================== */
+
+@media (min-width:1600px){
+
+    .dashboard-grid{
+
+        grid-template-columns:
+        repeat(3,1fr);
+
+    }
+
+}
+
+
+/* ===========================
+   FUTURE MODULE PLACEHOLDERS
+=========================== */
+
+/*
+Weather
+
+Notes
+
+Finance
+
+Calendar
+
+AI
+
+Developer Hub
+
+Focus Analytics
+
+Habit Tracker
+
+Plugin Marketplace
+*/
+
+
+/* ==========================================================
+   END OF STYLE.CSS
+========================================================== */
