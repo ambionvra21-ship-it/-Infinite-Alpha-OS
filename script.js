@@ -544,6 +544,7 @@ async function searchWeatherByCity() {
         );
 
         const geoData = await geoResponse.json();
+        console.log(geoData);
 
         if (!geoData.results || geoData.results.length === 0) {
 
