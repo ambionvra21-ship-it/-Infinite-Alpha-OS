@@ -411,3 +411,293 @@ body{
     cursor:pointer;
 
 }
+
+/* ==========================================================
+   INFINITY ALPHA v0.1
+   STYLE.CSS - PART 2
+   Dashboard Widgets
+========================================================== */
+
+
+/* ===========================
+   DASHBOARD GRID
+=========================== */
+
+.dashboard-grid{
+
+    display:grid;
+
+    grid-template-columns:repeat(auto-fit,minmax(380px,1fr));
+
+    gap:25px;
+
+    margin-top:30px;
+
+}
+
+
+/* ===========================
+   WIDGET CARD
+=========================== */
+
+.widget{
+
+    background:rgba(255,255,255,.06);
+
+    backdrop-filter:blur(18px);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:22px;
+
+    padding:28px;
+
+    transition:.30s;
+
+    box-shadow:0 12px 35px rgba(0,0,0,.25);
+
+}
+
+.widget:hover{
+
+    transform:translateY(-8px);
+
+    border-color:#3b82f6;
+
+    box-shadow:0 20px 45px rgba(37,99,235,.20);
+
+}
+
+.widget h2{
+
+    margin-bottom:22px;
+
+    font-size:24px;
+
+    font-weight:700;
+
+}
+
+
+/* ===========================
+   GLOBAL INPUTS
+=========================== */
+
+.widget input,
+
+.widget select{
+
+    width:100%;
+
+    padding:14px;
+
+    margin-bottom:15px;
+
+    border:none;
+
+    outline:none;
+
+    border-radius:14px;
+
+    background:#1e293b;
+
+    color:white;
+
+    font-size:16px;
+
+}
+
+
+/* ===========================
+   GLOBAL BUTTONS
+=========================== */
+
+.widget button{
+
+    background:#2563eb;
+
+    color:white;
+
+    border:none;
+
+    border-radius:12px;
+
+    padding:12px 18px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    font-weight:600;
+
+}
+
+.widget button:hover{
+
+    background:#1d4ed8;
+
+    transform:translateY(-2px);
+
+}
+
+
+/* ===========================
+   POMODORO
+=========================== */
+
+#pomodoro{
+
+    text-align:center;
+
+}
+
+#pomodoroTime{
+
+    font-size:58px;
+
+    font-weight:800;
+
+    margin:30px 0;
+
+    color:#60a5fa;
+
+    letter-spacing:2px;
+
+}
+
+#pomodoro button{
+
+    margin:6px;
+
+}
+
+
+/* ===========================
+   CALCULATOR
+=========================== */
+
+#calculator{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+#calcDisplay{
+
+    height:65px;
+
+    background:#0f172a;
+
+    color:white;
+
+    border:none;
+
+    border-radius:16px;
+
+    padding:18px;
+
+    font-size:28px;
+
+    text-align:right;
+
+    margin-bottom:18px;
+
+}
+
+.calculator-buttons{
+
+    display:grid;
+
+    grid-template-columns:repeat(4,1fr);
+
+    gap:12px;
+
+}
+
+.calculator-buttons button{
+
+    height:60px;
+
+    font-size:20px;
+
+    border-radius:14px;
+
+}
+
+
+/* ===========================
+   CURRENCY
+=========================== */
+
+#currency{
+
+    display:flex;
+
+    flex-direction:column;
+
+}
+
+#currency span{
+
+    text-align:center;
+
+    margin-bottom:12px;
+
+    font-weight:bold;
+
+    color:#94a3b8;
+
+}
+
+#currencyResult{
+
+    margin-top:20px;
+
+    padding:18px;
+
+    border-radius:14px;
+
+    background:#111827;
+
+    color:#38bdf8;
+
+    text-align:center;
+
+    font-size:22px;
+
+    font-weight:700;
+
+}
+
+
+/* ===========================
+   SCROLLBAR
+=========================== */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#0f172a;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#334155;
+
+    border-radius:20px;
+
+}
+
+::-webkit-scrollbar-thumb:hover{
+
+    background:#475569;
+
+}
