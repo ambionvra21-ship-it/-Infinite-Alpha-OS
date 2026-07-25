@@ -439,7 +439,7 @@ async function loadWeather() {
                     Math.round(data.current.temperature_2m) + "°C";
 
                 city.textContent =
-                    `Lat ${lat.toFixed(2)}, Lon ${lon.toFixed(2)}`;
+                "Current Location Weather";
 
                 desc.textContent = "Live Weather";
 
