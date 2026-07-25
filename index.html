@@ -1,1076 +1,290 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vitals Tracker — Health Tools, Weather, and Daily Utilities</title>
-  <meta name="description" content="Free health and daily utility tools: BMI calculator, hydration tracker, weather advisor, alarm clock, calendar, and calculator - all in one place.">
-  <meta name="google-site-verification" content="8GoCC4AS-u6haUnrwxTb4hCrK6MBFOeY4sHQdTOvAvA" />
-  <link rel="preconnect" href="https://googleapis.com">
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-NGQGPEH0K4"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'G-NGQGPEH0K4');
-</script>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<!--
-  GOOGLE ADSENSE — replace ca-pub-9659641195994032 below with your real
-  Publisher ID once your AdSense account is approved. This one script
-  tag enables ads site-wide; the <ins> blocks further down mark WHERE
-  ads can appear once you've created ad units in your AdSense dashboard.
--->
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-9659641195994032" crossorigin="anonymous"></script>
-<style>
-:root{
-  --navy:#141c2b; --navy2:#1c2740;
-  --orange:#f5a623; --blue:#3b82f6; --green:#22c55e; --teal:#14b8a6;
-  --bg:#f4f5f7; --card:#ffffff; --text:#1c2333; --muted:#6b7280; --line:#e5e7eb;
-  --font-h:"Poppins",sans-serif; --font-b:"Inter",sans-serif;
-}
-*{box-sizing:border-box;}
-body{margin:0; background:var(--bg); color:var(--text); font-family:var(--font-b); line-height:1.5;}
-.wrap{max-width:640px; margin:0 auto; padding:0 16px 60px;}
-header.top{background:var(--navy); color:#fff; padding:22px 0; text-align:center;}
-header.top h1{font-family:var(--font-h); font-size:1.4rem; margin:0; font-weight:600;}
-header.top p{margin:6px 0 0; color:#9aa4b8; font-size:0.85rem;}
+    <meta charset="UTF-8">
 
-.card{background:var(--card); border-radius:12px; padding:20px; margin-top:18px; box-shadow:0 1px 3px rgba(0,0,0,0.06); border:1px solid var(--line);}
-.card h2{font-family:var(--font-h); font-size:1.05rem; margin:0 0 14px; display:flex; align-items:center; gap:8px;}
-.card.dark{background:var(--navy2); color:#fff; border:none;}
-.card.dark .muted{color:#9aa4b8;}
-.card.install{background:linear-gradient(135deg,#4f46e5,#3b82f6); color:#fff; border:none;}
-.card.install h2{color:#fff;}
-.card.install p{color:#e0e7ff; font-size:0.85rem; margin:4px 0;}
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0">
 
-.muted{color:var(--muted); font-size:0.85rem;}
-.row{display:flex; gap:10px; flex-wrap:wrap;}
-input[type=number], input[type=text], input[type=time]{
-  padding:10px 12px; border:1px solid var(--line); border-radius:8px; font-size:0.95rem; width:100%; font-family:var(--font-b);
-}
-label{font-size:0.8rem; color:var(--muted); display:block; margin-bottom:4px;}
-.field{flex:1; min-width:120px;}
-button{
-  background:var(--blue); color:#fff; border:none; border-radius:8px; padding:10px 16px;
-  font-size:0.9rem; font-weight:600; cursor:pointer; font-family:var(--font-b);
-}
-button:hover{opacity:0.9;}
-button.secondary{background:var(--line); color:var(--text);}
-button.full{width:100%; padding:12px;}
+    <title>Infinity Alpha v0.1</title>
 
-.result{margin-top:14px; padding:14px; border-radius:8px; background:#f0f4ff; font-size:0.95rem;}
-.result.good{background:#ecfdf5; color:#065f46;}
-.result.warn{background:#fffbeb; color:#92400e;}
-.result.bad{background:#fef2f2; color:#991b1b;}
+    <meta
+        name="description"
+        content="Infinity Alpha is a modern productivity workspace featuring Pomodoro, Notes, Calculator, Weather, Currency Converter, Finance Dashboard, AI Assistant and more.">
 
-/* Calculator */
-.calc-display{background:var(--navy); color:#fff; font-family:var(--font-h); font-size:1.6rem; text-align:right; padding:16px; border-radius:8px; margin-bottom:10px; min-height:1.6em; overflow-x:auto;}
-.calc-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:8px;}
-.calc-grid button{padding:14px 0; font-size:1.05rem; background:#eef0f3; color:var(--text);}
-.calc-grid button.op{background:var(--orange); color:#fff;}
-.calc-grid button.eq{background:var(--green); color:#fff;}
-.calc-grid button.clear{background:#ef4444; color:#fff;}
+    <meta
+        name="theme-color"
+        content="#0b1120">
 
-/* Clock/alarm */
-.clock-display{font-family:var(--font-h); font-size:2.4rem; text-align:center; padding:10px 0; color:var(--navy);}
-.alarm-list{margin-top:10px;}
-.alarm-item{display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--line);}
-.alarm-item:last-child{border-bottom:none;}
-.alarm-item button{background:#ef4444; padding:4px 10px; font-size:0.75rem;}
+    <meta
+        name="color-scheme"
+        content="dark">
 
-/* Calendar */
-.cal-header{display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;}
-.cal-grid{display:grid; grid-template-columns:repeat(7,1fr); gap:4px; text-align:center; font-size:0.8rem;}
-.cal-grid .dow{color:var(--muted); font-weight:600; padding:4px 0;}
-.cal-grid .day{padding:8px 0; border-radius:6px; cursor:default;}
-.cal-grid .day.today{background:var(--blue); color:#fff; font-weight:700;}
-.cal-grid .day.empty{visibility:hidden;}
+    <link
+        rel="preconnect"
+        href="https://fonts.googleapis.com">
 
-/* Hydration */
-.hydro-buttons button{flex:1;}
-.hydro-total{font-family:var(--font-h); font-size:1.8rem; text-align:center; margin:14px 0 6px; color:var(--blue);}
-.progress-bar{height:10px; background:var(--line); border-radius:6px; overflow:hidden;}
-.progress-fill{height:100%; background:var(--blue); transition:width 0.3s;}
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
 
-/* Share */
-.share-grid{display:flex; gap:10px; flex-wrap:wrap;}
-.share-grid a, .share-grid button{
-  flex:1; min-width:100px; text-align:center; text-decoration:none; padding:10px 8px; border-radius:8px;
-  font-size:0.82rem; font-weight:600; color:#fff;
-}
-.sh-fb{background:#1877f2;} .sh-tw{background:#000;} .sh-wa{background:#25d366;}
-.sh-mail{background:#6b7280;} .sh-copy{background:var(--teal);}
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
 
-.entry-list{margin-top:14px; max-height:220px; overflow-y:auto;}
-.entry-row{display:flex; justify-content:space-between; align-items:center; padding:8px 0; border-bottom:1px solid var(--line); font-size:0.85rem;}
-.entry-row:last-child{border-bottom:none;}
-.entry-row .del{background:#ef4444; color:#fff; border:none; border-radius:6px; padding:3px 9px; font-size:0.7rem; cursor:pointer;}
-select{padding:10px 12px; border:1px solid var(--line); border-radius:8px; font-size:0.9rem; width:100%; font-family:var(--font-b); background:#fff;}
-.exp-total{font-family:var(--font-h); font-size:1.6rem; text-align:center; margin:10px 0; color:var(--teal);}
-canvas{max-width:100%;}
-.ad-slot{
-  background:#fafafa; border:1px dashed #d1d5db; border-radius:10px;
-  padding:14px; margin-top:18px; text-align:center; font-size:0.7rem;
-  color:#9ca3af; text-transform:uppercase; letter-spacing:0.05em; min-height:60px;
-  display:flex; align-items:center; justify-content:center;
-}
+    <link
+        rel="stylesheet"
+        href="style.css">
 
-footer{text-align:center; color:var(--muted); font-size:0.8rem; margin-top:30px;}
-</style>
 </head>
+
 <body>
 
-<header class="top">
-  <h1>&#129490; Vitals Tracker</h1>
-  <p>Health tools & daily utilities, all in one page</p>
-</header>
+<div class="app">
 
-<div class="wrap">
+    <!-- ========================= -->
+    <!-- Sidebar -->
+    <!-- ========================= -->
 
-  <!-- Weather -->
-  <div class="card dark">
-    <h2>&#9728;&#65039; Outdoor Activity Weather Advisor</h2>
-    <div id="weatherBox">Loading current weather…</div>
-  </div>
+    <aside class="sidebar">
 
-  <!-- AD UNIT 1 — top of page, high visibility.
-       Replace data-ad-slot value with a real slot ID from your AdSense
-       dashboard once you've created an ad unit there. -->
-  <ins class="adsbygoogle ad-slot"
-       style="display:block"
-       data-ad-client="ca-pub-9659641195994032"
-       data-ad-slot="0000000000"
-       data-ad-format="auto"
-       data-full-width-responsive="true">Ad space</ins>
-  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        <div class="brand">
 
-<!-- Healthy Vitals Guide -->
-  <div class="card" style="background:#fffbeb; border-color:#fde68a;">
-    <h2>&#128203; Healthy Vitals Target Reference Guide</h2>
-    <p class="muted" style="margin-top:-6px;">General reference ranges — not a substitute for medical advice.</p>
-    <ul style="font-size:0.9rem; padding-left:18px;">
-      <li><strong>BMI Index:</strong> Normal 18.5 – 24.9</li>
-      <li><strong>Blood Pressure:</strong> Below 120/80 mmHg</li>
-      <li><strong>Total Cholesterol:</strong> Below 200 mg/dL</li>
-      <li><strong>Fasting Sugar:</strong> 70 – 99 mg/dL</li>
-      <li><strong>Pulse Rate:</strong> 60 – 100 beats/min</li>
-      <li><strong>LDL Cholesterol:</strong> Below 100 mg/dL</li>
-    </ul>
-  </div>
+            <div class="brand-logo">
+                ∞
+            </div>
 
-<!-- Streak / logging challenge -->
-  <div class="card">
-    <h2>&#128293; Multi-Tier Logging Challenge</h2>
-    <div class="row" style="margin-bottom:10px;">
-      <button class="secondary" style="flex:1;">30 Days</button>
-      <button class="secondary" style="flex:1;">60 Days</button>
-      <button class="secondary" style="flex:1;">90 Days</button>
-    </div>
-    <div class="row" style="justify-content:space-between;">
-      <span>Current Streak: <strong id="streakCount">0</strong> days &#128293;</span>
-      <span class="muted">Target: 30 Days</span>
-    </div>
-    <button class="full" style="margin-top:12px;" onclick="logToday()">Log Today</button>
-  </div>
+            <div class="brand-info">
 
-<!-- BMI Calculator -->
-  <div class="card">
-    <h2>&#9878;&#65039; BMI Calculator</h2>
-    <div class="row">
-      <div class="field">
-        <label for="bmiHeight">Height (cm)</label>
-        <input type="number" id="bmiHeight" placeholder="e.g. 165">
-      </div>
-      <div class="field">
-        <label for="bmiWeight">Weight (kg)</label>
-        <input type="number" id="bmiWeight" placeholder="e.g. 60">
-      </div>
-    </div>
-    <button class="full" style="margin-top:12px;" onclick="calcBMI()">Calculate BMI</button>
-    <div id="bmiResult"></div>
-  </div>
-<!-- ========================================================= -->
-<!-- NEW HEALTH UTILITIES SECTION (PLACED IN THE MIDDLE) -->
-<!-- ========================================================= -->
+                <h1>Infinity</h1>
 
-<!-- 1. TDEE & Calorie Deficit Calculator -->
-<div class="card" style="margin-top: 18px;">
-    <h2 style="color: var(--blue); margin-top: 0;">🔥 TDEE & Calorie Deficit Calculator</h2>
-    <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 15px;">Find out your baseline calorie burn and target for weight loss.</p>
-    
-    <div style="margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
-        <label style="font-size: 0.85rem; font-weight: 600;">Weight (kg): </label>
-        <input type="number" id="tdee-weight" placeholder="e.g. 70" style="padding: 8px; border: 1px solid var(--line); border-radius: 8px; width: 100px;">
-    </div>
-    <div style="margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
-        <label style="font-size: 0.85rem; font-weight: 600;">Height (cm): </label>
-        <input type="number" id="tdee-height" placeholder="e.g. 175" style="padding: 8px; border: 1px solid var(--line); border-radius: 8px; width: 100px;">
-    </div>
-    <div style="margin-bottom: 12px; display: flex; align-items: center; justify-content: space-between;">
-        <label style="font-size: 0.85rem; font-weight: 600;">Age: </label>
-        <input type="number" id="tdee-age" placeholder="e.g. 25" style="padding: 8px; border: 1px solid var(--line); border-radius: 8px; width: 100px;">
-    </div>
-    <div style="margin-bottom: 18px; display: flex; flex-direction: column; gap: 6px;">
-        <label style="font-size: 0.85rem; font-weight: 600;">Activity Level: </label>
-        <select id="tdee-activity" style="padding: 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--card); color: var(--text); width: 100%;">
-            <option value="1.2">Sedentary (Office job)</option>
-            <option value="1.375">Lightly Active (Exercise 1-3 days/wk)</option>
-            <option value="1.55">Moderately Active (Exercise 3-5 days/wk)</option>
-            <option value="1.725">Very Active (Heavy exercise 6-7 days/wk)</option>
-        </select>
-    </div>
-    
-    <button onclick="calculateTDEE()" style="background: var(--blue); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%;">Calculate Energy Target</button>
-    <div id="tdee-result" style="margin-top: 15px; font-weight: bold; font-size: 0.9rem;"></div>
-</div>
+                <span>Alpha v0.1</span>
 
-<!-- 2. Food Intake Tracker (Calories & Protein) -->
-<div class="card" style="margin-top: 18px;">
-    <h2 style="color: var(--blue); margin-top: 0;">🍗 Food Intake Tracker</h2>
-    <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 15px;">Log your meals to keep track of your daily macros.</p>
-    
-    <div style="display: flex; gap: 8px; margin-bottom: 12px;">
-        <input type="text" id="food-name" placeholder="Meal name (e.g. Chicken)" style="flex: 2; padding: 8px; border: 1px solid var(--line); border-radius: 8px; width: 40%;">
-        <input type="number" id="food-cal" placeholder="Calories" style="flex: 1; padding: 8px; border: 1px solid var(--line); border-radius: 8px; width: 25%;">
-        <input type="number" id="food-prot" placeholder="Protein (g)" style="flex: 1; padding: 8px; border: 1px solid var(--line); border-radius: 8px; width: 25%;">
-    </div>
-    <button onclick="addFoodItem()" style="background: var(--blue); color: white; border: none; padding: 10px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; margin-bottom: 15px;">Log Meal</button>
-    
-    <div style="background: var(--bg); padding: 12px; border-radius: 8px; margin-bottom: 10px; display: flex; justify-content: space-around; font-weight: bold; font-size: 0.9rem;">
-        <div>Total Calories: <span id="total-calories" style="color: var(--blue);">0</span> kcal</div>
-        <div>Total Protein: <span id="total-protein" style="color: var(--green);">0</span> g</div>
-    </div>
-    <ul id="food-list" style="padding-left: 15px; font-size: 0.85rem; color: var(--text); max-height: 150px; overflow-y: auto;"></ul>
-</div>
+            </div>
 
-<!-- 3. Daily Health Tips Panel -->
-<div class="card" style="margin-top: 18px; background: #e8f0fe; border: 1px solid #d2e3fc;">
-    <h2 style="color: #1a73e8; margin-top: 0; display: flex; align-items: center; gap: 6px;">💡 Daily Health Tip</h2>
-    <p id="health-tip-text" style="font-size: 0.95rem; font-weight: 500; color: #1e293b; margin: 0; min-height: 40px;">Loading your tip for today...</p>
-    <button onclick="getRandomTip()" style="background: transparent; color: #1a73e8; border: 1px solid #1a73e8; padding: 6px 12px; border-radius: 6px; font-size: 0.8rem; font-weight: bold; cursor: pointer; margin-top: 12px;">Next Tip</button>
-</div>
+        </div>
 
-<!-- Inline Scripts needed to make the features calculate instantly -->
-<script>
-function calculateTDEE() {
-    const w = parseFloat(document.getElementById('tdee-weight').value);
-    const h = parseFloat(document.getElementById('tdee-height').value);
-    const a = parseFloat(document.getElementById('tdee-age').value);
-    const activity = parseFloat(document.getElementById('tdee-activity').value);
-    if(!w || !h || !a) { document.getElementById('tdee-result').innerHTML = "<span style='color: var(--orange);'>Please fill in all fields.</span>"; return; }
-    const bmr = (10 * w) + (6.25 * h) - (5 * a) + 5; 
-    const tdee = Math.round(bmr * activity);
-    const deficit = tdee - 500;
-    document.getElementById('tdee-result').innerHTML = `
-        <p style='margin: 4px 0;'>Maintenance Calories (TDEE): <span style='color: var(--blue);'>${tdee} kcal</span></p>
-        <p style='margin: 4px 0;'>Weight Loss Target (Deficit): <span style='color: var(--orange);'>${deficit} kcal</span></p>
-    `;
-}
+        <nav class="sidebar-nav">
 
-let totalCals = 0;
-let totalProt = 0;
-function addFoodItem() {
-    const name = document.getElementById('food-name').value.trim();
-    const cal = parseInt(document.getElementById('food-cal').value);
-    const prot = parseInt(document.getElementById('food-prot').value);
-    if(!name || isNaN(cal) || isNaN(prot)) return;
-    totalCals += cal;
-    totalProt += prot;
-    document.getElementById('total-calories').innerText = totalCals;
-    document.getElementById('total-protein').innerText = totalProt;
-    const li = document.createElement('li');
-    li.style.marginBottom = "4px";
-    li.innerHTML = `<strong>${name}</strong> - ${cal} kcal, ${prot}g protein`;
-    document.getElementById('food-list').appendChild(li);
-    document.getElementById('food-name').value = '';
-    document.getElementById('food-cal').value = '';
-    document.getElementById('food-prot').value = '';
-}
+            <ul>
 
-const healthTips = [
-    "Drink a glass of water right after waking up to kickstart your hydration and metabolism.",
-    "Prioritize protein in your breakfast to feel full longer and sustain energy drops.",
-    "Try taking a short 10-minute walk after your largest meal to aid digestion and lower blood sugar.",
-    "Consistent sleep schedules are just as vital to fat loss as exercise or diet control.",
-    "Don't drink your calories. Swap out soda and sugary juices for water, tea, or black coffee.",
-    "Stretching for just 5 minutes before bed can help relax your nervous system and sleep deeply."
-];
-function getRandomTip() {
-    const index = Math.floor(Math.random() * healthTips.length);
-    document.getElementById('health-tip-text').innerText = healthTips[index];
-}
-setTimeout(getRandomTip, 250);
-</script>
+                <li>
+                    <a
+                        href="#dashboard"
+                        class="active">
 
-<!-- Ultimate Daily Check-In -->
-  <div class="card" style="background:#f5f3ff; border-color:#ddd6fe;">
-    <h2>&#127775; Ultimate Daily Check-In</h2>
-    <p class="muted" style="margin-top:-6px;">Log this once a day — weight, sleep, steps, mood — and watch your trend build over time.</p>
-    <div class="row">
-      <div class="field">
-        <label for="ciWeight">Weight (kg)</label>
-        <input type="number" id="ciWeight" placeholder="e.g. 60">
-      </div>
-      <div class="field">
-        <label for="ciSleep">Sleep (hours)</label>
-        <input type="number" id="ciSleep" placeholder="e.g. 7">
-      </div>
-    </div>
-    <div class="row" style="margin-top:10px;">
-      <div class="field">
-        <label for="ciSteps">Steps</label>
-        <input type="number" id="ciSteps" placeholder="e.g. 5000">
-      </div>
-      <div class="field">
-        <label for="ciMood">Mood</label>
-        <select id="ciMood">
-          <option value="😀">😀 Great</option>
-          <option value="🙂">🙂 Good</option>
-          <option value="😐">😐 Okay</option>
-          <option value="😕">😕 Low</option>
-          <option value="😫">😫 Rough</option>
-        </select>
-      </div>
-    </div>
-    <button class="full" style="margin-top:12px;" onclick="logCheckin()">Log Today's Check-In</button>
-    <div style="margin-top:18px;">
-      <canvas id="checkinChart" height="180"></canvas>
-    </div>
-    <div class="entry-list" id="checkinList"></div>
-  </div>
+                        <span>🏠</span>
 
-<!-- Vital Signs Log -->
-  <div class="card">
-    <h2>&#10084;&#65039; Vital Signs Log</h2>
-    <p class="muted" style="margin-top:-6px;">Log your numbers over time and watch the trend. Not a diagnosis — just your own record.</p>
-    <div class="row">
-      <div class="field">
-        <label for="vHeart">Heart Rate (bpm)</label>
-        <input type="number" id="vHeart" placeholder="e.g. 72">
-      </div>
-      <div class="field">
-        <label for="vSugar">Blood Sugar (mg/dL)</label>
-        <input type="number" id="vSugar" placeholder="e.g. 90">
-      </div>
-    </div>
-    <div class="row" style="margin-top:10px;">
-      <div class="field">
-        <label for="vBPsys">Blood Pressure — Systolic</label>
-        <input type="number" id="vBPsys" placeholder="e.g. 118">
-      </div>
-      <div class="field">
-        <label for="vBPdia">Blood Pressure — Diastolic</label>
-        <input type="number" id="vBPdia" placeholder="e.g. 78">
-      </div>
-    </div>
-    <div class="row" style="margin-top:10px;">
-      <div class="field">
-        <label for="vChol">Total Cholesterol (mg/dL)</label>
-        <input type="number" id="vChol" placeholder="e.g. 180">
-      </div>
-    </div>
-    <button class="full" style="margin-top:12px;" onclick="logVitals()">Log Today's Vitals</button>
+                        Dashboard
 
-    <div style="margin-top:18px;">
-      <canvas id="vitalsChart" height="180"></canvas>
-    </div>
-    <div class="entry-list" id="vitalsList"></div>
-  </div>
+                    </a>
+                </li>
 
-<!-- Hydration Tracker -->
-  <div class="card">
-    <h2>&#128167; Daily Water Hydration Tracker</h2>
-    <div class="hydro-total"><span id="hydroTotal">0</span> ml <span class="muted" style="font-size:1rem;">/ 2000 ml</span></div>
-    <div class="progress-bar"><div class="progress-fill" id="hydroBar" style="width:0%;"></div></div>
-    <div class="row hydro-buttons" style="margin-top:14px;">
-      <button onclick="addWater(250)">+250 ml</button>
-      <button onclick="addWater(500)">+500 ml</button>
-      <button onclick="addWater(1000)">+1.0 L</button>
-    </div>
-    <button class="secondary full" style="margin-top:8px;" onclick="resetWater()">Reset for the day</button>
-  </div>
+                <li>
+                    <a href="#pomodoro">
 
-  <!-- AD UNIT 2 — mid-page, between the tracking tools -->
-  <ins class="adsbygoogle ad-slot"
-       style="display:block"
-       data-ad-client="ca-pub-9659641195994032"
-       data-ad-slot="0000000001"
-       data-ad-format="auto"
-       data-full-width-responsive="true">Ad space</ins>
-  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
-<!-- Google Form Feature Request Embed Card -->
-<div class="card" style="margin-top: 16px;">
-  <h2>💡 Request a Tool / Submit Feedback</h2>
-  <p style="font-size: 0.75rem; color: #6b7280; margin: 0 0 12px 0;">Is our toolkit missing something from your daily routine? Submit your tool ideas directly to us below!</p>
-  
-  <div style="width: 100%; overflow: hidden; border-radius: 4px; border: 1px solid #e5e7eb; background: #f9fafb;">
-    <iframe 
-      src="https://docs.google.com/forms/d/e/1FAIpQLSdwLd9dOL_CNEzUEVO_8HSVv_aIW9Cg3X1_x7RQeCgm1C986Q/viewform?usp=publish-editor"
-      width="100%" 
-      height="400" 
-      frameborder="0" 
-      marginheight="0" 
-      marginwidth="0" 
-      style="display: block; width: 100%; border: none;">Loading form...</iframe>
-  </div>
-</div>
+                        <span>⏱️</span>
 
-<!-- Expense Tracker -->
-  <div class="card">
-    <h2>&#128181; Expense Tracker</h2>
-    <div class="row">
-      <div class="field">
-        <label for="expAmount">Amount</label>
-        <input type="number" id="expAmount" placeholder="e.g. 150">
-      </div>
-      <div class="field">
-        <label for="expCurrency">Currency</label>
-        <select id="expCurrency">
-          <option value="₱">PHP (₱)</option>
-          <option value="$">USD ($)</option>
-          <option value="€">EUR (€)</option>
-          <option value="¥">JPY (¥)</option>
-          <option value="₩">KRW (₩)</option>
-          <option value="A$">AUD (A$)</option>
-          <option value="S$">SGD (S$)</option>
-          <option value="£">GBP (£)</option>
-        </select>
-      </div>
-    </div>
-    <div class="row" style="margin-top:10px;">
-      <div class="field">
-        <label for="expCategory">Category</label>
-        <select id="expCategory">
-          <option>Food</option>
-          <option>Transport</option>
-          <option>Bills</option>
-          <option>Health</option>
-          <option>Shopping</option>
-          <option>Other</option>
-        </select>
-      </div>
-    </div>
-    <div class="field" style="margin-top:10px;">
-      <label for="expNote">Note (optional)</label>
-      <input type="text" id="expNote" placeholder="e.g. lunch">
-    </div>
- <button class="full" style="margin-top:12px;" onclick="addExpense()">Add Expense</button>
-</div>
-<!-- LIVE CURRENCY CONVERTER CARD -->
-<div class="currency-converter">
+                        Pomodoro
 
-    <input
-        type="number"
-        id="convertAmount"
-        value="1"
-        min="0"
-        step="0.01"
-    >
+                    </a>
+                </li>
 
-    <select id="fromCurrency">
-        <option value="USD">USD ($)</option>
-        <option value="PHP">PHP (₱)</option>
-        <option value="EUR">EUR (€)</option>
-        <option value="GBP">GBP (£)</option>
-        <option value="JPY">JPY (¥)</option>
-        <option value="AUD">AUD ($)</option>
-        <option value="CAD">CAD ($)</option>
-        <option value="SGD">SGD ($)</option>
-        <option value="HKD">HKD ($)</option>
-        <option value="CNY">CNY (¥)</option>
-    </select>
+                <li>
+                    <a href="#calculator">
 
-    <select id="toCurrency">
-        <option value="PHP">PHP (₱)</option>
-        <option value="USD">USD ($)</option>
-        <option value="EUR">EUR (€)</option>
-        <option value="GBP">GBP (£)</option>
-        <option value="JPY">JPY (¥)</option>
-        <option value="AUD">AUD ($)</option>
-        <option value="CAD">CAD ($)</option>
-        <option value="SGD">SGD ($)</option>
-        <option value="HKD">HKD ($)</option>
-        <option value="CNY">CNY (¥)</option>
-    </select>
+                        <span>🧮</span>
 
-    <button onclick="convertCurrency()">Convert</button>
-<h2 id="conversionResult">0.00</h2>
-<p id="exchangeRate">Exchange Rate: --</p>
-</div>
-  </div>
+                        Calculator
 
-  <div class="row" style="margin-top: 15px;">
-    <div class="field" style="width: 100%; text-align: center; background-color: #f3f4f6; border: 1px solid #e5e7eb; border-radius: 4px; padding: 12px 0;">
-      <span style="font-size: 0.8rem; color: #4b5563; display: block; font-weight: bold; margin-bottom: 2px;">Converted Result</span>
-      <strong id="conversionResult" style="font-size: 1.4rem; color: #1f2937; font-weight: bold;">0.00</strong>
-    </div>
-  </div>
-</div>
-<!-- Smart Shopping Discount Calculator -->
-<div class="card" style="margin-top: 16px;">
-  <h2>🛒 Smart Shopping Discount Calculator</h2>
-  <p style="font-size: 0.75rem; color: #6b7280; margin: 0 0 12px 0;">Instantly calculate retail discounts and local checkout taxes together.</p>
-  
-  <!-- This inline style forces the inputs to sit side-by-side instead of stretching -->
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-top: 10px;">
-    <div class="field">
-      <label>Price ($)</label>
-      <input type="number" id="shopPrice" placeholder="100" style="width: 100%; box-sizing: border-box;">
-    </div>
-    <div class="field">
-      <label>Discount (%)</label>
-      <input type="number" id="shopDiscount" placeholder="20" style="width: 100%; box-sizing: border-box;">
-    </div>
-    <div class="field">
-      <label>Tax (%)</label>
-      <input type="number" id="shopTax" placeholder="8" style="width: 100%; box-sizing: border-box;">
-    </div>
-  <button class="full" onclick="calculateShoppingDiscount()" style="margin-top: 16px;">Compute Checkout Cost</button>
-  
-  <div class="row" style="margin-top: 15px;">
-    <div class="field" style="width: 100%; text-align: center; background-color: #e8f5e9; border: 1px solid #c8e6c9; border-radius: 4px; padding: 12px 0;">
-      <span style="font-size: 0.8rem; color: #2e7d32; display: block; font-weight: bold; margin-bottom: 2px;">Final Estimated Cost</span>
-      <strong id="shopTotalDisplay" style="font-size: 1.4rem; color: #2e7d32; font-weight: bold;">$0.00</strong>
-    </div>
-  </div>
-</div>
+                    </a>
+                </li>
 
-<!-- REAL-TIME CRYPTO TICKER CHART CARD -->
-<div class="card" style="margin-top: 16px;">
-  <h2>🪙 Crypto Market Ticker Chart</h2>
-  <p style="font-size: 0.75rem; color: #6b7280; margin: 0 0 12px 0;">Track live, streaming market prices for Bitcoin and major digital assets.</p>
-  
-  <!-- TradingView Live Widget Frame Container -->
-  <div style="width: 100%; height: 350px; border: 1px solid #e5e7eb; border-radius: 4px; overflow: hidden; background: #fff;">
-    <iframe src="https://tradingview.com" style="width:100%; height:100%; border:none; margin:0; padding:0;"></iframe>
-  </div>
-</div>
+                <li>
+                    <a href="#currency">
 
-    <div class="exp-total"><span id="expTotal">0</span> <span class="muted" style="font-size:1rem;">total this month (mixed currencies shown separately if used)</span></div>
-    <canvas id="expenseChart" height="180"></canvas>
-    <div class="entry-list" id="expenseList"></div>
-  </div>
-<!-- Pomodoro Focus Timer -->
-<div class="card">
-  <h2>⏱️ Pomodoro Focus Timer</h2>
-  <div class="row" style="margin-top: 10px;">
-    <div class="field" style="width: 100%; text-align: center; background: #f9fafb; border: 1px solid #e5e7eb; border-radius: 4px; padding: 12px 0; margin-bottom: 10px;">
-      <span id="pomoDisplay" style="font-family: monospace; font-weight: bold; font-size: 2.25rem; color: #0056b3; letter-spacing: 0.05em;">25:00</span>
-    </div>
-  </div>
-  <div class="row" style="gap: 10px;">
-    <button id="pomoStartBtn" class="full" onclick="togglePomodoro()" style="flex: 1; margin: 0;">Start Session</button>
-    <button onclick="resetPomodoro()" class="full" style="flex: 0.4; margin: 0; background-color: #6c757d;">Reset</button>
-  </div>
-</div>
+                        <span>💱</span>
 
-<!-- Strong Password Generator -->
-<div class="card">
-  <h2>🔑 Strong Password Generator</h2>
-  <div class="row" style="margin-top: 10px;">
-    <div class="field">
-      <label>Generated Secure Password</label>
-      <input type="text" id="generatedPasswordOutput" readonly placeholder="Your safe password will appear here..." style="font-family: monospace; background-color: #f9fafb;">
-    </div>
-  </div>
-  <button class="full" onclick="generateSecurePassword()" style="margin-top: 12px;">Generate 14-Character Password</button>
-</div>
+                        Currency
 
+                    </a>
+                </li>
 
-<!-- Alarm Clock -->
-  <div class="card">
-    <h2>&#9200; Alarm Clock</h2>
-    <div class="clock-display" id="liveClock">--:--:--</div>
-    <div class="row">
-      <div class="field">
-        <label for="alarmTime">Set alarm</label>
-        <input type="time" id="alarmTime">
-      </div>
-    </div>
-    <button class="full" style="margin-top:10px;" onclick="addAlarm()">Add Alarm</button>
-    <div class="alarm-list" id="alarmList"></div>
-  </div>
+                <li>
+                    <a href="#weather">
 
-<!-- Calendar -->
-  <div class="card">
-    <h2>&#128197; Calendar</h2>
-    <div class="cal-header">
-      <button class="secondary" onclick="changeMonth(-1)">‹ Prev</button>
-      <strong id="calMonthLabel"></strong>
-      <button class="secondary" onclick="changeMonth(1)">Next ›</button>
-    </div>
-    <div class="cal-grid" id="calGrid"></div>
-  </div>
+                        <span>☀️</span>
 
-<!-- Calculator -->
-  <div class="card">
-    <h2>&#129518; Basic Calculator</h2>
-    <div class="calc-display" id="calcDisplay">0</div>
-    <div class="calc-grid">
-      <button class="clear" onclick="calcClear()">C</button>
-      <button class="op" onclick="calcInput('/')">÷</button>
-      <button class="op" onclick="calcInput('*')">×</button>
-      <button class="op" onclick="calcBackspace()">⌫</button>
+                        Weather
 
-      <button onclick="calcInput('7')">7</button>
-      <button onclick="calcInput('8')">8</button>
-      <button onclick="calcInput('9')">9</button>
-      <button class="op" onclick="calcInput('-')">−</button>
+                    </a>
+                </li>
 
-      <button onclick="calcInput('4')">4</button>
-      <button onclick="calcInput('5')">5</button>
-      <button onclick="calcInput('6')">6</button>
-      <button class="op" onclick="calcInput('+')">+</button>
+                <li>
+                    <a href="#notes">
 
-      <button onclick="calcInput('1')">1</button>
-      <button onclick="calcInput('2')">2</button>
-      <button onclick="calcInput('3')">3</button>
-      <button class="eq" onclick="calcEquals()" style="grid-row:span 2;">=</button>
+                        <span>📝</span>
 
-      <button onclick="calcInput('0')" style="grid-column:span 2;">0</button>
-      <button onclick="calcInput('.')">.</button>
-    </div>
-  </div>
+                        Notes
 
-<!-- Install -->
-  <div class="card install">
-    <h2>&#128242; Install as Mobile App</h2>
-    <p><strong>Android/Chrome:</strong> Tap ⋮ menu → "Add to Home Screen"</p>
-    <p><strong>iPhone/Safari:</strong> Tap Share icon → "Add to Home Screen"</p>
-  </div>
+                    </a>
+                </li>
 
-  <!-- AD UNIT 3 — near the bottom, before Share -->
-  <ins class="adsbygoogle ad-slot"
-       style="display:block"
-       data-ad-client="ca-pub-9659641195994032"
-       data-ad-slot="0000000002"
-       data-ad-format="auto"
-       data-full-width-responsive="true">Ad space</ins>
-  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+                <li>
+                    <a href="#finance">
 
-<!-- Share -->
-  <div class="card">
-    <h2>&#128279; Share This Page</h2>
-    <div class="share-grid">
-      <a class="sh-fb" href="#" onclick="shareTo('facebook');return false;">Facebook</a>
-      <a class="sh-tw" href="#" onclick="shareTo('twitter');return false;">X / Twitter</a>
-      <a class="sh-wa" href="#" onclick="shareTo('whatsapp');return false;">WhatsApp</a>
-      <a class="sh-mail" href="#" onclick="shareTo('email');return false;">Email</a>
-      <button class="sh-copy" onclick="copyLink()">Copy Link</button>
-    </div>
-  </div>
+                        <span>📈</span>
 
-<footer>
-    <p>Vitals Tracker — general wellness tools, not a substitute for professional medical advice.</p>
-  </footer>
-</div>
+                        Finance
 
-<script>
-/* ---------- Weather (Open-Meteo, no API key needed) ---------- */
-function loadWeather(lat, lon, label){
-  fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,weather_code,wind_speed_10m`)
-    .then(r => r.json())
-    .then(data => {
-      const t = Math.round(data.current.temperature_2m);
-      const wind = Math.round(data.current.wind_speed_10m);
-      const code = data.current.weather_code;
-      let desc = "Clear", advice = "Good for walks", cls = "good";
-      if(code >= 61 && code <= 82){ desc = "Rainy"; advice = "Stay indoors"; cls="bad"; }
-      else if(code >= 45 && code <= 48){ desc = "Foggy"; advice = "Caution outdoors"; cls="warn"; }
-      else if(code >= 1 && code <= 3){ desc = "Partly Cloudy"; advice = "Good for walks"; cls="good"; }
-      else if(t >= 33){ desc = "Hot & Clear"; advice = "Stay hydrated"; cls="warn"; }
-      document.getElementById('weatherBox').innerHTML = `
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-          <div><strong style="font-size:1.6rem;">${t}°C</strong><br><span class="muted">${desc} · ${label} · wind ${wind} km/h</span></div>
-          <div style="background:${cls==='good'?'#22c55e':cls==='warn'?'#f59e0b':'#ef4444'}; padding:6px 12px; border-radius:16px; font-size:0.8rem; font-weight:600;">${advice}</div>
-        </div>`;
-    })
-    .catch(() => {
-      document.getElementById('weatherBox').innerText = "Weather unavailable right now.";
-    });
-}
-if(navigator.geolocation){
-  navigator.geolocation.getCurrentPosition(
-    pos => loadWeather(pos.coords.latitude, pos.coords.longitude, "Your location"),
-    () => loadWeather(14.1694, 121.2437, "Los Baños") // fallback
-  );
-} else {
-  loadWeather(14.1694, 121.2437, "Los Baños");
-}
+                    </a>
+                </li>
 
-/* ---------- BMI Calculator ---------- */
-function calcBMI(){
-  const h = parseFloat(document.getElementById('bmiHeight').value) / 100;
-  const w = parseFloat(document.getElementById('bmiWeight').value);
-  const box = document.getElementById('bmiResult');
-  if(!h || !w || h <= 0 || w <= 0){
-    box.innerHTML = `<div class="result warn">Enter a valid height and weight.</div>`;
-    return;
-  }
-  const bmi = w / (h*h);
-  let category, cls;
-  if(bmi < 18.5){ category = "Underweight"; cls = "warn"; }
-  else if(bmi < 25){ category = "Normal weight"; cls = "good"; }
-  else if(bmi < 30){ category = "Overweight"; cls = "warn"; }
-  else { category = "Obese"; cls = "bad"; }
-  box.innerHTML = `<div class="result ${cls}"><strong>BMI: ${bmi.toFixed(1)}</strong> — ${category}</div>`;
-}
+                <li>
+                    <a href="#assistant">
 
-/* ---------- Calculator ---------- */
-let calcExpr = "";
-function calcInput(v){
-  calcExpr += v;
-  document.getElementById('calcDisplay').innerText = calcExpr;
-}
-function calcClear(){
-  calcExpr = "";
-  document.getElementById('calcDisplay').innerText = "0";
-}
-function calcBackspace(){
-  calcExpr = calcExpr.slice(0, -1);
-  document.getElementById('calcDisplay').innerText = calcExpr || "0";
-}
-function calcEquals(){
-  try{
-    if(!/^[0-9+\-*/.\s]+$/.test(calcExpr)) throw "invalid";
-    const result = Function('"use strict";return (' + calcExpr + ')')();
-    document.getElementById('calcDisplay').innerText = result;
-    calcExpr = String(result);
-  }catch(e){
-    document.getElementById('calcDisplay').innerText = "Error";
-    calcExpr = "";
-  }
-}
+                        <span>🤖</span>
 
-/* ---------- Clock & Alarm ---------- */
-let alarms = JSON.parse(localStorage.getItem('vt_alarms') || "[]");
-function renderAlarms(){
-  const list = document.getElementById('alarmList');
-  list.innerHTML = alarms.map((a, i) =>
-    `<div class="alarm-item"><span>&#9200; ${a}</span><button onclick="removeAlarm(${i})">Remove</button></div>`
-  ).join('') || `<p class="muted">No alarms set.</p>`;
-}
-function addAlarm(){
-  const t = document.getElementById('alarmTime').value;
-  if(!t) return;
-  alarms.push(t);
-  localStorage.setItem('vt_alarms', JSON.stringify(alarms));
-  renderAlarms();
-}
-function removeAlarm(i){
-  alarms.splice(i,1);
-  localStorage.setItem('vt_alarms', JSON.stringify(alarms));
-  renderAlarms();
-}
-function beep(){
-  try{
-    const ctx = new (window.AudioContext || window.webkitAudioContext)();
-    const o = ctx.createOscillator();
-    const g = ctx.createGain();
-    o.connect(g); g.connect(ctx.destination);
-    o.frequency.value = 880;
-    g.gain.value = 0.2;
-    o.start();
-    setTimeout(() => o.stop(), 600);
-  }catch(e){}
-}
-let lastAlarmMinute = "";
-function tickClock(){
-  const now = new Date();
-  const hh = String(now.getHours()).padStart(2,'0');
-  const mm = String(now.getMinutes()).padStart(2,'0');
-  const ss = String(now.getSeconds()).padStart(2,'0');
-  document.getElementById('liveClock').innerText = `${hh}:${mm}:${ss}`;
-  const current = `${hh}:${mm}`;
-  if(alarms.includes(current) && lastAlarmMinute !== current){
-    lastAlarmMinute = current;
-    beep();
-    alert(`&#9200; Alarm: ${current}`);
-  }
-}
-setInterval(tickClock, 1000);
-renderAlarms();
+                        AI Assistant
 
-/* ---------- Calendar ---------- */
-let calDate = new Date();
-function renderCalendar(){
-  const year = calDate.getFullYear();
-  const month = calDate.getMonth();
-  const first = new Date(year, month, 1);
-  const startDay = first.getDay();
-  const daysInMonth = new Date(year, month+1, 0).getDate();
-  const label = calDate.toLocaleString('default', {month:'long', year:'numeric'});
-  document.getElementById('calMonthLabel').innerText = label;
+                    </a>
+                </li>
 
-  const dows = ['Su','Mo','Tu','We','Th','Fr','Sa'];
-  let html = dows.map(d => `<div class="dow">${d}</div>`).join('');
-  for(let i=0; i<startDay; i++) html += `<div class="day empty"></div>`;
-  const today = new Date();
-  for(let d=1; d<=daysInMonth; d++){
-    const isToday = d === today.getDate() && month === today.getMonth() && year === today.getFullYear();
-    html += `<div class="day ${isToday ? 'today' : ''}">${d}</div>`;
-  }
-  document.getElementById('calGrid').innerHTML = html;
-}
-function changeMonth(delta){
-  calDate.setMonth(calDate.getMonth() + delta);
-  renderCalendar();
-}
-renderCalendar();
+                <li>
+                    <a href="#settings">
 
-/* ---------- Hydration Tracker ---------- */
-const HYDRO_GOAL = 2000;
-function getWaterKey(){
-  const d = new Date();
-  return `vt_water_${d.toISOString().slice(0,10)}`;
-}
-function renderWater(){
-  const total = parseInt(localStorage.getItem(getWaterKey()) || "0");
-  document.getElementById('hydroTotal').innerText = total;
-  document.getElementById('hydroBar').style.width = Math.min(100, (total/HYDRO_GOAL)*100) + '%';
-}
-function addWater(ml){
-  const total = parseInt(localStorage.getItem(getWaterKey()) || "0") + ml;
-  localStorage.setItem(getWaterKey(), total);
-  renderWater();
-}
-function resetWater(){
-  localStorage.setItem(getWaterKey(), "0");
-  renderWater();
-}
-renderWater();
+                        <span>⚙️</span>
 
-/* ---------- Streak tracker ---------- */
-function getStreakData(){
-  return JSON.parse(localStorage.getItem('vt_streak') || '{"count":0,"last":""}');
-}
-function renderStreak(){
-  document.getElementById('streakCount').innerText = getStreakData().count;
-}
-function logToday(){
-  const data = getStreakData();
-  const today = new Date().toISOString().slice(0,10);
-  if(data.last === today) { alert("Already logged today!"); return; }
-  const yesterday = new Date(Date.now() - 86400000).toISOString().slice(0,10);
-  data.count = (data.last === yesterday) ? data.count + 1 : 1;
-  data.last = today;
-  localStorage.setItem('vt_streak', JSON.stringify(data));
-  renderStreak();
-}
-renderStreak();
+                        Settings
 
-/* ---------- Ultimate Daily Check-In ---------- */
-let checkinChartInstance = null;
-function getCheckinData(){
-  return JSON.parse(localStorage.getItem('vt_checkin') || "[]");
-}
-function logCheckin(){
-  const entry = {
-    date: new Date().toISOString().slice(0,10),
-    weight: parseFloat(document.getElementById('ciWeight').value) || null,
-    sleep: parseFloat(document.getElementById('ciSleep').value) || null,
-    steps: parseFloat(document.getElementById('ciSteps').value) || null,
-    mood: document.getElementById('ciMood').value,
-  };
-  if(!entry.weight && !entry.sleep && !entry.steps){
-    alert("Enter at least one value to log.");
-    return;
-  }
-  const data = getCheckinData();
-  data.push(entry);
-  localStorage.setItem('vt_checkin', JSON.stringify(data));
-  ['ciWeight','ciSleep','ciSteps'].forEach(id => document.getElementById(id).value = '');
-  renderCheckin();
-}
-function deleteCheckin(i){
-  const data = getCheckinData();
-  data.splice(i,1);
-  localStorage.setItem('vt_checkin', JSON.stringify(data));
-  renderCheckin();
-}
-function renderCheckin(){
-  const data = getCheckinData();
-  const listEl = document.getElementById('checkinList');
-  listEl.innerHTML = data.slice().reverse().map((e, ri) => {
-    const i = data.length - 1 - ri;
-    const parts = [];
-    if(e.weight) parts.push(`${e.weight}kg`);
-    if(e.sleep) parts.push(`${e.sleep}h sleep`);
-    if(e.steps) parts.push(`${e.steps} steps`);
-    return `<div class="entry-row"><span>${e.date} ${e.mood} — ${parts.join(', ')}</span><button class="del" onclick="deleteCheckin(${i})">×</button></div>`;
-  }).join('') || `<p class="muted">No check-ins yet — log your first one above.</p>`;
+                    </a>
+                </li>
 
-  const ctx = document.getElementById('checkinChart');
-  if(checkinChartInstance) checkinChartInstance.destroy();
-  if(typeof Chart === 'undefined' || data.length === 0) return;
-  checkinChartInstance = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: data.map(e => e.date),
-      datasets: [
-        { label: 'Weight (kg)', data: data.map(e=>e.weight), borderColor:'#7c3aed', tension:0.3, spanGaps:true, yAxisID:'y' },
-        { label: 'Sleep (hrs)', data: data.map(e=>e.sleep), borderColor:'#3b82f6', tension:0.3, spanGaps:true, yAxisID:'y1' },
-      ]
-    },
-    options: {
-      responsive:true,
-      plugins:{ legend:{ position:'bottom', labels:{ boxWidth:10, font:{size:10} } } },
-      scales:{
-        y:{ type:'linear', position:'left', title:{display:true, text:'kg', font:{size:10}} },
-        y1:{ type:'linear', position:'right', title:{display:true, text:'hrs', font:{size:10}}, grid:{drawOnChartArea:false} }
-      }
-    }
-  });
-}
-renderCheckin();
+            </ul>
 
-/* ---------- Vital Signs Log ---------- */
-let vitalsChartInstance = null;
-function getVitalsData(){
-  return JSON.parse(localStorage.getItem('vt_vitals') || "[]");
-}
-function logVitals(){
-  const entry = {
-    date: new Date().toISOString().slice(0,10),
-    heart: parseFloat(document.getElementById('vHeart').value) || null,
-    sugar: parseFloat(document.getElementById('vSugar').value) || null,
-    bpSys: parseFloat(document.getElementById('vBPsys').value) || null,
-    bpDia: parseFloat(document.getElementById('vBPdia').value) || null,
-    chol: parseFloat(document.getElementById('vChol').value) || null,
-  };
-  if(!entry.heart && !entry.sugar && !entry.bpSys && !entry.chol){
-    alert("Enter at least one value to log.");
-    return;
-  }
-  const data = getVitalsData();
-  data.push(entry);
-  localStorage.setItem('vt_vitals', JSON.stringify(data));
-  ['vHeart','vSugar','vBPsys','vBPdia','vChol'].forEach(id => document.getElementById(id).value = '');
-  renderVitals();
-}
-function deleteVital(i){
-  const data = getVitalsData();
-  data.splice(i,1);
-  localStorage.setItem('vt_vitals', JSON.stringify(data));
-  renderVitals();
-}
-function renderVitals(){
-  const data = getVitalsData();
-  const listEl = document.getElementById('vitalsList');
-  listEl.innerHTML = data.slice().reverse().map((e, ri) => {
-    const i = data.length - 1 - ri;
-    const parts = [];
-    if(e.heart) parts.push(`HR ${e.heart}bpm`);
-    if(e.bpSys && e.bpDia) parts.push(`BP ${e.bpSys}/${e.bpDia}`);
-    if(e.chol) parts.push(`Chol ${e.chol}`);
-    if(e.sugar) parts.push(`Sugar ${e.sugar}`);
-    return `<div class="entry-row"><span>${e.date} — ${parts.join(', ')}</span><button class="del" onclick="deleteVital(${i})">×</button></div>`;
-  }).join('') || `<p class="muted">No entries yet — log your first reading above.</p>`;
+        </nav>
 
-  const labels = data.map(e => e.date);
-  const ctx = document.getElementById('vitalsChart');
-  if(vitalsChartInstance) vitalsChartInstance.destroy();
-  if(typeof Chart === 'undefined' || data.length === 0) return;
-  vitalsChartInstance = new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: labels,
-      datasets: [
-        { label: 'Heart Rate', data: data.map(e=>e.heart), borderColor:'#ef4444', tension:0.3, spanGaps:true },
-        { label: 'Systolic BP', data: data.map(e=>e.bpSys), borderColor:'#3b82f6', tension:0.3, spanGaps:true },
-        { label: 'Cholesterol', data: data.map(e=>e.chol), borderColor:'#f5a623', tension:0.3, spanGaps:true },
-        { label: 'Blood Sugar', data: data.map(e=>e.sugar), borderColor:'#22c55e', tension:0.3, spanGaps:true },
-      ]
-    },
-    options: { responsive:true, plugins:{ legend:{ position:'bottom', labels:{ boxWidth:10, font:{size:10} } } }, scales:{ y:{ beginAtZero:false } } }
-  });
-}
-renderVitals();
+    </aside>
 
-/* ---------- Expense Tracker ---------- */
-let expenseChartInstance = null;
-function getExpenseData(){
-  return JSON.parse(localStorage.getItem('vt_expenses') || "[]");
-}
-function addExpense(){
-  const amount = parseFloat(document.getElementById('expAmount').value);
-  const currency = document.getElementById('expCurrency').value;
-  const category = document.getElementById('expCategory').value;
-  const note = document.getElementById('expNote').value;
-  if(!amount || amount <= 0){ alert("Enter a valid amount."); return; }
-  const data = getExpenseData();
-  data.push({ date: new Date().toISOString().slice(0,10), amount, currency, category, note });
-  localStorage.setItem('vt_expenses', JSON.stringify(data));
-  document.getElementById('expAmount').value = '';
-  document.getElementById('expNote').value = '';
-  renderExpenses();
-}
-function deleteExpense(i){
-  const data = getExpenseData();
-  data.splice(i,1);
-  localStorage.setItem('vt_expenses', JSON.stringify(data));
-  renderExpenses();
-}
-function renderExpenses(){
-  const data = getExpenseData();
-  const thisMonth = new Date().toISOString().slice(0,7);
-  const monthEntries = data.filter(e => e.date.startsWith(thisMonth));
-  const totalsByCurrency = {};
-  monthEntries.forEach(e => {
-    const cur = e.currency || '₱';
-    totalsByCurrency[cur] = (totalsByCurrency[cur] || 0) + e.amount;
-  });
-  const totalText = Object.entries(totalsByCurrency).map(([cur, amt]) => `${cur}${amt.toLocaleString()}`).join(' + ') || '0';
-  document.getElementById('expTotal').innerText = totalText;
+    <!-- ========================= -->
+    <!-- Main Content -->
+    <!-- ========================= -->
 
-  const listEl = document.getElementById('expenseList');
-  listEl.innerHTML = data.slice().reverse().map((e, ri) => {
-    const i = data.length - 1 - ri;
-    const cur = e.currency || '₱';
-    return `<div class="entry-row"><span>${e.date} — ${e.category}${e.note ? ' ('+e.note+')' : ''}: ${cur}${e.amount.toLocaleString()}</span><button class="del" onclick="deleteExpense(${i})">×</button></div>`;
-  }).join('') || `<p class="muted">No expenses logged yet.</p>`;
+    <main class="main-content">
 
-  const byCategory = {};
-  data.forEach(e => { byCategory[e.category] = (byCategory[e.category]||0) + e.amount; });
-  const ctx = document.getElementById('expenseChart');
-  if(expenseChartInstance) expenseChartInstance.destroy();
-  if(typeof Chart === 'undefined' || data.length === 0) return;
-  expenseChartInstance = new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: Object.keys(byCategory),
-      datasets: [{ label: 'Spent by category (₱)', data: Object.values(byCategory), backgroundColor:'#14b8a6' }]
-    },
-    options: { responsive:true, plugins:{ legend:{ display:false } }, scales:{ y:{ beginAtZero:true } } }
-  });
-}
-renderExpenses();
+        <!-- ========================= -->
+        <!-- Header -->
+        <!-- ========================= -->
 
-/* ---------- Share ---------- */
-function shareTo(platform){
-  const url = encodeURIComponent(window.location.href);
-  const text = encodeURIComponent("Check out this free health & daily tools tracker!");
-  let shareUrl = "";
-  if(platform === 'facebook') shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
-  if(platform === 'twitter') shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${text}`;
-  if(platform === 'whatsapp') shareUrl = `https://wa.me/?text=${text}%20${url}`;
-  if(platform === 'email') shareUrl = `mailto:?subject=${text}&body=${url}`;
-  window.open(shareUrl, '_blank');
-}
-function copyLink(){
-  navigator.clipboard.writeText(window.location.href).then(() => alert("Link copied!"));
-}
+        <header class="topbar">
 
-</script>
-<p style="text-align: center; margin: 30px 0;">
-    <a href="privacy.html" style="color: #0056b3; font-weight: bold; text-decoration: underline; position: relative; z-index: 9999;">Privacy Policy</a>
-</p>
-<script src="calculators.js"></script>
-<script src="tools.js"></script>
-</body>
-</html>
+            <div class="topbar-left">
+
+                <button
+                    id="menuButton"
+                    class="icon-button">
+
+                    ☰
+
+                </button>
+
+                <div>
+
+                    <h2>
+                        Welcome Back
+                    </h2>
+
+                    <p>
+                        Your productivity workspace is ready.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="topbar-right">
+
+                <input
+                    type="search"
+                    id="globalSearch"
+                    placeholder="Search anything...">
+
+                <button
+                    id="themeToggle"
+                    class="icon-button">
+
+                    🌙
+
+                </button>
+
+                <button
+                    class="profile-button">
+
+                    VA
+
+                </button>
+
+            </div>
+
+        </header>
+
+        <!-- ========================= -->
+        <!-- Dashboard -->
+        <!-- ========================= -->
+
+        <section
+            id="dashboard"
+            class="dashboard">
+
+            <!-- Welcome Card -->
+
+            <section class="hero-card">
+
+                <div>
+
+                    <span class="badge">
+
+                        Infinity Alpha
+
+                    </span>
+
+                    <h2>
+
+                        Your Productivity Operating System
+
+                    </h2>
+
+                    <p>
+
+                        Manage work, study, finances, weather,
+                        notes, AI, focus sessions, and more from
+                        one dashboard.
+
+                    </p>
+
+                </div>
+
+                <div class="hero-actions">
+
+                    <button class="primary-btn">
+
+                        Get Started
+
+                    </button>
+
+                    <button class="secondary-btn">
+
+                        Documentation
+
+                    </button>
+
+                </div>
+
+            </section>
+
+            <!-- Widget Grid Starts -->
+            <section class="dashboard-grid">
