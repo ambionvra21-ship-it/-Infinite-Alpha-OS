@@ -400,14 +400,10 @@ function deleteTask(index) {
 renderTasks();
 
 // ==========================================
-// ☀️ INFINITY ALPHA WEATHER ENGINE
+// ☀️ ALPHA WEATHER ENGINE V3
 // ==========================================
 
-window.manualWeather = false;
-
 async function loadWeather() {
-
-    if (window.manualWeather) return;
 
     const temp = document.getElementById("weatherTemp");
     const city = document.getElementById("weatherCity");
@@ -415,7 +411,7 @@ async function loadWeather() {
     const humidity = document.getElementById("humidity");
     const wind = document.getElementById("wind");
 
-    city.textContent = "📍 Detecting location...";
+    city.textContent = "📍 Detecting your location...";
     desc.textContent = "Connecting...";
 
     if (!navigator.geolocation) {
@@ -427,54 +423,87 @@ async function loadWeather() {
 
     navigator.geolocation.getCurrentPosition(
 
-        async (position) => {
+        async function(position){
 
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
 
-            try {
+            try{
 
-                const response = await fetch(
+                // Weather
+                const weatherResponse = await fetch(
                     `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m`
                 );
 
-                const data = await response.json();
+                const weather = await weatherResponse.json();
+
+                // Reverse Geocoding
+                const geoResponse = await fetch(
+                    `https://geocode.maps.co/reverse?lat=${lat}&lon=${lon}`
+                );
+
+                const geo = await geoResponse.json();
+
+                let place = "Current Location";
+
+                if(geo.address){
+
+                    place =
+                        geo.address.city ||
+                        geo.address.town ||
+                        geo.address.village ||
+                        geo.address.state ||
+                        "Current Location";
+
+                }
 
                 temp.textContent =
-                    Math.round(data.current.temperature_2m) + "°C";
+                    Math.round(weather.current.temperature_2m) + "°C";
 
                 city.textContent =
-                    "📍 Current Location";
+                    "📍 " + place;
 
                 desc.textContent =
                     "Live Weather";
 
                 humidity.textContent =
-                    data.current.relative_humidity_2m + "%";
+                    weather.current.relative_humidity_2m + "%";
 
                 wind.textContent =
-                    data.current.wind_speed_10m + " km/h";
+                    weather.current.wind_speed_10m + " km/h";
 
-            } catch {
+            }
 
-                city.textContent = "Weather unavailable";
-                desc.textContent = "Connection failed";
+            catch(error){
+
+                console.log(error);
+
+                city.textContent =
+                    "Unable to load weather";
 
             }
 
         },
 
-        () => {
+        function(){
 
-            city.textContent = "Location permission denied";
-            desc.textContent = "Enable location access";
+            city.textContent =
+                "Location permission denied";
 
+            desc.textContent =
+                "Enable Location in browser settings.";
+
+        },
+
+        {
+            enableHighAccuracy:true,
+            timeout:10000,
+            maximumAge:0
         }
 
     );
 
 }
-
 
 
 // ==========================================
