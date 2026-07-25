@@ -192,6 +192,12 @@ window.onload = function () {
 
     updatePomodoroDisplay();
 
+    displayNotes();
+
+    renderTasks();
+
+    loadWeather();
+
     console.log("✅ Infinity Alpha v0.1 Loaded");
 
 };
@@ -390,3 +396,74 @@ function deleteTask(index) {
 }
 
 renderTasks();
+
+// ==========================================
+// ☀️ WEATHER CENTER
+// ==========================================
+
+async function loadWeather() {
+
+    const temp = document.getElementById("weatherTemp");
+    const city = document.getElementById("weatherCity");
+    const desc = document.getElementById("weatherDesc");
+    const humidity = document.getElementById("humidity");
+    const wind = document.getElementById("wind");
+
+    if (!navigator.geolocation) {
+
+        city.textContent = "Geolocation not supported";
+        return;
+
+    }
+
+    city.textContent = "Getting location...";
+
+    navigator.geolocation.getCurrentPosition(
+
+        async (position) => {
+
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            try {
+
+                const response = await fetch(
+                    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m`
+                );
+
+                const data = await response.json();
+
+                temp.textContent =
+                    Math.round(data.current.temperature_2m) + "°C";
+
+                city.textContent =
+                    `Lat ${lat.toFixed(2)}, Lon ${lon.toFixed(2)}`;
+
+                desc.textContent = "Live Weather";
+
+                humidity.textContent =
+                    data.current.relative_humidity_2m + "%";
+
+                wind.textContent =
+                    data.current.wind_speed_10m + " km/h";
+
+            } catch (error) {
+
+                console.error(error);
+
+                city.textContent = "Weather unavailable";
+                desc.textContent = "Connection failed";
+
+            }
+
+        },
+
+        () => {
+
+            city.textContent = "Location permission denied";
+
+        }
+
+    );
+
+}
