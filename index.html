@@ -356,13 +356,12 @@
 
     <h2>☀️ Weather Center</h2>
 
-    <input
+<input
     type="text"
     id="citySearch"
-    placeholder="Search any city...">
-
-<button onclick="searchWeatherByCity()">
-    🔍 Search
+    placeholder="Search any city..."
+    onkeydown="if(event.key==='Enter'){searchWeatherByCity()}">
+    
 </button>
 
 <br><br>
