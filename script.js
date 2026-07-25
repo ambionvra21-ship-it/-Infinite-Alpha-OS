@@ -399,6 +399,23 @@ function deleteTask(index) {
 
 renderTasks();
 
+// ==========================================
+// ☀️ ALPHA WEATHER ENGINE V1
+// ==========================================
+
+async function loadWeather() {
+
+    const temp = document.getElementById("weatherTemp");
+    const city = document.getElementById("weatherCity");
+    const desc = document.getElementById("weatherDesc");
+    const humidity = document.getElementById("humidity");
+    const wind = document.getElementById("wind");
+
+    city.textContent = "📍 Detecting location...";
+    desc.textContent = "Please wait...";
+
+}
+
 
 
 
