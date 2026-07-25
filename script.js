@@ -400,14 +400,14 @@ function deleteTask(index) {
 renderTasks();
 
 // ==========================================
-// ☀️ WEATHER CENTER
+// ☀️ INFINITY ALPHA WEATHER ENGINE
 // ==========================================
 
-// ==========================================
-// ☀️ WEATHER CENTER V2
-// ==========================================
+window.manualWeather = false;
 
 async function loadWeather() {
+
+    if (window.manualWeather) return;
 
     const temp = document.getElementById("weatherTemp");
     const city = document.getElementById("weatherCity");
@@ -415,6 +415,8 @@ async function loadWeather() {
     const humidity = document.getElementById("humidity");
     const wind = document.getElementById("wind");
 
+    city.textContent = "📍 Detecting location...";
+    desc.textContent = "Connecting...";
 
     if (!navigator.geolocation) {
 
@@ -423,97 +425,63 @@ async function loadWeather() {
 
     }
 
-
-    city.textContent = "📍 Detecting location...";
-    desc.textContent = "Connecting...";
-
-
     navigator.geolocation.getCurrentPosition(
 
-        async function(position) {
+        async (position) => {
 
             const lat = position.coords.latitude;
             const lon = position.coords.longitude;
 
-
             try {
 
-
                 const response = await fetch(
-                `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m`
+                    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m`
                 );
-
 
                 const data = await response.json();
 
-
                 temp.textContent =
-                Math.round(data.current.temperature_2m) + "°C";
-
+                    Math.round(data.current.temperature_2m) + "°C";
 
                 city.textContent =
-                `📍 Location detected (${lat.toFixed(2)}, ${lon.toFixed(2)})`;
-
+                    "📍 Current Location";
 
                 desc.textContent =
-                "Live Weather";
-
+                    "Live Weather";
 
                 humidity.textContent =
-                data.current.relative_humidity_2m + "%";
-
+                    data.current.relative_humidity_2m + "%";
 
                 wind.textContent =
-                data.current.wind_speed_10m + " km/h";
+                    data.current.wind_speed_10m + " km/h";
 
+            } catch {
 
-            }
-
-            catch(error){
-
-                console.log(error);
-
-                desc.textContent =
-                "Weather connection failed";
+                city.textContent = "Weather unavailable";
+                desc.textContent = "Connection failed";
 
             }
 
-
         },
 
+        () => {
 
-        function(error){
+            city.textContent = "Location permission denied";
+            desc.textContent = "Enable location access";
 
-            console.log(error);
-
-
-            city.textContent =
-            "📍 Location blocked";
-
-
-            desc.textContent =
-            "Allow GPS permission and refresh";
-
-        },
-
-
-        {
-            enableHighAccuracy:true,
-            timeout:10000,
-            maximumAge:0
         }
-
 
     );
 
-
 }
+
+
 
 // ==========================================
 // 🧠 ALPHA INTELLIGENCE
 // ==========================================
 
-function updateGreeting(){
+function updateGreeting() {
 
     const hour = new Date().getHours();
 
@@ -549,74 +517,6 @@ function updateGreeting(){
         title.innerHTML = "🌙 Working Late?";
         message.innerHTML =
         "Don't forget to recharge.";
-
-    }
-
-}
-
-// ==========================================
-// 🔍 SEARCH WEATHER BY CITY
-// ==========================================
-
-async function searchWeatherByCity() {
-
-    const cityInput = document.getElementById("citySearch").value.trim();
-
-    if (cityInput === "") {
-        alert("Please enter a city name.");
-        return;
-    }
-
-    const temp = document.getElementById("weatherTemp");
-    const city = document.getElementById("weatherCity");
-    const desc = document.getElementById("weatherDesc");
-    const humidity = document.getElementById("humidity");
-    const wind = document.getElementById("wind");
-
-    city.textContent = "Searching...";
-
-    try {
-
-        // Get coordinates from city name
-        const geoResponse = await fetch(
-            `https://geocoding-api.open-meteo.com/v1/search?name=${encodeURIComponent(cityInput)}&count=1`
-        );
-
-        const geoData = await geoResponse.json();
-        console.log(geoData);
-
-        if (!geoData.results || geoData.results.length === 0) {
-
-            city.textContent = "City not found";
-            desc.textContent = "";
-            return;
-
-        }
-
-        const place = geoData.results[0];
-
-        // Get weather using coordinates
-        const weatherResponse = await fetch(
-            `https://api.open-meteo.com/v1/forecast?latitude=${place.latitude}&longitude=${place.longitude}&current=temperature_2m,relative_humidity_2m,wind_speed_10m`
-        );
-
-        const weatherData = await weatherResponse.json();
-
-        temp.textContent = Math.round(weatherData.current.temperature_2m) + "°C";
-
-        city.textContent = `${place.name}, ${place.country}`;
-
-        desc.textContent = "Live Weather";
-
-        humidity.textContent = weatherData.current.relative_humidity_2m + "%";
-
-        wind.textContent = weatherData.current.wind_speed_10m + " km/h";
-
-    } catch (error) {
-
-        console.error(error);
-
-        city.textContent = "Unable to load weather";
 
     }
 
