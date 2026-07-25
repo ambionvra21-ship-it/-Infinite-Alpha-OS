@@ -96,6 +96,47 @@ button {
     gap: 10px;
 }
 
+/* ==========================================
+   INFINITY ALPHA WIDGET POLISH
+========================================== */
+
+.widget h2 {
+    margin-top: 0;
+    font-size: 22px;
+}
+
+
+.widget input,
+.widget select {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    border: 1px solid rgba(255,255,255,0.2);
+    padding: 12px;
+    border-radius: 10px;
+}
+
+
+.widget button {
+    background: rgba(255,255,255,0.15);
+    color: white;
+}
+
+
+.widget button:hover {
+    transform: translateY(-2px);
+}
+
+
+/* Currency Layout */
+
+#currency select {
+    margin: 10px 5px;
+}
+
+
+#currencyResult {
+    margin-top: 20px;
+}
 
 .calculator-buttons button {
     height: 45px;
