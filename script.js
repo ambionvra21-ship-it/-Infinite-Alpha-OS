@@ -1132,3 +1132,197 @@ window.addEventListener(
 }
 
 );
+
+// ==========================================
+// 📈 FINANCE ALPHA ENGINE v1
+// ==========================================
+
+let transactions = JSON.parse(
+    localStorage.getItem("alphaFinance")
+) || [];
+
+
+// Add Transaction
+
+function addTransaction(){
+
+    const name =
+        document.getElementById("transactionName").value.trim();
+
+    const amount =
+        Number(document.getElementById("transactionAmount").value);
+
+    const type =
+        document.getElementById("transactionType").value;
+
+    const category =
+        document.getElementById("transactionCategory").value;
+
+
+    if(!name || !amount){
+
+        alert("Please enter description and amount.");
+
+        return;
+
+    }
+
+
+    transactions.push({
+
+        id: Date.now(),
+
+        name:name,
+
+        amount:amount,
+
+        type:type,
+
+        category:category,
+
+        date:new Date().toLocaleDateString()
+
+    });
+
+
+    saveFinance();
+
+
+    document.getElementById("transactionName").value="";
+    document.getElementById("transactionAmount").value="";
+
+
+}
+
+
+
+// Save Finance
+
+function saveFinance(){
+
+    localStorage.setItem(
+        "alphaFinance",
+        JSON.stringify(transactions)
+    );
+
+
+    updateFinance();
+
+}
+
+
+
+// Update Dashboard
+
+function updateFinance(){
+
+    let income = 0;
+
+    let expense = 0;
+
+
+    transactions.forEach(item=>{
+
+
+        if(item.type==="income"){
+
+            income += item.amount;
+
+        }
+
+        else{
+
+            expense += item.amount;
+
+        }
+
+
+    });
+
+
+
+    document.getElementById("totalIncome").textContent =
+        "$" + income.toFixed(2);
+
+
+    document.getElementById("totalExpense").textContent =
+        "$" + expense.toFixed(2);
+
+
+    document.getElementById("balance").textContent =
+        "$" + (income-expense).toFixed(2);
+
+
+
+    renderTransactions();
+
+
+}
+
+
+
+// Transaction History
+
+function renderTransactions(){
+
+
+    const list =
+        document.getElementById("transactionList");
+
+
+    if(!list) return;
+
+
+    list.innerHTML="";
+
+
+    transactions.forEach(item=>{
+
+
+        const li=document.createElement("li");
+
+
+        li.innerHTML=`
+
+        ${item.name}
+        -
+        $${item.amount}
+        -
+        ${item.category}
+
+        <button onclick="deleteTransaction(${item.id})">
+        🗑
+        </button>
+
+        `;
+
+
+        list.appendChild(li);
+
+
+    });
+
+
+}
+
+
+
+// Delete
+
+function deleteTransaction(id){
+
+
+    transactions =
+    transactions.filter(item=>item.id !== id);
+
+
+    saveFinance();
+
+
+}
+
+
+
+// Start Finance
+
+updateFinance();
