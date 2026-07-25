@@ -160,3 +160,132 @@
             <!-- Widget Grid -->
 
             <section class="dashboard-grid">
+
+                <!-- ==========================================
+     POMODORO WIDGET
+========================================== -->
+
+<div class="widget" id="pomodoro">
+
+    <h2>⏱️ Pomodoro Focus Timer</h2>
+
+    <div id="pomodoroTime">25:00</div>
+
+    <button id="pomoStartBtn" onclick="togglePomodoro()">
+        Start
+    </button>
+
+    <button onclick="resetPomodoro()">
+        Reset
+    </button>
+
+</div>
+
+<!-- ==========================================
+     CALCULATOR WIDGET
+========================================== -->
+
+<div class="widget" id="calculator">
+
+    <h2>🧮 Calculator</h2>
+
+    <input
+        type="text"
+        id="calcDisplay"
+        readonly>
+
+    <div class="calculator-buttons">
+
+        <button onclick="clearCalc()">C</button>
+        <button onclick="deleteCalc()">DEL</button>
+        <button onclick="appendCalc('/')">÷</button>
+        <button onclick="appendCalc('*')">×</button>
+
+        <button onclick="appendCalc('7')">7</button>
+        <button onclick="appendCalc('8')">8</button>
+        <button onclick="appendCalc('9')">9</button>
+        <button onclick="appendCalc('-')">−</button>
+
+        <button onclick="appendCalc('4')">4</button>
+        <button onclick="appendCalc('5')">5</button>
+        <button onclick="appendCalc('6')">6</button>
+        <button onclick="appendCalc('+')">+</button>
+
+        <button onclick="appendCalc('1')">1</button>
+        <button onclick="appendCalc('2')">2</button>
+        <button onclick="appendCalc('3')">3</button>
+        <button onclick="calculateCalc()">=</button>
+
+        <button onclick="appendCalc('0')">0</button>
+        <button onclick="appendCalc('.')">.</button>
+
+    </div>
+
+</div>
+
+<!-- ==========================================
+     CURRENCY CONVERTER
+========================================== -->
+
+<div class="widget" id="currency">
+
+    <h2>💱 Currency Converter</h2>
+
+    <input
+        type="number"
+        id="amount"
+        value="1"
+        min="0">
+
+    <br><br>
+
+    <select id="fromCurrency">
+
+        <option value="USD">USD</option>
+        <option value="PHP">PHP</option>
+        <option value="EUR">EUR</option>
+        <option value="JPY">JPY</option>
+        <option value="GBP">GBP</option>
+
+    </select>
+
+    <span> → </span>
+
+    <select id="toCurrency">
+
+        <option value="PHP">PHP</option>
+        <option value="USD">USD</option>
+        <option value="EUR">EUR</option>
+        <option value="JPY">JPY</option>
+        <option value="GBP">GBP</option>
+
+    </select>
+
+    <br><br>
+
+    <button onclick="convertCurrency()">
+        Convert
+    </button>
+
+    <h3 id="currencyResult">
+        Result will appear here
+    </h3>
+
+</div>
+
+<!-- ==========================================
+     END OF DASHBOARD
+========================================== -->
+
+            </section>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
