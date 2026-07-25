@@ -198,6 +198,8 @@ window.onload = function () {
 
     loadWeather();
 
+    updateGreeting();
+
     console.log("✅ Infinity Alpha v0.1 Loaded");
 
 };
