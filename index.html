@@ -403,38 +403,204 @@
     </div>
 
 </div>
-
-  📈 Finance Alpha
-
-💵 Income
-$0.00
-
-💸 Expenses
-$0.00
-
-📊 Balance
-$0.00
+                
+// ==========================================
+// 📈 FINANCE ALPHA ENGINE v1
+// ==========================================
 
 
-Add Transaction
-
-Description
-Amount
-Category
-
-Add Transaction
+let financeTransactions =
+JSON.parse(localStorage.getItem("alphaFinance")) || [];
 
 
-Transaction History
+// ==========================================
+// ADD TRANSACTION
+// ==========================================
+
+function addFinanceTransaction(){
+
+    const description =
+    document.getElementById("financeDescription").value.trim();
 
 
-🤖 Alpha Financial Intelligence
+    const amount =
+    parseFloat(document.getElementById("financeAmount").value);
 
-Waiting for financial data...
 
-Generate Alpha Report
+    const category =
+    document.getElementById("financeCategory").value;
 
-</div>       
+
+
+    if(description === "" || isNaN(amount)){
+
+        alert("Please enter description and amount.");
+
+        return;
+
+    }
+
+
+
+    financeTransactions.push({
+
+        description: description,
+
+        amount: amount,
+
+        category: category,
+
+        date: new Date().toLocaleString()
+
+    });
+
+
+
+    saveFinance();
+
+
+
+    document.getElementById("financeDescription").value = "";
+
+    document.getElementById("financeAmount").value = "";
+
+}
+
+
+
+// ==========================================
+// SAVE FINANCE
+// ==========================================
+
+function saveFinance(){
+
+    localStorage.setItem(
+        "alphaFinance",
+        JSON.stringify(financeTransactions)
+    );
+
+
+    updateFinanceDashboard();
+
+}
+
+
+
+// ==========================================
+// UPDATE SUMMARY
+// ==========================================
+
+function updateFinanceDashboard(){
+
+    let income = 0;
+
+    let expenses = 0;
+
+
+
+    financeTransactions.forEach(transaction => {
+
+
+        if(transaction.category === "Income"){
+
+            income += transaction.amount;
+
+        }
+
+        else{
+
+            expenses += transaction.amount;
+
+        }
+
+
+    });
+
+
+
+    document.getElementById("totalIncome").textContent =
+    "$" + income.toFixed(2);
+
+
+
+    document.getElementById("totalExpenses").textContent =
+    "$" + expenses.toFixed(2);
+
+
+
+    document.getElementById("totalBalance").textContent =
+    "$" + (income - expenses).toFixed(2);
+
+
+
+    renderFinanceHistory();
+
+}
+
+
+
+// ==========================================
+// TRANSACTION HISTORY
+// ==========================================
+
+function renderFinanceHistory(){
+
+    const list =
+    document.getElementById("financeList");
+
+
+    if(!list) return;
+
+
+    list.innerHTML = "";
+
+
+    financeTransactions
+    .slice()
+    .reverse()
+    .forEach(transaction => {
+
+
+        list.innerHTML += `
+
+        <li>
+
+        <strong>
+        ${transaction.description}
+        </strong>
+
+        <br>
+
+        ${transaction.category}
+        -
+        $${transaction.amount.toFixed(2)}
+
+        <br>
+
+        <small>
+        ${transaction.date}
+        </small>
+
+        </li>
+
+        `;
+
+
+    });
+
+
+}
+
+
+
+// ==========================================
+// LOAD FINANCE ON START
+// ==========================================
+
+updateFinanceDashboard();
+
+
+console.log("📈 Finance Alpha Engine Loaded");
                 
                 
 <!-- ==========================================
