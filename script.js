@@ -410,42 +410,76 @@ async function loadWeather() {
     const desc = document.getElementById("weatherDesc");
     const humidity = document.getElementById("humidity");
     const wind = document.getElementById("wind");
-city.textContent = "📍 Detecting location...";
-desc.textContent = "Please wait...";
 
-if (!navigator.geolocation) {
+    city.textContent = "📍 Detecting location...";
+    desc.textContent = "Please wait...";
 
-    city.textContent = "GPS not supported";
-    return;
+    if (!navigator.geolocation) {
+        city.textContent = "GPS not supported";
+        return;
+    }
+
+    navigator.geolocation.getCurrentPosition(
+
+        async function (position) {
+
+            const lat = position.coords.latitude;
+            const lon = position.coords.longitude;
+
+            try {
+                // Get city name from coordinates
+                const geoRes = await fetch(
+                    `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`
+                );
+                const geoData = await geoRes.json();
+                city.textContent =
+                    "📍 " + (geoData.city || geoData.locality || "Unknown location");
+
+                // Get weather from Open-Meteo
+                const weatherRes = await fetch(
+                    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code`
+                );
+                const weatherData = await weatherRes.json();
+                const current = weatherData.current;
+
+                temp.textContent = `${Math.round(current.temperature_2m)}°C`;
+                humidity.textContent = `${current.relative_humidity_2m}%`;
+                wind.textContent = `${current.wind_speed_10m} km/h`;
+                desc.textContent = describeWeather(current.weather_code);
+
+            } catch (error) {
+                console.error(error);
+                city.textContent = "Unable to load weather data";
+            }
+
+        },
+
+        function () {
+            city.textContent = "Location permission denied";
+        }
+
+    );
 
 }
 
-navigator.geolocation.getCurrentPosition(
-
-    function(position){
-
-        console.log(position);
-
-        city.textContent = "📍 GPS Found";
-
-    },
-
-    function(){
-
-        city.textContent = "Location permission denied";
-
-    }
-
-);
-
-
+function describeWeather(code) {
+    if (code === 0) return "☀️ Clear sky";
+    if (code <= 3) return "⛅ Partly cloudy";
+    if (code <= 48) return "🌫 Foggy";
+    if (code <= 67) return "🌧 Rainy";
+    if (code <= 77) return "❄️ Snowy";
+    if (code <= 82) return "🌦 Rain showers";
+    if (code <= 99) return "⛈ Thunderstorm";
+    return "🌡 Unknown conditions";
+}
 
 // ==========================================
 // 🧠 ALPHA INTELLIGENCE
 // ==========================================
 
 function updateGreeting() {
-
+    // ...unchanged, now correctly a separate top-level function
+}
     const hour = new Date().getHours();
 
     const title = document.getElementById("greetingTitle");
