@@ -1,185 +1,1134 @@
 // ==========================================
-// INFINITY ALPHA v0.2 STABLE
+// INFINITY ALPHA v0.2
 // CORE ENGINE - BATCH 1
 // ==========================================
 
-console.clear();
-console.log("🚀 Infinity Alpha v0.2 Stable Booting...");
+console.log("🚀 Infinity Alpha Starting...");
+
 
 // ==========================================
-// GLOBAL STATE
+// ⏱️ POMODORO TIMER
 // ==========================================
 
-const Alpha = {
-    version: "0.2 Stable",
-    weatherLoaded: false,
-    notesLoaded: false,
-    tasksLoaded: false
-};
+let pomodoroTime = 25 * 60;
+let pomodoroRunning = false;
+let pomodoroInterval = null;
 
-// ==========================================
-// GREETING ENGINE
-// ==========================================
 
-function updateGreeting() {
+function updatePomodoroDisplay(){
 
-    const title = document.getElementById("greetingTitle");
-    const message = document.getElementById("greetingMessage");
+    const display =
+    document.getElementById("pomodoroTime");
 
-    if (!title || !message) return;
+    if(!display) return;
 
-    const hour = new Date().getHours();
+    const minutes =
+    Math.floor(pomodoroTime / 60);
 
-    if (hour >= 5 && hour < 12) {
+    const seconds =
+    pomodoroTime % 60;
 
-        title.textContent = "☀️ Good Morning";
-        message.textContent = "Ready to build something amazing today?";
+
+    display.textContent =
+    `${minutes}:${seconds.toString().padStart(2,"0")}`;
+
+}
+
+
+
+function togglePomodoro(){
+
+    const button =
+    document.getElementById("pomoStartBtn");
+
+    if(!button) return;
+
+
+    if(!pomodoroRunning){
+
+        pomodoroRunning = true;
+
+        button.textContent = "Pause";
+
+
+        pomodoroInterval =
+        setInterval(()=>{
+
+
+            if(pomodoroTime > 0){
+
+                pomodoroTime--;
+
+                updatePomodoroDisplay();
+
+            }
+
+            else{
+
+                clearInterval(pomodoroInterval);
+
+                pomodoroRunning=false;
+
+                button.textContent="Start";
+
+                alert("🎉 Focus Session Complete!");
+
+            }
+
+
+        },1000);
+
 
     }
 
-    else if (hour >= 12 && hour < 18) {
+    else{
 
-        title.textContent = "🌤 Good Afternoon";
-        message.textContent = "Keep your momentum going.";
 
-    }
+        clearInterval(pomodoroInterval);
 
-    else if (hour >= 18 && hour < 22) {
+        pomodoroRunning=false;
 
-        title.textContent = "🌇 Good Evening";
-        message.textContent = "Let's finish today strong.";
+        button.textContent="Start";
 
-    }
-
-    else {
-
-        title.textContent = "🌙 Working Late?";
-        message.textContent = "Don't forget to recharge.";
 
     }
 
 }
 
+
+
+
+function resetPomodoro(){
+
+    clearInterval(pomodoroInterval);
+
+    pomodoroRunning=false;
+
+    pomodoroTime=25*60;
+
+    updatePomodoroDisplay();
+
+
+    const button =
+    document.getElementById("pomoStartBtn");
+
+
+    if(button){
+
+        button.textContent="Start";
+
+    }
+
+}
+
+
+
 // ==========================================
-// APPLICATION STARTUP
+// 🧮 CALCULATOR
 // ==========================================
 
-window.onload = function () {
 
-    console.log("✅ Core Engine Started");
+function appendCalc(value){
 
-    updateGreeting();
+    const display =
+    document.getElementById("calcDisplay");
 
-};
+    if(display){
+
+        display.value += value;
+
+    }
+
+}
+
+
+
+function clearCalc(){
+
+    const display =
+    document.getElementById("calcDisplay");
+
+    if(display){
+
+        display.value="";
+
+    }
+
+}
+
+
+
+function deleteCalc(){
+
+    const display =
+    document.getElementById("calcDisplay");
+
+    if(display){
+
+        display.value =
+        display.value.slice(0,-1);
+
+    }
+
+}
+
+
+
+function calculateCalc(){
+
+    const display =
+    document.getElementById("calcDisplay");
+
+
+    if(!display) return;
+
+
+    try{
+
+        display.value =
+        eval(display.value);
+
+    }
+
+    catch{
+
+        display.value="Error";
+
+    }
+
+}
+
+
 
 // ==========================================
-// ☀️ WEATHER ENGINE
+// 💱 CURRENCY CONVERTER
 // ==========================================
 
-async function loadWeather() {
 
-    const temp = document.getElementById("weatherTemp");
-    const city = document.getElementById("weatherCity");
-    const desc = document.getElementById("weatherDesc");
-    const humidity = document.getElementById("humidity");
-    const wind = document.getElementById("wind");
+async function convertCurrency(){
 
-    if (!temp) return;
 
-    city.textContent = "📍 Detecting location...";
-    desc.textContent = "Please wait...";
+    const amount =
+    parseFloat(
+    document.getElementById("amount").value
+    );
 
-    if (!navigator.geolocation) {
 
-        city.textContent = "GPS not supported";
+    const from =
+    document.getElementById("fromCurrency").value;
+
+
+    const to =
+    document.getElementById("toCurrency").value;
+
+
+    const result =
+    document.getElementById("currencyResult");
+
+
+
+    if(isNaN(amount)){
+
+
+        result.textContent =
+        "Enter an amount.";
+
         return;
 
     }
 
-    navigator.geolocation.getCurrentPosition(
 
-        async function(position){
 
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
+    result.textContent =
+    "Converting...";
 
-            try{
 
-                // Reverse Geocoding
-                const geoResponse = await fetch(
-                    `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`
-                );
 
-                const geo = await geoResponse.json();
+    try{
 
-                const place =
-                    geo.city ||
-                    geo.locality ||
-                    geo.principalSubdivision ||
-                    "Current Location";
 
-                // Weather
-                const weatherResponse = await fetch(
-                    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code`
-                );
+        const response =
+        await fetch(
+        `https://open.er-api.com/v6/latest/${from}`
+        );
 
-                const weather = await weatherResponse.json();
 
-                temp.textContent =
-                    Math.round(weather.current.temperature_2m) + "°C";
+        const data =
+        await response.json();
 
-                city.textContent =
-                    "📍 " + place;
 
-                humidity.textContent =
-                    weather.current.relative_humidity_2m + "%";
+        const converted =
+        amount * data.rates[to];
 
-                wind.textContent =
-                    weather.current.wind_speed_10m + " km/h";
 
-                desc.textContent =
-                    getWeatherDescription(weather.current.weather_code);
 
-            }
+        result.textContent =
+        `${amount} ${from} = ${converted.toFixed(2)} ${to}`;
 
-            catch(error){
 
-                console.error(error);
+    }
 
-                city.textContent = "Weather unavailable";
-                desc.textContent = "Connection failed";
 
-            }
+    catch(error){
 
-        },
 
-        function(){
+        console.log(error);
 
-            city.textContent = "Location permission denied";
-            desc.textContent = "Enable location and refresh.";
 
-        },
+        result.textContent =
+        "Exchange service unavailable.";
 
-        {
-            enableHighAccuracy:true,
-            timeout:10000,
-            maximumAge:60000
+
+    }
+
+
+}
+
+
+
+// ==========================================
+// 🧠 GREETING ENGINE
+// ==========================================
+
+
+function updateGreeting(){
+
+
+    const title =
+    document.getElementById("greetingTitle");
+
+
+    const message =
+    document.getElementById("greetingMessage");
+
+
+
+    if(!title || !message) return;
+
+
+
+    const hour =
+    new Date().getHours();
+
+
+
+    if(hour < 12){
+
+
+        title.innerHTML =
+        "☀️ Good Morning";
+
+
+        message.innerHTML =
+        "Ready to build something amazing today?";
+
+
+    }
+
+
+    else if(hour < 18){
+
+
+        title.innerHTML =
+        "🌤 Good Afternoon";
+
+
+        message.innerHTML =
+        "Keep your momentum going.";
+
+
+    }
+
+
+    else if(hour < 22){
+
+
+        title.innerHTML =
+        "🌇 Good Evening";
+
+
+        message.innerHTML =
+        "Let's finish today strong.";
+
+
+    }
+
+
+    else{
+
+
+        title.innerHTML =
+        "🌙 Working Late?";
+
+
+        message.innerHTML =
+        "Don't forget to recharge.";
+
+
+    }
+
+
+}
+
+
+
+// ==========================================
+// 🚀 STARTUP ENGINE
+// ==========================================
+
+
+function alphaStart(){
+
+
+    updatePomodoroDisplay();
+
+    updateGreeting();
+
+
+    console.log(
+    "✅ Infinity Alpha Core Loaded"
+    );
+
+
+}
+
+
+window.addEventListener(
+"DOMContentLoaded",
+alphaStart
+);
+
+// ==========================================
+// 📝 SMART NOTES ENGINE
+// ==========================================
+
+
+let notes =
+JSON.parse(localStorage.getItem("alphaNotes")) || [];
+
+
+
+function saveNote(){
+
+
+    const title =
+    document.getElementById("noteTitle").value.trim();
+
+
+    const content =
+    document.getElementById("noteContent").value.trim();
+
+
+
+    if(!title || !content){
+
+        alert("Please enter title and note.");
+
+        return;
+
+    }
+
+
+
+    notes.unshift({
+
+        title:title,
+
+        content:content,
+
+        date:new Date().toLocaleString()
+
+    });
+
+
+
+    localStorage.setItem(
+        "alphaNotes",
+        JSON.stringify(notes)
+    );
+
+
+
+    displayNotes();
+
+
+    clearNote();
+
+
+}
+
+
+
+
+function displayNotes(){
+
+
+    const list =
+    document.getElementById("notesList");
+
+
+    if(!list) return;
+
+
+
+    list.innerHTML="";
+
+
+
+    notes.forEach((note,index)=>{
+
+
+        list.innerHTML += `
+
+        <div class="note-item"
+        onclick="loadNote(${index})">
+
+            <strong>${note.title}</strong>
+
+            <br>
+
+            <small>${note.date}</small>
+
+        </div>
+
+        `;
+
+
+    });
+
+
+}
+
+
+
+
+function loadNote(index){
+
+
+    document.getElementById("noteTitle").value =
+    notes[index].title;
+
+
+    document.getElementById("noteContent").value =
+    notes[index].content;
+
+
+}
+
+
+
+
+function clearNote(){
+
+
+    const title =
+    document.getElementById("noteTitle");
+
+
+    const content =
+    document.getElementById("noteContent");
+
+
+
+    if(title) title.value="";
+
+
+    if(content) content.value="";
+
+
+}
+
+
+
+
+function searchNotes(){
+
+
+    const search =
+    document.getElementById("noteSearch");
+
+
+    if(!search) return;
+
+
+
+    const keyword =
+    search.value.toLowerCase();
+
+
+
+    const items =
+    document.querySelectorAll(".note-item");
+
+
+
+    items.forEach(item=>{
+
+
+        if(item.innerText.toLowerCase().includes(keyword)){
+
+
+            item.style.display="block";
+
+
         }
+
+        else{
+
+
+            item.style.display="none";
+
+
+        }
+
+
+    });
+
+
+}
+
+
+
+
+// ==========================================
+// ✅ SMART TASK ENGINE
+// ==========================================
+
+
+
+let tasks =
+JSON.parse(localStorage.getItem("alphaTasks")) || [];
+
+
+
+
+
+function addTask(){
+
+
+    const input =
+    document.getElementById("taskInput");
+
+
+    if(!input) return;
+
+
+
+    const text =
+    input.value.trim();
+
+
+
+    if(text==="") return;
+
+
+
+    tasks.push({
+
+        text:text,
+
+        completed:false
+
+    });
+
+
+
+    input.value="";
+
+
+    saveTasks();
+
+
+}
+
+
+
+
+function saveTasks(){
+
+
+    localStorage.setItem(
+
+        "alphaTasks",
+
+        JSON.stringify(tasks)
 
     );
 
-}
 
-function getWeatherDescription(code){
+    renderTasks();
 
-    if(code===0) return "☀️ Clear Sky";
-    if(code<=3) return "⛅ Partly Cloudy";
-    if(code<=48) return "🌫 Fog";
-    if(code<=67) return "🌧 Rain";
-    if(code<=77) return "❄️ Snow";
-    if(code<=82) return "🌦 Showers";
-    if(code<=99) return "⛈ Thunderstorm";
-
-    return "Live Weather";
 
 }
+
+
+
+
+function renderTasks(){
+
+
+    const list =
+    document.getElementById("taskList");
+
+
+    if(!list) return;
+
+
+
+    list.innerHTML="";
+
+
+    let completed=0;
+
+
+
+
+    tasks.forEach((task,index)=>{
+
+
+        if(task.completed){
+
+            completed++;
+
+        }
+
+
+
+        list.innerHTML += `
+
+        <li class="task-item">
+
+            <span>
+            ${task.text}
+            </span>
+
+
+            <button onclick="toggleTask(${index})">
+
+            ${task.completed ? "↩" : "✔"}
+
+            </button>
+
+
+
+            <button onclick="deleteTask(${index})">
+
+            🗑
+
+            </button>
+
+
+        </li>
+
+        `;
+
+
+
+    });
+
+
+
+    const stats =
+    document.getElementById("taskStats");
+
+
+    const bar =
+    document.getElementById("taskProgressBar");
+
+
+
+    if(stats){
+
+
+        stats.innerHTML =
+        `${completed} of ${tasks.length} completed`;
+
+    }
+
+
+
+
+    if(bar){
+
+
+        const percent =
+        tasks.length===0
+        ?0
+        :(completed/tasks.length)*100;
+
+
+
+        bar.style.width =
+        percent+"%";
+
+
+    }
+
+
+
+}
+
+
+
+
+
+function toggleTask(index){
+
+
+    tasks[index].completed =
+    !tasks[index].completed;
+
+
+    saveTasks();
+
+
+}
+
+
+
+
+
+function deleteTask(index){
+
+
+    tasks.splice(index,1);
+
+
+    saveTasks();
+
+
+}
+
+
+
+
+// Load saved data
+
+
+document.addEventListener(
+"DOMContentLoaded",
+()=>{
+
+
+    displayNotes();
+
+
+    renderTasks();
+
+
+});
+
+// ==========================================
+// ☀️ ALPHA WEATHER ENGINE FINAL
+// ==========================================
+
+
+async function loadWeather(){
+
+
+    const temp =
+    document.getElementById("weatherTemp");
+
+
+    const city =
+    document.getElementById("weatherCity");
+
+
+    const desc =
+    document.getElementById("weatherDesc");
+
+
+    const humidity =
+    document.getElementById("humidity");
+
+
+    const wind =
+    document.getElementById("wind");
+
+
+
+    if(!temp || !city){
+
+        return;
+
+    }
+
+
+
+    city.textContent =
+    "📍 Detecting location...";
+
+
+    desc.textContent =
+    "Connecting...";
+
+
+
+    if(!navigator.geolocation){
+
+
+        city.textContent =
+        "GPS not supported";
+
+
+        return;
+
+    }
+
+
+
+
+    navigator.geolocation.getCurrentPosition(
+
+    async(position)=>{
+
+
+        const lat =
+        position.coords.latitude;
+
+
+        const lon =
+        position.coords.longitude;
+
+
+
+        try{
+
+
+            // WEATHER DATA
+
+            const weatherResponse =
+            await fetch(
+
+            `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code`
+
+            );
+
+
+
+            const weather =
+            await weatherResponse.json();
+
+
+
+
+            // LOCATION NAME
+
+            const locationResponse =
+            await fetch(
+
+            `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`
+
+            );
+
+
+
+            const location =
+            await locationResponse.json();
+
+
+
+
+            const place =
+
+            location.city ||
+
+            location.locality ||
+
+            location.principalSubdivision ||
+
+            "Current Location";
+
+
+
+
+
+
+            temp.textContent =
+
+            Math.round(
+            weather.current.temperature_2m
+            )
+
+            +"°C";
+
+
+
+
+            city.textContent =
+
+            "📍 " + place;
+
+
+
+
+            desc.textContent =
+
+            weatherDescription(
+
+            weather.current.weather_code
+
+            );
+
+
+
+
+            humidity.textContent =
+
+            weather.current.relative_humidity_2m
+            +"%";
+
+
+
+
+            wind.textContent =
+
+            weather.current.wind_speed_10m
+            +" km/h";
+
+
+
+
+
+        }
+
+
+        catch(error){
+
+
+            console.log(error);
+
+
+            city.textContent =
+            "Weather connection failed";
+
+
+            desc.textContent =
+            "Try refresh";
+
+        }
+
+
+
+    },
+
+
+
+    (error)=>{
+
+
+        console.log(error);
+
+
+        city.textContent =
+        "📍 Location permission needed";
+
+
+        desc.textContent =
+        "Allow location access";
+
+
+
+    },
+
+
+
+    {
+
+        enableHighAccuracy:false,
+
+        timeout:15000,
+
+        maximumAge:300000
+
+    }
+
+
+
+    );
+
+
+}
+
+
+
+
+function weatherDescription(code){
+
+
+    if(code===0)
+
+    return "☀️ Clear Sky";
+
+
+    if(code<=3)
+
+    return "⛅ Partly Cloudy";
+
+
+    if(code<=48)
+
+    return "🌫 Fog";
+
+
+    if(code<=67)
+
+    return "🌧 Rain";
+
+
+    if(code<=82)
+
+    return "🌦 Showers";
+
+
+    if(code<=99)
+
+    return "⛈ Thunderstorm";
+
+
+    return "Weather";
+
+
+}
+
+
+
+
+// ==========================================
+// 🚀 FINAL ALPHA START SYSTEM
+// ==========================================
+
+
+window.addEventListener(
+
+"DOMContentLoaded",
+
+()=>{
+
+
+    updatePomodoroDisplay();
+
+
+    updateGreeting();
+
+
+    displayNotes();
+
+
+    renderTasks();
+
+
+    loadWeather();
+
+
+
+    console.log(
+
+    "🚀 Infinity Alpha v0.2 ONLINE"
+
+    );
+
+
+}
+
+);
