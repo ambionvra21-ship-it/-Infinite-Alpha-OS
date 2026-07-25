@@ -410,12 +410,33 @@ async function loadWeather() {
     const desc = document.getElementById("weatherDesc");
     const humidity = document.getElementById("humidity");
     const wind = document.getElementById("wind");
+city.textContent = "📍 Detecting location...";
+desc.textContent = "Please wait...";
 
-    city.textContent = "📍 Detecting location...";
-    desc.textContent = "Please wait...";
+if (!navigator.geolocation) {
+
+    city.textContent = "GPS not supported";
+    return;
 
 }
 
+navigator.geolocation.getCurrentPosition(
+
+    function(position){
+
+        console.log(position);
+
+        city.textContent = "📍 GPS Found";
+
+    },
+
+    function(){
+
+        city.textContent = "Location permission denied";
+
+    }
+
+);
 
 
 
