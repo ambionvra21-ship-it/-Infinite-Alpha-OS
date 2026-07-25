@@ -1,8 +1,9 @@
 // ==========================================
-// INFINITY ALPHA v0.1
-// SCRIPT.JS - PART 1
+// INFINITY ALPHA v0.2
+// CORE ENGINE - BATCH 1
 // ==========================================
 
+console.log("🚀 Infinity Alpha Starting...");
 
 // ==========================================
 // ⏱️ POMODORO TIMER
@@ -14,10 +15,14 @@ let pomodoroInterval = null;
 
 function updatePomodoroDisplay() {
 
+    const display = document.getElementById("pomodoroTime");
+
+    if (!display) return;
+
     const minutes = Math.floor(pomodoroTime / 60);
     const seconds = pomodoroTime % 60;
 
-    document.getElementById("pomodoroTime").textContent =
+    display.textContent =
         `${minutes}:${seconds.toString().padStart(2, "0")}`;
 
 }
@@ -25,6 +30,8 @@ function updatePomodoroDisplay() {
 function togglePomodoro() {
 
     const button = document.getElementById("pomoStartBtn");
+
+    if (!button) return;
 
     if (!pomodoroRunning) {
 
@@ -36,7 +43,6 @@ function togglePomodoro() {
             if (pomodoroTime > 0) {
 
                 pomodoroTime--;
-
                 updatePomodoroDisplay();
 
             } else {
@@ -51,76 +57,75 @@ function togglePomodoro() {
 
             }
 
-        }, 1000);
+        },1000);
 
-    } else {
+    }
+
+    else{
 
         clearInterval(pomodoroInterval);
 
-        pomodoroRunning = false;
+        pomodoroRunning=false;
 
-        button.textContent = "Start";
+        button.textContent="Start";
 
     }
 
 }
 
-
-function resetPomodoro() {
+function resetPomodoro(){
 
     clearInterval(pomodoroInterval);
 
-    pomodoroRunning = false;
+    pomodoroRunning=false;
 
-    pomodoroTime = 25 * 60;
+    pomodoroTime=25*60;
 
     updatePomodoroDisplay();
 
-    document.getElementById("pomoStartBtn").textContent = "Start";
+    const btn=document.getElementById("pomoStartBtn");
+
+    if(btn) btn.textContent="Start";
 
 }
-
 
 // ==========================================
 // 🧮 CALCULATOR
 // ==========================================
 
-function appendCalc(value) {
+function appendCalc(value){
 
-    document.getElementById("calcDisplay").value += value;
-
-}
-
-
-function clearCalc() {
-
-    document.getElementById("calcDisplay").value = "";
+    document.getElementById("calcDisplay").value+=value;
 
 }
 
+function clearCalc(){
 
-function deleteCalc() {
-
-    const display = document.getElementById("calcDisplay");
-
-    display.value = display.value.slice(0, -1);
+    document.getElementById("calcDisplay").value="";
 
 }
 
+function deleteCalc(){
 
-function calculateCalc() {
+    const display=document.getElementById("calcDisplay");
 
-    const display = document.getElementById("calcDisplay");
+    display.value=display.value.slice(0,-1);
 
-    try {
+}
 
-        display.value = eval(display.value);
+function calculateCalc(){
+
+    const display=document.getElementById("calcDisplay");
+
+    try{
+
+        display.value=eval(display.value);
 
     }
 
-    catch {
+    catch{
 
-        display.value = "Error";
+        display.value="Error";
 
     }
 
@@ -130,391 +135,112 @@ function calculateCalc() {
 // 💱 CURRENCY CONVERTER
 // ==========================================
 
-async function convertCurrency() {
+async function convertCurrency(){
 
-    const amount = parseFloat(document.getElementById("amount").value);
+    const amount=parseFloat(document.getElementById("amount").value);
 
-    const from = document.getElementById("fromCurrency").value;
+    const from=document.getElementById("fromCurrency").value;
 
-    const to = document.getElementById("toCurrency").value;
+    const to=document.getElementById("toCurrency").value;
 
-    const result = document.getElementById("currencyResult");
+    const result=document.getElementById("currencyResult");
 
-    if (isNaN(amount) || amount <= 0) {
+    if(isNaN(amount)){
 
-        result.textContent = "Please enter a valid amount.";
+        result.textContent="Enter an amount.";
 
         return;
 
     }
 
-    try {
+    result.textContent="Converting...";
 
-        result.textContent = "Converting...";
+    try{
 
-        const response = await fetch(
+        const response=await fetch(
             `https://open.er-api.com/v6/latest/${from}`
         );
 
-        const data = await response.json();
+        const data=await response.json();
 
-        if (!data.rates || !data.rates[to]) {
+        const converted=amount*data.rates[to];
 
-            result.textContent = "Exchange rate unavailable.";
-
-            return;
-
-        }
-
-        const converted = amount * data.rates[to];
-
-        result.textContent =
-            `${amount} ${from} = ${converted.toFixed(2)} ${to}`;
+        result.textContent=
+        `${amount} ${from} = ${converted.toFixed(2)} ${to}`;
 
     }
 
-    catch (error) {
+    catch{
 
-        console.error(error);
-
-        result.textContent = "Unable to connect to exchange service.";
+        result.textContent=
+        "Exchange service unavailable.";
 
     }
 
 }
 
-
 // ==========================================
-// 🚀 INITIALIZE ALPHA
-// ==========================================
-
-window.onload = function () {
-
-    updatePomodoroDisplay();
-
-    displayNotes();
-
-    renderTasks();
-
-    loadWeather();
-
-    updateGreeting();
-
-    console.log("✅ Infinity Alpha v0.1 Loaded");
-
-};
-
-// ==========================================
-// 📝 SMART NOTES PRO
+// 🧠 GREETING ENGINE
 // ==========================================
 
-let notes = JSON.parse(localStorage.getItem("alphaNotes")) || [];
+function updateGreeting(){
 
-function saveNote() {
+    const title=document.getElementById("greetingTitle");
 
-    const title = document.getElementById("noteTitle").value.trim();
-    const content = document.getElementById("noteContent").value.trim();
+    const message=document.getElementById("greetingMessage");
 
-    if (!title || !content) {
-        alert("Please enter both a title and note.");
-        return;
-    }
+    if(!title || !message) return;
 
-    notes.unshift({
-        title,
-        content,
-        date: new Date().toLocaleString()
-    });
+    const hour=new Date().getHours();
 
-    localStorage.setItem("alphaNotes", JSON.stringify(notes));
+    if(hour<12){
 
-    displayNotes();
+        title.innerHTML="☀️ Good Morning";
 
-    clearNote();
-}
-
-function displayNotes() {
-
-    const list = document.getElementById("notesList");
-
-    list.innerHTML = "";
-
-    notes.forEach((note, index) => {
-
-        list.innerHTML += `
-            <div class="note-item" onclick="loadNote(${index})">
-                <strong>${note.title}</strong><br>
-                <small>${note.date}</small>
-            </div>
-        `;
-
-    });
-
-}
-
-function loadNote(index) {
-
-    document.getElementById("noteTitle").value =
-        notes[index].title;
-
-    document.getElementById("noteContent").value =
-        notes[index].content;
-
-}
-
-function clearNote() {
-
-    document.getElementById("noteTitle").value = "";
-
-    document.getElementById("noteContent").value = "";
-
-}
-
-function searchNotes() {
-
-    const keyword =
-        document.getElementById("noteSearch")
-        .value
-        .toLowerCase();
-
-    const items =
-        document.querySelectorAll(".note-item");
-
-    items.forEach((item) => {
-
-        if (item.innerText.toLowerCase().includes(keyword)) {
-
-            item.style.display = "block";
-
-        } else {
-
-            item.style.display = "none";
-
-        }
-
-    });
-
-}
-
-displayNotes();
-
-// ==========================================
-// ✅ SMART TASKS
-// ==========================================
-
-let tasks = JSON.parse(localStorage.getItem("alphaTasks")) || [];
-
-function addTask() {
-
-    const input = document.getElementById("taskInput");
-
-    const text = input.value.trim();
-
-    if (text === "") return;
-
-    tasks.push({
-        text: text,
-        completed: false
-    });
-
-    input.value = "";
-
-    saveTasks();
-
-}
-
-function saveTasks() {
-
-    localStorage.setItem(
-        "alphaTasks",
-        JSON.stringify(tasks)
-    );
-
-    renderTasks();
-
-}
-
-function renderTasks() {
-
-    const list = document.getElementById("taskList");
-
-    list.innerHTML = "";
-
-    let completed = 0;
-
-    tasks.forEach((task, index) => {
-
-        if (task.completed) completed++;
-
-        list.innerHTML += `
-        <li class="task-item ${task.completed ? "completed" : ""}">
-            <span>${task.text}</span>
-
-            <div class="task-actions">
-
-                <button onclick="toggleTask(${index})">
-                    ${task.completed ? "↩" : "✔"}
-                </button>
-
-                <button onclick="deleteTask(${index})">
-                    🗑
-                </button>
-
-            </div>
-
-        </li>
-        `;
-
-    });
-
-    const percent =
-        tasks.length === 0
-            ? 0
-            : (completed / tasks.length) * 100;
-
-    document.getElementById("taskProgressBar").style.width =
-        percent + "%";
-
-    document.getElementById("taskStats").innerHTML =
-        `${completed} of ${tasks.length} completed`;
-
-}
-
-function toggleTask(index) {
-
-    tasks[index].completed =
-        !tasks[index].completed;
-
-    saveTasks();
-
-}
-
-function deleteTask(index) {
-
-    tasks.splice(index, 1);
-
-    saveTasks();
-
-}
-
-renderTasks();
-
-// ==========================================
-// ☀️ ALPHA WEATHER ENGINE V1
-// ==========================================
-
-async function loadWeather() {
-
-    const temp = document.getElementById("weatherTemp");
-    const city = document.getElementById("weatherCity");
-    const desc = document.getElementById("weatherDesc");
-    const humidity = document.getElementById("humidity");
-    const wind = document.getElementById("wind");
-
-    city.textContent = "📍 Detecting location...";
-    desc.textContent = "Please wait...";
-
-    if (!navigator.geolocation) {
-        city.textContent = "GPS not supported";
-        return;
-    }
-
-    navigator.geolocation.getCurrentPosition(
-
-        async function (position) {
-
-            const lat = position.coords.latitude;
-            const lon = position.coords.longitude;
-
-            try {
-                // Get city name from coordinates
-                const geoRes = await fetch(
-                    `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`
-                );
-                const geoData = await geoRes.json();
-                city.textContent =
-                    "📍 " + (geoData.city || geoData.locality || "Unknown location");
-
-                // Get weather from Open-Meteo
-                const weatherRes = await fetch(
-                    `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code`
-                );
-                const weatherData = await weatherRes.json();
-                const current = weatherData.current;
-
-                temp.textContent = `${Math.round(current.temperature_2m)}°C`;
-                humidity.textContent = `${current.relative_humidity_2m}%`;
-                wind.textContent = `${current.wind_speed_10m} km/h`;
-                desc.textContent = describeWeather(current.weather_code);
-
-            } catch (error) {
-                console.error(error);
-                city.textContent = "Unable to load weather data";
-            }
-
-        },
-
-        function () {
-            city.textContent = "Location permission denied";
-        }
-
-    );
-
-}
-
-function describeWeather(code) {
-    if (code === 0) return "☀️ Clear sky";
-    if (code <= 3) return "⛅ Partly cloudy";
-    if (code <= 48) return "🌫 Foggy";
-    if (code <= 67) return "🌧 Rainy";
-    if (code <= 77) return "❄️ Snowy";
-    if (code <= 82) return "🌦 Rain showers";
-    if (code <= 99) return "⛈ Thunderstorm";
-    return "🌡 Unknown conditions";
-}
-
-// ==========================================
-// 🧠 ALPHA INTELLIGENCE
-// ==========================================
-
-function updateGreeting() {
-    // ...unchanged, now correctly a separate top-level function
-}
-    const hour = new Date().getHours();
-
-    const title = document.getElementById("greetingTitle");
-    const message = document.getElementById("greetingMessage");
-
-    if(hour >= 5 && hour < 12){
-
-        title.innerHTML = "☀️ Good Morning";
-        message.innerHTML =
+        message.innerHTML=
         "Ready to build something amazing today?";
 
     }
 
-    else if(hour >= 12 && hour < 18){
+    else if(hour<18){
 
-        title.innerHTML = "🌤 Good Afternoon";
-        message.innerHTML =
+        title.innerHTML="🌤 Good Afternoon";
+
+        message.innerHTML=
         "Keep your momentum going.";
 
     }
 
-    else if(hour >= 18 && hour < 22){
+    else if(hour<22){
 
-        title.innerHTML = "🌇 Good Evening";
-        message.innerHTML =
+        title.innerHTML="🌇 Good Evening";
+
+        message.innerHTML=
         "Let's finish today strong.";
 
     }
 
     else{
 
-        title.innerHTML = "🌙 Working Late?";
-        message.innerHTML =
+        title.innerHTML="🌙 Working Late?";
+
+        message.innerHTML=
         "Don't forget to recharge.";
 
     }
 
 }
+
+// ==========================================
+// 🚀 INITIALIZE ALPHA
+// ==========================================
+
+window.onload=function(){
+
+    updatePomodoroDisplay();
+
+    updateGreeting();
+
+    console.log("✅ Infinity Alpha Ready");
+
+};
