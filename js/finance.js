@@ -248,3 +248,149 @@ window.addEventListener("load", function(){
 
 
 });
+
+// ==========================================
+// 🤖 ALPHA FINANCIAL ADVISOR AI
+// ==========================================
+
+function runAlphaFinanceAI() {
+
+
+    const report =
+    document.getElementById("alphaFinanceReport");
+
+
+    const score =
+    document.getElementById("alphaFinanceScore");
+
+
+    const advice =
+    document.getElementById("alphaFinanceAdvice");
+
+
+
+    if(!report || !score || !advice) {
+
+        console.log("Finance AI elements missing");
+        return;
+
+    }
+
+
+
+    let income = 0;
+
+    let expenses = 0;
+
+
+
+    alphaFinance.forEach(item => {
+
+
+        if(item.category === "Income") {
+
+            income += item.amount;
+
+        }
+
+        else {
+
+            expenses += item.amount;
+
+        }
+
+
+    });
+
+
+
+    let balance = income - expenses;
+
+
+
+    let healthScore = 0;
+
+
+
+    if(income > 0) {
+
+        healthScore += 40;
+
+    }
+
+
+    if(expenses < income) {
+
+        healthScore += 40;
+
+    }
+
+
+    if(balance > 0) {
+
+        healthScore += 20;
+
+    }
+
+
+
+    report.innerHTML = `
+
+    📊 Income:
+    $${income.toFixed(2)}
+
+    <br>
+
+    💸 Expenses:
+    $${expenses.toFixed(2)}
+
+    <br>
+
+    💰 Balance:
+    $${balance.toFixed(2)}
+
+    `;
+
+
+
+    score.innerHTML =
+
+    "Financial Health Score: " 
+    + healthScore
+    + "/100";
+
+
+
+    if(healthScore >= 80) {
+
+
+        advice.innerHTML =
+        "🟢 Excellent! Your finances look healthy. Keep saving and investing.";
+
+
+    }
+
+    else if(healthScore >= 50) {
+
+
+        advice.innerHTML =
+        "🟡 Good progress. Watch your expenses and increase savings.";
+
+
+    }
+
+    else {
+
+
+        advice.innerHTML =
+        "🔴 Attention needed. Reduce unnecessary spending and build your income.";
+
+
+    }
+
+
+
+    console.log("🤖 Alpha Financial Analysis Complete");
+
+
+}
