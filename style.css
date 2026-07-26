@@ -494,50 +494,71 @@ body{
     background:#1d4ed8;
 
 }
-
 /* ==========================================
-   FINANCE
+   📈 FINANCE SUMMARY FIX
 ========================================== */
 
-.finance-summary{
+.finance-summary {
 
-    display:grid;
+    display: grid;
 
-    grid-template-columns:repeat(3,1fr);
+    grid-template-columns: repeat(
+        3,
+        minmax(0, 1fr)
+    );
 
-    gap:15px;
+    gap: 15px;
 
-    margin-bottom:25px;
-
-}
-
-.finance-card{
-
-    background:#0f172a;
-
-    border-radius:14px;
-
-    padding:18px;
-
-    text-align:center;
-
-    border:1px solid rgba(255,255,255,.08);
+    width: 100%;
 
 }
 
-.finance-card h3{
 
-    color:#94a3b8;
+.finance-card {
 
-    font-size:14px;
+    min-width: 0;
 
-    margin-bottom:10px;
+    overflow: hidden;
+
+    padding: 15px;
 
 }
 
-.finance-card h2{
 
-    color:#38bdf8;
+.finance-card h2 {
+
+    font-size: clamp(
+        1.2rem,
+        2vw,
+        2rem
+    );
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+
+}
+
+
+
+/* Mobile */
+
+@media(max-width:768px){
+
+    .finance-summary{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .finance-card h2{
+
+        white-space:normal;
+
+    }
 
 }
 
