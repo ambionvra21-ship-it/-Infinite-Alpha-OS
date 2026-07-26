@@ -6,11 +6,12 @@ console.log("🤖 Alpha AI Module Loaded");
 
 
 
-// Main Alpha Command Function
-function runAlphaCommand() {
+// Main Alpha Command
+window.runAlphaCommand = function(){
 
 
-    const input = document.getElementById(
+    const input =
+    document.getElementById(
         "alphaCommandInput"
     );
 
@@ -22,7 +23,12 @@ function runAlphaCommand() {
 
 
 
-    if(!input || !response) return;
+    if(!input || !response){
+
+        console.log("⚠️ Alpha AI elements missing");
+        return;
+
+    }
 
 
 
@@ -31,10 +37,10 @@ function runAlphaCommand() {
 
 
 
-    if(command === "") {
+    if(command === ""){
 
         response.textContent =
-        "Please ask Alpha something.";
+        "🤖 Please ask Alpha something.";
 
         return;
 
@@ -46,95 +52,178 @@ function runAlphaCommand() {
 
 
 
-    // Greetings
+
+
+    // =========================
+    // GREETING
+    // =========================
+
     if(
         command.includes("hello") ||
         command.includes("hi") ||
         command.includes("hey")
-    ) {
+    ){
 
         answer =
-        "👋 Hello! I am Infinity Alpha. Ready to help you.";
+        "👋 Hello! I am Infinity Alpha. Your personal productivity assistant.";
 
     }
 
 
 
-    // Productivity
+
+
+    // =========================
+    // TASKS
+    // =========================
+
     else if(
-        command.includes("focus") ||
-        command.includes("work")
-    ) {
+        command.includes("task") ||
+        command.includes("todo")
+    ){
 
         answer =
-        "⏱️ Start a Pomodoro session and focus on one important task.";
+        "✅ Open Smart Tasks. I recommend completing your highest priority task first.";
 
     }
 
 
 
-    // Tasks
+
+
+    // =========================
+    // NOTES
+    // =========================
+
     else if(
-        command.includes("task")
-    ) {
+        command.includes("note") ||
+        command.includes("idea")
+    ){
 
         answer =
-        "✅ Check your Smart Tasks dashboard and organize your priorities.";
+        "📝 Smart Notes is ready. Capture your thoughts before they disappear.";
 
     }
 
 
 
-    // Finance
+
+
+    // =========================
+    // FINANCE
+    // =========================
+
     else if(
         command.includes("money") ||
         command.includes("finance") ||
         command.includes("budget")
-    ) {
+    ){
 
         answer =
-        "📈 Open Finance Alpha to track income, expenses, and balance.";
+        "📈 Finance Alpha is monitoring your transactions. Check your Financial Advisor for analysis.";
 
     }
 
 
 
-    // Notes
+
+
+    // =========================
+    // PRODUCTIVITY
+    // =========================
+
     else if(
-        command.includes("note")
-    ) {
+        command.includes("focus") ||
+        command.includes("pomodoro")
+    ){
 
         answer =
-        "📝 Use Smart Notes to capture your ideas and important information.";
+        "⏱️ Start a Pomodoro session. Focus for 25 minutes with no distractions.";
 
     }
 
 
 
-    // Time
+
+
+    // =========================
+    // TIME
+    // =========================
+
     else if(
         command.includes("time")
-    ) {
+    ){
 
         answer =
-        "🕒 Current time: " +
-        new Date().toLocaleTimeString();
+        "🕒 Current time: "
+        + new Date().toLocaleTimeString();
 
     }
 
 
 
-    // Default AI Response
+
+
+    // =========================
+    // DATE
+    // =========================
+
+    else if(
+        command.includes("date")
+    ){
+
+        answer =
+        "📅 Today is "
+        + new Date().toLocaleDateString();
+
+    }
+
+
+
+
+
+    // =========================
+    // HELP
+    // =========================
+
+    else if(
+        command.includes("help")
+    ){
+
+        answer =
+        `
+        🤖 Alpha Commands:
+
+        • tasks
+        • notes
+        • finance
+        • focus
+        • time
+        • date
+        `;
+
+    }
+
+
+
+
+
+    // =========================
+    // DEFAULT RESPONSE
+    // =========================
+
     else {
 
         answer =
-        "🤖 Alpha is still learning. Try asking about tasks, finance, focus, notes, or time.";
+        "🤖 I am still learning. Try asking about tasks, notes, finance, focus, or time.";
 
     }
 
 
 
-    response.textContent = answer;
+
+
+    response.innerHTML = answer;
 
 
     input.value = "";
@@ -147,4 +236,4 @@ function runAlphaCommand() {
     );
 
 
-}
+};
