@@ -212,72 +212,194 @@ const WealthEngine = {
 
 
 
+broadcast(){
 
-    broadcast(){
+
+    console.log(
+
+        "💰 Wealth Report",
+
+        this.data
+
+    );
 
 
-        console.log(
 
-            "💰 Wealth Report",
+    this.updateDashboard();
+
+
+
+    if(window.AlphaLive){
+
+
+        AlphaLive.send(
+
+            "wealth-update",
 
             this.data
 
         );
 
 
-
-        if(window.AlphaLive){
-
-
-            AlphaLive.send(
-
-                "wealth-update",
-
-                this.data
-
-            );
+    }
 
 
-        }
-
-
-    },
+},
 
 
 
 
+updateDashboard(){
 
-    report(){
 
 
-        return this.data;
+    const balance =
+
+    document.getElementById(
+        "wealthBalance"
+    );
+
+
+
+    const income =
+
+    document.getElementById(
+        "wealthIncome"
+    );
+
+
+
+    const expenses =
+
+    document.getElementById(
+        "wealthExpenses"
+    );
+
+
+
+    const score =
+
+    document.getElementById(
+        "wealthScore"
+    );
+
+
+
+    const status =
+
+    document.getElementById(
+        "wealthStatus"
+    );
+
+
+
+
+
+    if(balance){
+
+
+        balance.innerHTML =
+
+        new Intl.NumberFormat(
+
+            "en-US",
+
+            {
+
+                style:"currency",
+
+                currency:"USD"
+
+            }
+
+        ).format(
+            this.data.balance
+        );
 
 
     }
 
 
-};
+
+
+    if(income){
+
+
+        income.innerHTML =
+
+        "$" +
+
+        this.data.income.toFixed(2);
+
+
+    }
 
 
 
 
-
-window.WealthEngine = WealthEngine;
-
+    if(expenses){
 
 
+        expenses.innerHTML =
+
+        "$" +
+
+        this.data.expenses.toFixed(2);
 
 
-document.addEventListener(
-
-"DOMContentLoaded",
-
-()=>{
+    }
 
 
-    WealthEngine.init();
+
+
+    if(score){
+
+
+        score.innerHTML =
+
+        this.data.score;
+
+
+    }
+
+
+
+
+    if(status){
+
+
+        if(this.data.score >=80){
+
+
+            status.innerHTML =
+
+            "🟢 Financial health is strong";
+
+
+        }
+
+        else if(this.data.score >=60){
+
+
+            status.innerHTML =
+
+            "🟡 Improving financial position";
+
+
+        }
+
+        else{
+
+
+            status.innerHTML =
+
+            "🔴 Alpha recommends review";
+
+
+        }
+
+
+    }
 
 
 }
-
-);
