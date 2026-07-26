@@ -1,9 +1,9 @@
 // ==========================================
 // 🌤 INFINITY ALPHA OS
-// Weather Module v3.2 FINAL CLEAN
+// Weather Module v4.0 CLEAN CITY FIX
 // ==========================================
 
-console.log("🌤 Weather Module v3.2 Loaded");
+console.log("🌤 Weather Module v4.0 Loaded");
 
 
 const Weather = {
@@ -13,7 +13,7 @@ const Weather = {
 
     init() {
 
-        console.log("🚀 Starting Weather...");
+        console.log("🚀 Weather Starting...");
         console.log("📍 Requesting location...");
 
 
@@ -28,23 +28,19 @@ const Weather = {
         }
 
 
-
         navigator.geolocation.getCurrentPosition(
 
             (position) => {
 
-
                 const lat =
                     position.coords.latitude;
-
 
                 const lon =
                     position.coords.longitude;
 
 
-
                 console.log(
-                    "✅ GPS SUCCESS:",
+                    "✅ GPS:",
                     lat,
                     lon
                 );
@@ -58,7 +54,6 @@ const Weather = {
 
             (error) => {
 
-
                 console.error(
                     "GPS ERROR:",
                     error
@@ -66,29 +61,22 @@ const Weather = {
 
 
                 this.showError(
-                    "Location unavailable"
+                    "Location permission denied"
                 );
-
 
             },
 
 
             {
-
                 enableHighAccuracy: false,
-
                 timeout: 15000,
-
                 maximumAge: 60000
-
             }
-
 
         );
 
 
     },
-
 
 
     async load(lat, lon) {
@@ -102,14 +90,12 @@ const Weather = {
             );
 
 
-
             const weatherResponse =
                 await fetch(
 
 `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code`
 
                 );
-
 
 
             const weather =
@@ -124,14 +110,13 @@ const Weather = {
 
 
 
-
             console.log(
                 "📍 Finding city..."
             );
 
 
 
-            const locationResponse =
+            const cityResponse =
                 await fetch(
 
 `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`
@@ -141,7 +126,7 @@ const Weather = {
 
 
             const location =
-                await locationResponse.json();
+                await cityResponse.json();
 
 
 
@@ -152,31 +137,39 @@ const Weather = {
 
 
 
-            const city =
+            const cityName =
 
                 location.city ||
 
                 location.locality ||
 
+                location.principalSubdivision ||
+
                 location.localityInfo
                 ?.administrative
-                ?.find(x => x.name)
+                ?.find(
+                    item => item.name
+                )
                 ?.name ||
-
-                location.principalSubdivision ||
 
                 location.countryName ||
 
-                "Unknown Location";
+                "Current Location";
 
 
+
+            console.log(
+                "🏙 City:",
+                cityName
+            );
 
 
 
             this.data = {
 
 
-                city: city,
+                city:
+                    cityName,
 
 
                 temperature:
@@ -185,15 +178,12 @@ const Weather = {
                     ),
 
 
-
                 humidity:
                     weather.current.relative_humidity_2m,
 
 
-
                 wind:
                     weather.current.wind_speed_10m,
-
 
 
                 condition:
@@ -202,7 +192,6 @@ const Weather = {
                     )
 
             };
-
 
 
 
@@ -241,9 +230,7 @@ const Weather = {
 
 
 
-
     render() {
-
 
 
         const temp =
@@ -277,94 +264,70 @@ const Weather = {
 
 
 
-
         if(temp)
-
             temp.textContent =
             `${this.data.temperature}°C`;
 
 
 
         if(city)
-
             city.textContent =
             `📍 ${this.data.city}`;
 
 
 
         if(desc)
-
             desc.textContent =
             this.data.condition;
 
 
 
         if(humidity)
-
             humidity.textContent =
             `${this.data.humidity}%`;
 
 
 
         if(wind)
-
             wind.textContent =
             `${this.data.wind} km/h`;
 
 
-
     },
-
-
 
 
 
     describe(code) {
 
 
-        switch(true) {
+        if(code === 0)
+            return "☀️ Clear Sky";
 
 
-            case code === 0:
-
-                return "☀️ Clear Sky";
-
-
-            case code <= 3:
-
-                return "⛅ Partly Cloudy";
+        if(code <= 3)
+            return "⛅ Partly Cloudy";
 
 
-            case code <= 48:
-
-                return "🌫 Fog";
-
-
-            case code <= 67:
-
-                return "🌧 Rain";
+        if(code <= 48)
+            return "🌫 Fog";
 
 
-            case code <= 82:
-
-                return "🌦 Showers";
-
-
-            case code <= 99:
-
-                return "⛈ Thunderstorm";
+        if(code <= 67)
+            return "🌧 Rain";
 
 
-            default:
+        if(code <= 82)
+            return "🌦 Showers";
 
-                return "Unknown";
 
-        }
+        if(code <= 99)
+            return "⛈ Thunderstorm";
+
+
+        return "Unknown";
 
 
     },
-
-
 
 
 
@@ -394,23 +357,17 @@ const Weather = {
             );
 
 
-
         if(city)
-
             city.textContent =
             message;
 
 
-
         if(temp)
-
             temp.textContent =
             "--°C";
 
 
-
         if(desc)
-
             desc.textContent =
             "--";
 
@@ -422,12 +379,6 @@ const Weather = {
 
 
 
-
-// ==========================================
-// 🌤 AUTO START WEATHER
-// ==========================================
+// Make available to Alpha Engine
 
 window.Weather = Weather;
-
-
-Weather.init();
