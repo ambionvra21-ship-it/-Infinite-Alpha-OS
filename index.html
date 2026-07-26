@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Infinity Alpha v0.3 Phoenix</title>
+
+<meta name="description"
+content="Infinity Alpha Productivity Operating System">
+
+<meta name="theme-color"
+content="#0b1120">
+
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+<link rel="stylesheet"
+href="style.css">
+
+</head>
+
+<body>
+
+<div class="app">
+
+<!-- ===================================== -->
+<!-- SIDEBAR -->
+<!-- ===================================== -->
+
+<aside class="sidebar">
+
+<div class="brand">
+
+<div class="brand-logo">
+
+∞
+
+</div>
+
+<div class="brand-info">
+
+<h1>Infinity</h1>
+
+<span>Alpha v0.3 Phoenix</span>
+
+</div>
+
+</div>
+
+<nav class="sidebar-nav">
+
+<ul>
+
+<li><a href="#dashboard" class="active">🏠 Dashboard</a></li>
+
+<li><a href="#pomodoro">⏱️ Pomodoro</a></li>
+
+<li><a href="#calculator">🧮 Calculator</a></li>
+
+<li><a href="#currency">💱 Currency</a></li>
+
+<li><a href="#notes">📝 Notes</a></li>
+
+<li><a href="#tasks">✅ Tasks</a></li>
+
+<li><a href="#weather">☀️ Weather</a></li>
+
+<li><a href="#finance">📈 Finance</a></li>
+
+<li><a href="#assistant">🤖 Alpha AI</a></li>
+
+<li><a href="#settings">⚙️ Settings</a></li>
+
+</ul>
+
+</nav>
+
+</aside>
+
+<!-- ===================================== -->
+<!-- MAIN CONTENT -->
+<!-- ===================================== -->
+
+<main class="main-content">
+
+<header class="topbar">
+
+<div class="topbar-left">
+
+<button
+id="menuButton"
+class="icon-button">
+
+☰
+
+</button>
+
+<div>
+
+<h2 id="greetingTitle">
+
+Loading...
+
+</h2>
+
+<p id="greetingMessage">
+
+Preparing Infinity Alpha...
+
+</p>
+
+</div>
+
+</div>
+
+<div class="topbar-right">
+
+<input
+
+type="search"
+
+id="globalSearch"
+
+placeholder="Search Infinity Alpha...">
+
+<button
+
+id="themeToggle"
+
+class="icon-button">
+
+🌙
+
+</button>
+
+<button class="profile-button">
+
+VA
+
+</button>
+
+</div>
+
+</header>
+
+<!-- ===================================== -->
+<!-- DASHBOARD -->
+<!-- ===================================== -->
+
+<section
+id="dashboard"
+class="dashboard">
+
+<section class="hero-card">
+
+<div>
+
+<span class="badge">
+
+Infinity Alpha OS
+
+</span>
+
+<h2>
+
+Your Personal Productivity Operating System
+
+</h2>
+
+<p>
+
+Manage productivity, finances,
+weather, notes, AI,
+tasks and focus sessions
+from one intelligent workspace.
+
+</p>
+
+</div>
+
+<div class="hero-actions">
+
+<button class="primary-btn">
+
+Launch Workspace
+
+</button>
+
+<button class="secondary-btn">
+
+Documentation
+
+</button>
+
+</div>
+
+</section>
+
+<section class="dashboard-grid">
+
+  <!-- ===================================== -->
+<!-- ⏱️ POMODORO -->
+<!-- ===================================== -->
+
+<div class="widget" id="pomodoro">
+
+<h2>⏱️ Pomodoro</h2>
+
+<div id="pomodoroTime">
+
+25:00
+
+</div>
+
+<button
+id="pomoStartBtn"
+onclick="togglePomodoro()">
+
+Start
+
+</button>
+
+<button
+onclick="resetPomodoro()">
+
+Reset
+
+</button>
+
+</div>
+
+
+
+<!-- ===================================== -->
+<!-- 🧮 CALCULATOR -->
+<!-- ===================================== -->
+
+<div class="widget" id="calculator">
+
+<h2>🧮 Calculator</h2>
+
+<input
+type="text"
+id="calcDisplay"
+readonly>
+
+<div class="calculator-buttons">
+
+<button onclick="clearCalc()">C</button>
+<button onclick="deleteCalc()">DEL</button>
+<button onclick="appendCalc('/')">÷</button>
+<button onclick="appendCalc('*')">×</button>
+
+<button onclick="appendCalc('7')">7</button>
+<button onclick="appendCalc('8')">8</button>
+<button onclick="appendCalc('9')">9</button>
+<button onclick="appendCalc('-')">−</button>
+
+<button onclick="appendCalc('4')">4</button>
+<button onclick="appendCalc('5')">5</button>
+<button onclick="appendCalc('6')">6</button>
+<button onclick="appendCalc('+')">+</button>
+
+<button onclick="appendCalc('1')">1</button>
+<button onclick="appendCalc('2')">2</button>
+<button onclick="appendCalc('3')">3</button>
+<button onclick="calculateCalc()">=</button>
+
+<button onclick="appendCalc('0')">0</button>
+<button onclick="appendCalc('.')">.</button>
+
+</div>
+
+</div>
+
+
+
+<!-- ===================================== -->
+<!-- 💱 CURRENCY -->
+<!-- ===================================== -->
+
+<div class="widget" id="currency">
+
+<h2>💱 Currency Converter</h2>
+
+<input
+type="number"
+id="amount"
+value="1">
+
+<br><br>
+
+<select id="fromCurrency">
+
+<option value="USD">USD</option>
+<option value="PHP">PHP</option>
+<option value="EUR">EUR</option>
+<option value="GBP">GBP</option>
+<option value="JPY">JPY</option>
+
+</select>
+
+<span> → </span>
+
+<select id="toCurrency">
+
+<option value="PHP">PHP</option>
+<option value="USD">USD</option>
+<option value="EUR">EUR</option>
+<option value="GBP">GBP</option>
+<option value="JPY">JPY</option>
+
+</select>
+
+<br><br>
+
+<button onclick="convertCurrency()">
+
+Convert
+
+</button>
+
+<h3 id="currencyResult">
+
+Result will appear here
+
+</h3>
+
+</div>
+
+
+
+<!-- ===================================== -->
+<!-- 📝 SMART NOTES -->
+<!-- ===================================== -->
+
+<div class="widget" id="notes">
+
+<h2>📝 Smart Notes</h2>
+
+<input
+type="text"
+id="noteTitle"
+placeholder="Title">
+
+<textarea
+id="noteContent"
+placeholder="Write your ideas...">
+
+</textarea>
+
+<button onclick="saveNote()">
+
+Save Note
+
+</button>
+
+<button onclick="clearNote()">
+
+New Note
+
+</button>
+
+<input
+type="search"
+id="noteSearch"
+placeholder="Search notes..."
+onkeyup="searchNotes()">
+
+<div id="notesList">
+
+</div>
+
+</div>
+
+
+
+<!-- ===================================== -->
+<!-- ✅ SMART TASKS -->
+<!-- ===================================== -->
+
+<div class="widget" id="tasks">
+
+<h2>✅ Smart Tasks</h2>
+
+<input
+type="text"
+id="taskInput"
+placeholder="Enter new task...">
+
+<button onclick="addTask()">
+
+Add Task
+
+</button>
+
+<div class="task-progress">
+
+<div id="taskProgressBar">
+
+</div>
+
+</div>
+
+<p id="taskStats">
+
+0 of 0 completed
+
+</p>
+
+<ul id="taskList">
+
+</ul>
+
+</div>
+
+  <!-- ===================================== -->
+<!-- ☀️ WEATHER -->
+<!-- ===================================== -->
+
+<div class="widget" id="weather">
+
+<h2>☀️ Weather</h2>
+
+<h1 id="weatherTemp">--°C</h1>
+
+<h3 id="weatherCity">
+
+Detecting location...
+
+</h3>
+
+<p id="weatherDesc">
+
+Loading weather...
+
+</p>
+
+<hr>
+
+<p>
+
+💧 Humidity:
+<span id="humidity">--%</span>
+
+</p>
+
+<p>
+
+🌬 Wind:
+<span id="wind">-- km/h</span>
+
+</p>
+
+</div>
+
+
+
+<!-- ===================================== -->
+<!-- 📈 FINANCE -->
+<!-- ===================================== -->
+
+<div class="widget" id="finance">
+
+<h2>📈 Finance Alpha</h2>
+
+<div class="finance-summary">
+
+<div class="finance-card">
+
+<h3>💵 Income</h3>
+
+<h2 id="totalIncome">$0.00</h2>
+
+</div>
+
+<div class="finance-card">
+
+<h3>💸 Expenses</h3>
+
+<h2 id="totalExpenses">$0.00</h2>
+
+</div>
+
+<div class="finance-card">
+
+<h3>📊 Balance</h3>
+
+<h2 id="totalBalance">$0.00</h2>
+
+</div>
+
+</div>
+
+<hr>
+
+<h3>Add Transaction</h3>
+
+<input
+type="text"
+id="financeDescription"
+placeholder="Description">
+
+<input
+type="number"
+id="financeAmount"
+placeholder="Amount">
+
+<select id="financeCategory">
+
+<option value="Income">💵 Income</option>
+
+<option value="Food">🍔 Food</option>
+
+<option value="Bills">📱 Bills</option>
+
+<option value="Transport">🚗 Transport</option>
+
+<option value="Shopping">🛒 Shopping</option>
+
+<option value="Other">📦 Other</option>
+
+</select>
+
+<button onclick="addFinanceTransaction()">
+
+Add Transaction
+
+</button>
+
+<h3>
+
+Transaction History
+
+</h3>
+
+<ul id="financeList">
+
+</ul>
+
+<hr>
+
+<h3>
+
+🤖 Alpha Financial Advisor
+
+</h3>
+
+<button onclick="runAlphaFinanceAI()">
+
+Analyze My Finances
+
+</button>
+
+<div id="alphaFinanceReport">
+
+Waiting for analysis...
+
+</div>
+
+<div id="alphaFinanceScore">
+
+</div>
+
+<div id="alphaFinanceAdvice">
+
+</div>
+
+</div>
+
+
+
+<!-- ===================================== -->
+<!-- 🤖 ALPHA AI -->
+<!-- ===================================== -->
+
+<div class="widget" id="assistant">
+
+<h2>🤖 Alpha AI Assistant</h2>
+
+<input
+
+type="text"
+
+id="alphaCommandInput"
+
+placeholder="Ask Alpha anything...">
+
+<button
+
+onclick="runAlphaCommand()">
+
+Ask
+
+</button>
+
+<div id="alphaAssistantResponse">
+
+Hello! I am Infinity Alpha.
+
+</div>
+
+</div>
+
+</section>
+
+</main>
+
+</div>
+
+
+
+<!-- ===================================== -->
+<!-- JAVASCRIPT -->
+<!-- ===================================== -->
+
+<script src="js/core.js"></script>
+
+<script src="js/greeting.js"></script>
+
+<script src="js/pomodoro.js"></script>
+
+<script src="js/calculator.js"></script>
+
+<script src="js/currency.js"></script>
+
+<script src="js/notes.js"></script>
+
+<script src="js/tasks.js"></script>
+
+<script src="js/weather.js"></script>
+
+<script src="js/finance.js"></script>
+
+<script src="js/alphaAI.js"></script>
+
+<script src="js/app.js"></script>
+
+</body>
+
+</html>
