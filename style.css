@@ -1545,3 +1545,115 @@ body{
     color:var(--muted);
 
 }
+
+/* ==================================================
+   🌍 GLOBAL MARKET RIBBON v2
+================================================== */
+
+.market-ribbon{
+
+    position:relative;
+
+    width:100%;
+
+    height:60px;
+
+    margin:25px 0;
+
+    overflow:hidden;
+
+    border-radius:18px;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    background:linear-gradient(
+        90deg,
+        rgba(20,24,35,.95),
+        rgba(35,42,58,.95)
+    );
+
+    display:flex;
+
+    align-items:center;
+
+}
+
+.market-track{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:45px;
+
+    white-space:nowrap;
+
+    will-change:transform;
+
+    animation:marketTicker 35s linear infinite;
+
+    padding-left:100%;
+
+}
+
+.market-ribbon:hover .market-track{
+
+    animation-play-state:paused;
+
+}
+
+.market-item{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    font-size:15px;
+
+    font-weight:700;
+
+}
+
+.market-price{
+
+    color:#ffffff;
+
+}
+
+.market-positive{
+
+    color:#22c55e;
+
+}
+
+.market-negative{
+
+    color:#ef4444;
+
+}
+
+.market-live{
+
+    color:#00e0ff;
+
+    font-weight:700;
+
+}
+
+@keyframes marketTicker{
+
+    from{
+
+        transform:translateX(0);
+
+    }
+
+    to{
+
+        transform:translateX(-100%);
+
+    }
+
+}
