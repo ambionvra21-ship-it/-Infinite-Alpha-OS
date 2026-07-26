@@ -1,86 +1,53 @@
 // ==========================================
-// 🤖 INFINITY ALPHA v4
-// User Interface Controller
+// 🤖 ALPHA UI v1.0
 // ==========================================
 
-console.log("💬 Alpha UI v4 Loaded");
-
-
+console.log("💬 Alpha UI Ready");
 
 window.askAlpha = async function(){
-
 
     const input =
     document.getElementById("alphaCommandInput");
 
-
     const output =
     document.getElementById("alphaAssistantResponse");
 
+    if(!input || !output) return;
 
-
-    if(!input || !output){
-
-        console.log("Alpha UI elements missing");
-        return;
-
-    }
-
-
-
-    const message =
+    const question =
     input.value.trim();
 
-
-
-    if(message === ""){
+    if(question===""){
 
         output.innerHTML =
-        "🤖 Please ask Alpha something.";
+        "🤖 Ask me something.";
 
         return;
 
     }
 
-
-
     output.innerHTML =
-    "🤖 Alpha is thinking...";
-
-
+    "🤖 Thinking...";
 
     try{
 
-
-        const answer =
-        await Alpha.ask(message);
-
-
+        const reply =
+        await Alpha.ask(question);
 
         output.innerHTML =
-        answer;
-
-
+        reply;
 
     }
 
     catch(error){
 
-
-        console.error(
-            "Alpha Error:",
-            error
-        );
-
+        console.error(error);
 
         output.innerHTML =
         "⚠️ Alpha encountered an error.";
 
     }
 
-
-
-    input.value = "";
-
+    input.value="";
 
 };
