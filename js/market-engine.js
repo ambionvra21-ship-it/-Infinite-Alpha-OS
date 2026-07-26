@@ -232,22 +232,75 @@ coin.price_change_percentage_24h
 
 
 
-    updateTicker(){
+ updateTicker(){
 
-        // Batch 2
+    const ticker =
 
-    }
+    document.getElementById(
 
-};
+        "marketTicker"
 
+    );
 
+    if(!ticker) return;
 
-document.addEventListener(
+    let html="";
 
-"DOMContentLoaded",
+    this.coins.forEach(
 
-()=>{
+        coin=>{
 
-MarketEngine.init();
+            const positive=
 
-});
+            coin.price_change_percentage_24h>=0;
+
+            html+=`
+
+<div class="market-item">
+
+<img
+src="${coin.image}"
+width="22"
+height="22">
+
+<strong>
+
+${coin.symbol.toUpperCase()}
+
+</strong>
+
+<span class="market-price">
+
+$${coin.current_price.toLocaleString()}
+
+</span>
+
+<span class="${
+positive
+?
+"market-positive"
+:
+"market-negative"
+}">
+
+${positive?"▲":"▼"}
+
+${Math.abs(
+coin.price_change_percentage_24h
+).toFixed(2)}%
+
+</span>
+
+</div>
+
+`;
+
+        }
+
+    );
+
+    html+=html;
+
+    ticker.innerHTML=html;
+
+}
