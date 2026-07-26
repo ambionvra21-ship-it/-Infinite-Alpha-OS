@@ -1,1 +1,1486 @@
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<title>Infinity Alpha X</title>
+
+<meta name="theme-color"
+content="#050816">
+
+
+<link rel="preconnect"
+href="https://fonts.googleapis.com">
+
+
+<link rel="preconnect"
+href="https://fonts.gstatic.com"
+crossorigin>
+
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+rel="stylesheet">
+
+
+<link rel="stylesheet"
+href="style.css">
+
+
+</head>
+
+
+<body>
+
+
+<div class="alpha-os">
+
+
+<!-- ================================= -->
+<!-- GLOBAL SIDEBAR -->
+<!-- ================================= -->
+
+
+<aside class="alpha-sidebar">
+
+
+<div class="alpha-brand">
+
+
+<div class="alpha-symbol">
+
+∞
+
+</div>
+
+
+<div>
+
+<h1>
+
+Alpha X
+
+</h1>
+
+<p>
+
+AI Operating System
+
+</p>
+
+
+</div>
+
+
+</div>
+
+
+
+<div class="alpha-status">
+
+
+<span></span>
+
+
+<div>
+
+<strong>
+
+Alpha Core
+
+</strong>
+
+<small>
+
+ONLINE
+
+</small>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<nav>
+
+
+<a class="active">
+
+🏠 Command Center
+
+</a>
+
+
+<a>
+
+🧠 Alpha Brain
+
+</a>
+
+
+<a>
+
+💰 Wealth OS
+
+</a>
+
+
+<a>
+
+📈 Markets
+
+</a>
+
+
+<a>
+
+✅ Productivity
+
+</a>
+
+
+<a>
+
+🌍 Global Settings
+
+</a>
+
+
+</nav>
+
+
+
+</aside>
+
+
+
+
+
+<!-- ================================= -->
+<!-- MAIN COMMAND AREA -->
+<!-- ================================= -->
+
+
+<main class="alpha-main">
+
+
+
+
+
+<header class="alpha-header">
+
+
+<div>
+
+
+<h2 id="alphaGreeting">
+
+Initializing Alpha...
+
+</h2>
+
+
+<p id="alphaMessage">
+
+Preparing intelligence system...
+
+</p>
+
+
+</div>
+
+
+
+<div class="alpha-tools">
+
+
+<input
+
+type="search"
+
+placeholder="Ask Alpha anything...">
+
+
+<button>
+
+🌙
+
+</button>
+
+
+<div class="user-circle">
+
+VA
+
+</div>
+
+
+</div>
+
+
+</header>
+
+
+
+
+
+<!-- ================================= -->
+<!-- AI COMMAND CENTER -->
+<!-- ================================= -->
+
+
+<section class="alpha-command">
+
+
+<div>
+
+
+<span>
+
+🧠 AI DAILY INTELLIGENCE
+
+</span>
+
+
+<h1>
+
+Your world,
+organized by Alpha.
+
+</h1>
+
+
+<p>
+
+Finance, productivity,
+markets and decisions
+connected in one intelligent system.
+
+</p>
+
+
+<button>
+
+🚀 Enter Alpha
+
+</button>
+
+
+</div>
+
+
+
+<div class="ai-orb">
+
+
+<div class="orb-core">
+
+AI
+
+</div>
+
+
+</div>
+
+
+</section>
+
+<!-- ================================= -->
+<!-- ALPHA INTELLIGENCE GRID -->
+<!-- ================================= -->
+
+
+<section class="alpha-grid">
+
+
+<!-- =============================== -->
+<!-- AI SCORE -->
+<!-- =============================== -->
+
+
+<div class="alpha-card intelligence-card">
+
+
+<div class="card-title">
+
+🧠 Alpha Intelligence
+
+</div>
+
+
+<div class="ai-score">
+
+
+<div class="score-ring">
+
+87%
+
+</div>
+
+
+<div>
+
+<h3>
+
+System Health
+
+</h3>
+
+
+<p>
+
+Alpha Core analyzing your activity.
+
+</p>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+<!-- =============================== -->
+<!-- WEALTH OS -->
+<!-- =============================== -->
+
+
+<div class="alpha-card wealth-card">
+
+
+<div class="card-title">
+
+💰 Wealth OS
+
+</div>
+
+
+<div class="currency-header">
+
+
+<span>
+
+🌍 Base Currency
+
+</span>
+
+
+<select id="baseCurrency">
+
+
+<option value="USD">
+
+🇺🇸 USD
+
+</option>
+
+
+<option value="PHP">
+
+🇵🇭 PHP
+
+</option>
+
+
+<option value="EUR">
+
+🇪🇺 EUR
+
+</option>
+
+
+<option value="GBP">
+
+🇬🇧 GBP
+
+</option>
+
+
+<option value="JPY">
+
+🇯🇵 JPY
+
+</option>
+
+
+</select>
+
+
+</div>
+
+
+
+
+<div class="money-display">
+
+
+<small>
+
+Total Net Worth
+
+</small>
+
+
+<h1 id="netWorth">
+
+$0.00
+
+</h1>
+
+
+<p>
+
+▲ 0% this month
+
+</p>
+
+
+</div>
+
+
+
+<div class="money-row">
+
+
+<div>
+
+Income
+
+<strong id="alphaIncome">
+
+$0
+
+</strong>
+
+
+</div>
+
+
+
+<div>
+
+Expenses
+
+<strong id="alphaExpenses">
+
+$0
+
+</strong>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+
+
+
+
+<!-- =============================== -->
+<!-- LIVE MARKETS -->
+<!-- =============================== -->
+
+
+<div class="alpha-card market-card">
+
+
+<div class="card-title">
+
+📈 Live Intelligence
+
+</div>
+
+
+
+<div class="market-row">
+
+
+<span>
+
+₿ Bitcoin
+
+</span>
+
+
+<strong>
+
+Loading...
+
+</strong>
+
+
+</div>
+
+
+
+
+<div class="market-row">
+
+
+<span>
+
+Ξ Ethereum
+
+</span>
+
+
+<strong>
+
+Loading...
+
+</strong>
+
+
+</div>
+
+
+
+
+<div class="market-row">
+
+
+<span>
+
+🥇 Gold
+
+</span>
+
+
+<strong>
+
+Loading...
+
+</strong>
+
+
+</div>
+
+
+
+
+<div class="market-row">
+
+
+<span>
+
+💱 USD/PHP
+
+</span>
+
+
+<strong>
+
+Loading...
+
+</strong>
+
+
+</div>
+
+
+
+</div>
+
+
+
+
+
+
+<!-- =============================== -->
+<!-- PRODUCTIVITY -->
+<!-- =============================== -->
+
+
+<div class="alpha-card productivity-card">
+
+
+<div class="card-title">
+
+⚡ Productivity Core
+
+</div>
+
+
+
+<div class="productivity-items">
+
+
+<div>
+
+⏱ Focus
+
+<strong>
+
+25:00
+
+</strong>
+
+</div>
+
+
+
+<div>
+
+✅ Tasks
+
+<strong>
+
+0
+
+</strong>
+
+</div>
+
+
+
+<div>
+
+📝 Notes
+
+<strong>
+
+0
+
+</strong>
+
+</div>
+
+
+
+</div>
+
+
+</div>
+
+
+
+</section>
+
+
+
+
+
+
+<!-- ================================= -->
+<!-- ALPHA ACTIVITY TIMELINE -->
+<!-- ================================= -->
+
+
+<section class="alpha-card timeline-card">
+
+
+<div class="card-title">
+
+🤖 Alpha Timeline
+
+</div>
+
+
+
+<div class="timeline">
+
+
+<div>
+
+<span>
+
+●
+
+</span>
+
+
+Alpha Core initialized
+
+</div>
+
+
+
+<div>
+
+<span>
+
+●
+
+</span>
+
+
+Global currency system ready
+
+</div>
+
+
+
+<div>
+
+<span>
+
+●
+
+</span>
+
+
+Waiting for user intelligence
+
+</div>
+
+
+</div>
+
+
+</section>
+
+<!-- ================================= -->
+<!-- GLOBAL ALPHA SETTINGS -->
+<!-- ================================= -->
+
+
+<section class="alpha-card global-card">
+
+
+<div class="card-title">
+
+🌍 Global Alpha Profile
+
+</div>
+
+
+
+<div class="global-grid">
+
+
+
+<div class="setting-box">
+
+
+<h3>
+
+🌐 Region
+
+</h3>
+
+
+<p>
+
+Choose your Alpha environment
+
+</p>
+
+
+<select id="countrySelect">
+
+
+<option>
+
+🇵🇭 Philippines
+
+</option>
+
+
+<option>
+
+🇺🇸 United States
+
+</option>
+
+
+<option>
+
+🇬🇧 United Kingdom
+
+</option>
+
+
+<option>
+
+🇪🇺 European Union
+
+</option>
+
+
+<option>
+
+🇯🇵 Japan
+
+</option>
+
+
+<option>
+
+🇸🇬 Singapore
+
+</option>
+
+
+</select>
+
+
+</div>
+
+
+
+
+
+
+<div class="setting-box">
+
+
+<h3>
+
+💱 Currency
+
+</h3>
+
+
+<p>
+
+Primary financial display
+
+</p>
+
+
+<select id="currencySelect">
+
+
+<option value="USD">
+
+USD $
+
+</option>
+
+
+<option value="PHP">
+
+PHP ₱
+
+</option>
+
+
+<option value="EUR">
+
+EUR €
+
+</option>
+
+
+<option value="GBP">
+
+GBP £
+
+</option>
+
+
+<option value="JPY">
+
+JPY ¥
+
+</option>
+
+
+<option value="SGD">
+
+SGD $
+
+</option>
+
+
+</select>
+
+
+</div>
+
+
+
+
+
+
+<div class="setting-box">
+
+
+<h3>
+
+🌡 Climate
+
+</h3>
+
+
+<p>
+
+Temperature preference
+
+</p>
+
+
+<select id="temperatureMode">
+
+
+<option>
+
+Celsius °C
+
+</option>
+
+
+<option>
+
+Fahrenheit °F
+
+</option>
+
+
+</select>
+
+
+</div>
+
+
+
+
+
+<div class="setting-box">
+
+
+<h3>
+
+🕒 Time
+
+</h3>
+
+
+<p>
+
+Clock preference
+
+</p>
+
+
+<select id="timeMode">
+
+
+<option>
+
+24 Hour
+
+</option>
+
+
+<option>
+
+12 Hour
+
+</option>
+
+
+</select>
+
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<!-- ================================= -->
+<!-- ASSET INTELLIGENCE -->
+<!-- ================================= -->
+
+
+<section class="alpha-card asset-card">
+
+
+<div class="card-title">
+
+📊 Asset Intelligence
+
+</div>
+
+
+
+
+<div class="asset-grid">
+
+
+
+<div class="asset-item">
+
+
+<span>
+
+💵 Cash
+
+</span>
+
+
+<strong>
+
+$0
+
+</strong>
+
+
+</div>
+
+
+
+
+
+<div class="asset-item">
+
+
+<span>
+
+₿ Crypto
+
+</span>
+
+
+<strong>
+
+$0
+
+</strong>
+
+
+</div>
+
+
+
+
+
+
+<div class="asset-item">
+
+
+<span>
+
+📈 Stocks
+
+</span>
+
+
+<strong>
+
+$0
+
+</strong>
+
+
+</div>
+
+
+
+
+
+
+<div class="asset-item">
+
+
+<span>
+
+🏠 Property
+
+</span>
+
+
+<strong>
+
+$0
+
+</strong>
+
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<!-- ================================= -->
+<!-- ALPHA RECOMMENDATION ENGINE -->
+<!-- ================================= -->
+
+
+<section class="alpha-card recommendation-card">
+
+
+<div class="card-title">
+
+🤖 Alpha Recommendations
+
+</div>
+
+
+
+
+<div class="recommendation">
+
+
+<div class="recommendation-icon">
+
+💡
+
+</div>
+
+
+
+<div>
+
+
+<h3>
+
+Daily Insight
+
+</h3>
+
+
+<p id="alphaRecommendation">
+
+
+Alpha is preparing your personalized recommendations.
+
+</p>
+
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+<!-- ================================= -->
+<!-- ALPHA CORE CONNECTION HUB -->
+<!-- ================================= -->
+
+
+<section class="alpha-card core-card">
+
+
+<div class="card-title">
+
+🧠 Alpha Core Systems
+
+</div>
+
+
+
+<div class="core-grid">
+
+
+
+<div class="core-module">
+
+<span>
+
+🌤
+
+</span>
+
+<div>
+
+<h3>
+
+Weather Engine
+
+</h3>
+
+<p id="weatherStatus">
+
+Connecting...
+
+</p>
+
+</div>
+
+</div>
+
+
+
+
+
+<div class="core-module">
+
+<span>
+
+💰
+
+</span>
+
+<div>
+
+<h3>
+
+Finance Engine
+
+</h3>
+
+<p>
+
+Ready
+
+</p>
+
+</div>
+
+</div>
+
+
+
+
+
+
+<div class="core-module">
+
+<span>
+
+✅
+
+</span>
+
+<div>
+
+<h3>
+
+Task Engine
+
+</h3>
+
+<p>
+
+Ready
+
+</p>
+
+</div>
+
+</div>
+
+
+
+
+
+
+<div class="core-module">
+
+<span>
+
+⏱️
+
+</span>
+
+<div>
+
+<h3>
+
+Focus Engine
+
+</h3>
+
+<p>
+
+Ready
+
+</p>
+
+</div>
+
+</div>
+
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<!-- ================================= -->
+<!-- ALPHA ASSISTANT -->
+<!-- ================================= -->
+
+
+<section class="alpha-card alpha-chat-card">
+
+
+<div class="card-title">
+
+🤖 Talk With Alpha
+
+</div>
+
+
+
+
+<div id="alphaAssistantResponse"
+class="alpha-response">
+
+
+Welcome to Alpha X.
+
+Your intelligent operating system is initializing.
+
+
+</div>
+
+
+
+
+
+<div class="alpha-input">
+
+
+<input
+
+id="alphaCommandInput"
+
+type="text"
+
+placeholder="Ask Alpha anything..."
+
+>
+
+
+
+<button
+
+onclick="askAlpha()">
+
+🚀 Ask
+
+</button>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+<!-- ================================= -->
+<!-- SYSTEM FOOTER -->
+<!-- ================================= -->
+
+
+<footer class="alpha-footer">
+
+
+<div>
+
+
+<strong>
+
+Infinity Alpha X
+
+</strong>
+
+
+<p>
+
+AI Operating System v1.0
+
+</p>
+
+
+</div>
+
+
+
+<div>
+
+
+<span>
+
+🟢 Alpha Core Online
+
+</span>
+
+
+</div>
+
+
+</footer>
+
+
+
+
+</main>
+
+</div>
+
+
+
+
+
+<!-- ================================= -->
+<!-- JAVASCRIPT CORE -->
+<!-- ================================= -->
+
+
+<script src="js/greeting.js"></script>
+
+<script src="js/pomodoro.js"></script>
+
+<script src="js/calculator.js"></script>
+
+<script src="js/currency.js"></script>
+
+<script src="js/notes.js"></script>
+
+<script src="js/tasks.js"></script>
+
+<script src="js/finance.js"></script>
+
+<script src="js/weather.js"></script>
+
+<script src="js/alpha.js"></script>
+
+<script src="js/alpha-ui.js"></script>
+
+<script src="js/app.js"></script>
+
+
+
+</body>
+
+</html>
