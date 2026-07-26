@@ -1,0 +1,829 @@
+/* ==========================================
+   INFINITY ALPHA v0.3 PHOENIX
+   GLOBAL FOUNDATION
+========================================== */
+
+*{
+
+    margin:0;
+
+    padding:0;
+
+    box-sizing:border-box;
+
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    font-family:'Inter',sans-serif;
+
+    background:#0b1120;
+
+    color:#ffffff;
+
+    overflow-x:hidden;
+
+}
+
+/* ==========================================
+   MAIN LAYOUT
+========================================== */
+
+.app{
+
+    display:flex;
+
+    min-height:100vh;
+
+}
+
+/* ==========================================
+   SIDEBAR
+========================================== */
+
+.sidebar{
+
+    width:260px;
+
+    background:#111827;
+
+    border-right:1px solid rgba(255,255,255,.08);
+
+    padding:30px 20px;
+
+    position:fixed;
+
+    top:0;
+
+    left:0;
+
+    bottom:0;
+
+}
+
+.brand{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+    margin-bottom:40px;
+
+}
+
+.brand-logo{
+
+    width:55px;
+
+    height:55px;
+
+    border-radius:15px;
+
+    background:#2563eb;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    font-size:28px;
+
+    font-weight:bold;
+
+}
+
+.brand-info h1{
+
+    font-size:22px;
+
+}
+
+.brand-info span{
+
+    color:#94a3b8;
+
+    font-size:13px;
+
+}
+
+/* ==========================================
+   MENU
+========================================== */
+
+.sidebar-nav ul{
+
+    list-style:none;
+
+}
+
+.sidebar-nav li{
+
+    margin-bottom:10px;
+
+}
+
+.sidebar-nav a{
+
+    display:block;
+
+    text-decoration:none;
+
+    color:#cbd5e1;
+
+    padding:14px 18px;
+
+    border-radius:12px;
+
+    transition:.25s;
+
+}
+
+.sidebar-nav a:hover{
+
+    background:#1d4ed8;
+
+    color:white;
+
+}
+
+.sidebar-nav .active{
+
+    background:#2563eb;
+
+    color:white;
+
+}
+
+/* ==========================================
+   CONTENT
+========================================== */
+
+.main-content{
+
+    margin-left:260px;
+
+    width:100%;
+
+    padding:35px;
+
+}
+
+/* ==========================================
+   TOP BAR
+========================================== */
+
+.topbar{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:30px;
+
+}
+
+.topbar-left{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:20px;
+
+}
+
+.topbar-right{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:15px;
+
+}
+
+.icon-button{
+
+    background:#1e293b;
+
+    color:white;
+
+    border:none;
+
+    border-radius:12px;
+
+    width:46px;
+
+    height:46px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+}
+
+.icon-button:hover{
+
+    background:#2563eb;
+
+}
+
+.profile-button{
+
+    background:#2563eb;
+
+    border:none;
+
+    color:white;
+
+    border-radius:50%;
+
+    width:46px;
+
+    height:46px;
+
+    cursor:pointer;
+
+}
+
+.topbar input{
+
+    background:#111827;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    color:white;
+
+    padding:12px 18px;
+
+    border-radius:12px;
+
+    width:260px;
+
+}
+
+
+
+/* ==========================================
+   HERO
+========================================== */
+
+.hero-card{
+
+    background:linear-gradient(135deg,#2563eb,#1e40af);
+
+    padding:35px;
+
+    border-radius:20px;
+
+    margin-bottom:30px;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    gap:30px;
+
+}
+
+.hero-card h2{
+
+    margin:15px 0;
+
+    font-size:34px;
+
+}
+
+.hero-card p{
+
+    color:#dbeafe;
+
+    line-height:1.7;
+
+}
+
+.badge{
+
+    display:inline-block;
+
+    padding:8px 14px;
+
+    border-radius:20px;
+
+    background:rgba(255,255,255,.15);
+
+    font-size:13px;
+
+}
+
+
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+.primary-btn{
+
+    background:white;
+
+    color:#1d4ed8;
+
+    border:none;
+
+    padding:14px 24px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    font-weight:700;
+
+}
+
+.secondary-btn{
+
+    background:transparent;
+
+    color:white;
+
+    border:2px solid white;
+
+    padding:14px 24px;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    margin-left:15px;
+
+}
+
+
+
+/* ==========================================
+   DASHBOARD GRID
+========================================== */
+
+.dashboard-grid{
+
+    display:grid;
+
+    grid-template-columns:
+
+    repeat(auto-fit,minmax(340px,1fr));
+
+    gap:25px;
+
+}
+
+
+
+/* ==========================================
+   WIDGET
+========================================== */
+
+.widget{
+
+    background:#111827;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:18px;
+
+    padding:25px;
+
+    transition:.25s;
+
+}
+
+.widget:hover{
+
+    transform:translateY(-6px);
+
+    box-shadow:
+
+    0 15px 40px rgba(37,99,235,.20);
+
+}
+
+.widget h2{
+
+    margin-bottom:20px;
+
+}
+
+
+
+/* ==========================================
+   INPUTS
+========================================== */
+
+.widget input,
+
+.widget textarea,
+
+.widget select{
+
+    width:100%;
+
+    background:#0f172a;
+
+    color:white;
+
+    border:1px solid rgba(255,255,255,.08);
+
+    border-radius:12px;
+
+    padding:14px;
+
+    margin-bottom:12px;
+
+}
+
+.widget textarea{
+
+    min-height:140px;
+
+    resize:vertical;
+
+}
+
+
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+.widget button{
+
+    width:100%;
+
+    padding:14px;
+
+    border:none;
+
+    border-radius:12px;
+
+    background:#2563eb;
+
+    color:white;
+
+    cursor:pointer;
+
+    font-weight:600;
+
+    transition:.25s;
+
+}
+
+.widget button:hover{
+
+    background:#1d4ed8;
+
+}
+
+/* ==========================================
+   FINANCE
+========================================== */
+
+.finance-summary{
+
+    display:grid;
+
+    grid-template-columns:repeat(3,1fr);
+
+    gap:15px;
+
+    margin-bottom:25px;
+
+}
+
+.finance-card{
+
+    background:#0f172a;
+
+    border-radius:14px;
+
+    padding:18px;
+
+    text-align:center;
+
+    border:1px solid rgba(255,255,255,.08);
+
+}
+
+.finance-card h3{
+
+    color:#94a3b8;
+
+    font-size:14px;
+
+    margin-bottom:10px;
+
+}
+
+.finance-card h2{
+
+    color:#38bdf8;
+
+}
+
+/* ==========================================
+   NOTES
+========================================== */
+
+.note-item{
+
+    background:#0f172a;
+
+    border-radius:12px;
+
+    padding:15px;
+
+    margin-top:12px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    border-left:4px solid #2563eb;
+
+}
+
+.note-item:hover{
+
+    transform:translateX(6px);
+
+}
+
+/* ==========================================
+   TASKS
+========================================== */
+
+.task-progress{
+
+    width:100%;
+
+    height:10px;
+
+    background:#1e293b;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    margin:15px 0;
+
+}
+
+#taskProgressBar{
+
+    width:0%;
+
+    height:100%;
+
+    background:#22c55e;
+
+    transition:.4s;
+
+}
+
+.task-item{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    background:#0f172a;
+
+    border-radius:10px;
+
+    padding:12px;
+
+    margin-top:10px;
+
+}
+
+.task-item button{
+
+    width:auto;
+
+    padding:8px 12px;
+
+    margin-left:8px;
+
+}
+
+/* ==========================================
+   WEATHER
+========================================== */
+
+#weatherTemp{
+
+    font-size:56px;
+
+    font-weight:800;
+
+    color:#38bdf8;
+
+    margin-bottom:10px;
+
+}
+
+#weatherCity{
+
+    color:#cbd5e1;
+
+    margin-bottom:10px;
+
+}
+
+#weatherDesc{
+
+    color:#94a3b8;
+
+    margin-bottom:20px;
+
+}
+
+/* ==========================================
+   AI PANELS
+========================================== */
+
+#alphaFinanceReport,
+#alphaFinanceScore,
+#alphaFinanceAdvice,
+#alphaAssistantResponse{
+
+    margin-top:18px;
+
+    background:#0f172a;
+
+    border-radius:12px;
+
+    padding:16px;
+
+    border-left:4px solid #2563eb;
+
+    line-height:1.7;
+
+}
+
+/* ==========================================
+   LISTS
+========================================== */
+
+ul{
+
+    list-style:none;
+
+    padding:0;
+
+}
+
+li{
+
+    background:#0f172a;
+
+    margin-top:10px;
+
+    padding:14px;
+
+    border-radius:10px;
+
+}
+
+/* ==========================================
+   SCROLLBAR
+========================================== */
+
+::-webkit-scrollbar{
+
+    width:10px;
+
+}
+
+::-webkit-scrollbar-track{
+
+    background:#0b1120;
+
+}
+
+::-webkit-scrollbar-thumb{
+
+    background:#2563eb;
+
+    border-radius:20px;
+
+}
+
+/* ==========================================
+   MOBILE
+========================================== */
+
+@media(max-width:1000px){
+
+.sidebar{
+
+    width:80px;
+
+}
+
+.brand-info{
+
+    display:none;
+
+}
+
+.sidebar-nav a{
+
+    text-align:center;
+
+    padding:14px;
+
+}
+
+.main-content{
+
+    margin-left:80px;
+
+}
+
+.hero-card{
+
+    flex-direction:column;
+
+    align-items:flex-start;
+
+}
+
+}
+
+@media(max-width:768px){
+
+.main-content{
+
+    margin-left:0;
+
+    padding:20px;
+
+}
+
+.sidebar{
+
+    display:none;
+
+}
+
+.topbar{
+
+    flex-direction:column;
+
+    gap:20px;
+
+}
+
+.topbar-right{
+
+    width:100%;
+
+}
+
+.topbar input{
+
+    width:100%;
+
+}
+
+.finance-summary{
+
+    grid-template-columns:1fr;
+
+}
+
+.dashboard-grid{
+
+    grid-template-columns:1fr;
+
+}
+
+}
+
+/* ==========================================
+   END
+========================================== */
