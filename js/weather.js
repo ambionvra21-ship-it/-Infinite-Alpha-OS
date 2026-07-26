@@ -1,9 +1,9 @@
 // ==========================================
 // 🌤 INFINITY ALPHA OS
-// Weather Module v3.1 CLEAN FIX
+// Weather Module v3.2 FINAL CLEAN
 // ==========================================
 
-console.log("🌤 Weather Module v3.1 Loaded");
+console.log("🌤 Weather Module v3.2 Loaded");
 
 
 const Weather = {
@@ -11,33 +11,40 @@ const Weather = {
     data: null,
 
 
-    async init() {
+    init() {
 
+        console.log("🚀 Starting Weather...");
         console.log("📍 Requesting location...");
 
 
         if (!navigator.geolocation) {
 
-            return this.showError(
-                "Geolocation not supported."
+            this.showError(
+                "Geolocation not supported"
             );
 
+            return;
+
         }
+
 
 
         navigator.geolocation.getCurrentPosition(
 
             (position) => {
 
+
                 const lat =
                     position.coords.latitude;
+
 
                 const lon =
                     position.coords.longitude;
 
 
+
                 console.log(
-                    "✅ GPS:",
+                    "✅ GPS SUCCESS:",
                     lat,
                     lon
                 );
@@ -45,33 +52,43 @@ const Weather = {
 
                 this.load(lat, lon);
 
+
             },
 
 
             (error) => {
 
+
                 console.error(
-                    "GPS Error:",
+                    "GPS ERROR:",
                     error
                 );
 
 
                 this.showError(
-                    "Location permission denied."
+                    "Location unavailable"
                 );
+
 
             },
 
 
             {
-                enableHighAccuracy: true,
-                timeout: 10000,
-                maximumAge: 0
+
+                enableHighAccuracy: false,
+
+                timeout: 15000,
+
+                maximumAge: 60000
+
             }
+
 
         );
 
+
     },
+
 
 
     async load(lat, lon) {
@@ -85,40 +102,42 @@ const Weather = {
             );
 
 
-            // WEATHER API
 
             const weatherResponse =
                 await fetch(
 
-                `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code`
+`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code`
 
                 );
+
 
 
             const weather =
                 await weatherResponse.json();
 
 
+
             console.log(
-                "✅ Weather:",
+                "✅ Weather Data:",
                 weather
             );
 
 
 
-            // LOCATION API
 
             console.log(
                 "📍 Finding city..."
             );
 
 
+
             const locationResponse =
                 await fetch(
 
-                `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`
+`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`
 
                 );
+
 
 
             const location =
@@ -133,28 +152,31 @@ const Weather = {
 
 
 
-            let cityName =
+            const city =
 
                 location.city ||
 
                 location.locality ||
 
-                location.localityInfo?.administrative?.[2]?.name ||
-
-                location.localityInfo?.administrative?.[1]?.name ||
+                location.localityInfo
+                ?.administrative
+                ?.find(x => x.name)
+                ?.name ||
 
                 location.principalSubdivision ||
 
                 location.countryName ||
 
-                "Current Location";
+                "Unknown Location";
+
+
 
 
 
             this.data = {
 
 
-                city: cityName,
+                city: city,
 
 
                 temperature:
@@ -163,29 +185,24 @@ const Weather = {
                     ),
 
 
+
                 humidity:
                     weather.current.relative_humidity_2m,
+
 
 
                 wind:
                     weather.current.wind_speed_10m,
 
 
-                code:
-                    weather.current.weather_code,
-
 
                 condition:
                     this.describe(
                         weather.current.weather_code
-                    ),
-
-
-                updated:
-                    new Date()
-                    .toLocaleTimeString()
+                    )
 
             };
+
 
 
 
@@ -199,6 +216,7 @@ const Weather = {
             );
 
 
+
         }
 
 
@@ -206,14 +224,15 @@ const Weather = {
 
 
             console.error(
-                "Weather Error:",
+                "WEATHER ERROR:",
                 error
             );
 
 
             this.showError(
-                "Unable to load weather."
+                "Weather unavailable"
             );
+
 
         }
 
@@ -222,7 +241,9 @@ const Weather = {
 
 
 
+
     render() {
+
 
 
         const temp =
@@ -253,6 +274,7 @@ const Weather = {
             document.getElementById(
                 "wind"
             );
+
 
 
 
@@ -290,40 +312,59 @@ const Weather = {
             `${this.data.wind} km/h`;
 
 
+
     },
+
+
 
 
 
     describe(code) {
 
 
-        if(code === 0)
-            return "☀️ Clear Sky";
+        switch(true) {
 
 
-        if(code <= 3)
-            return "⛅ Partly Cloudy";
+            case code === 0:
+
+                return "☀️ Clear Sky";
 
 
-        if(code <= 48)
-            return "🌫 Fog";
+            case code <= 3:
+
+                return "⛅ Partly Cloudy";
 
 
-        if(code <= 67)
-            return "🌧 Rain";
+            case code <= 48:
+
+                return "🌫 Fog";
 
 
-        if(code <= 82)
-            return "🌦 Showers";
+            case code <= 67:
+
+                return "🌧 Rain";
 
 
-        if(code <= 99)
-            return "⛈ Thunderstorm";
+            case code <= 82:
+
+                return "🌦 Showers";
 
 
-        return "Unknown";
+            case code <= 99:
+
+                return "⛈ Thunderstorm";
+
+
+            default:
+
+                return "Unknown";
+
+        }
+
 
     },
+
+
 
 
 
@@ -341,32 +382,37 @@ const Weather = {
             );
 
 
-        const desc =
-            document.getElementById(
-                "weatherDesc"
-            );
-
-
         const temp =
             document.getElementById(
                 "weatherTemp"
             );
 
 
+        const desc =
+            document.getElementById(
+                "weatherDesc"
+            );
+
+
 
         if(city)
+
             city.textContent =
             message;
 
 
-        if(desc)
-            desc.textContent =
-            "--";
-
 
         if(temp)
+
             temp.textContent =
             "--°C";
+
+
+
+        if(desc)
+
+            desc.textContent =
+            "--";
 
 
     }
@@ -376,6 +422,12 @@ const Weather = {
 
 
 
-// Make available globally
+
+// ==========================================
+// 🌤 AUTO START WEATHER
+// ==========================================
 
 window.Weather = Weather;
+
+
+Weather.init();
