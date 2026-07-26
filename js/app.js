@@ -1,48 +1,32 @@
 // ==========================================
-// 🚀 INFINITY ALPHA APP ENGINE
-// v0.3 PHOENIX
+// 🚀 INFINITY ALPHA OS
+// Application Engine v1.0
 // ==========================================
 
-console.log("🚀 App Engine Online.");
+console.log("🚀 Starting Infinity Alpha OS...");
 
-// ==========================================
-// APPLICATION STARTUP
-// ==========================================
+window.addEventListener("DOMContentLoaded", () => {
 
-document.addEventListener("DOMContentLoaded", () => {
-
-    console.log("✅ Initializing Infinity Alpha...");
+    console.log("✅ DOM Ready");
 
     // Greeting
     if (typeof updateGreeting === "function") {
         updateGreeting();
-    }
-
-    // Pomodoro
-    if (typeof updatePomodoroDisplay === "function") {
-        updatePomodoroDisplay();
-    }
-
-    // Notes
-    if (typeof displayNotes === "function") {
-        displayNotes();
-    }
-
-    // Tasks
-    if (typeof renderTasks === "function") {
-        renderTasks();
-    }
-
-    // Finance
-    if (typeof updateFinanceDashboard === "function") {
-        updateFinanceDashboard();
+        console.log("👋 Greeting Ready");
     }
 
     // Weather
-    if (typeof loadWeather === "function") {
-        loadWeather();
+    if (window.Weather) {
+        Weather.init();
+        console.log("🌤 Weather Ready");
     }
 
-    console.log("🚀 Infinity Alpha Ready.");
+    // Future Modules
+    // Finance.init();
+    // Crypto.init();
+    // Stocks.init();
+    // News.init();
+
+    console.log("🤖 Infinity Alpha OS Ready");
 
 });
