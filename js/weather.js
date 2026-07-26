@@ -1,13 +1,21 @@
 // ==========================================
 // 🌤 INFINITY ALPHA OS
-// Weather Module v1.0
+// Weather Module v2.0
 // ==========================================
 
-console.log("🌤 Weather Module v1.0 Loaded");
+console.log("🌤 Weather Module v2.0 Loaded");
 
 const Weather = {
 
-    data: null,
+    data: {
+        city: "--",
+        temperature: "--",
+        humidity: "--",
+        wind: "--",
+        condition: "Loading...",
+        code: 0,
+        updated: ""
+    },
 
     async init(){
 
@@ -15,8 +23,7 @@ const Weather = {
 
         if(!navigator.geolocation){
 
-            this.showError("Geolocation is not supported.");
-
+            this.showError("Geolocation not supported.");
             return;
 
         }
@@ -25,7 +32,7 @@ const Weather = {
 
             (position)=>{
 
-                this.loadWeather(
+                this.load(
                     position.coords.latitude,
                     position.coords.longitude
                 );
@@ -34,9 +41,7 @@ const Weather = {
 
             ()=>{
 
-                this.showError(
-                    "Location permission denied."
-                );
+                this.showError("Location permission denied.");
 
             }
 
@@ -44,22 +49,55 @@ const Weather = {
 
     },
 
-    async loadWeather(lat,lon){
+    async load(lat,lon){
 
         try{
 
-            const response =
+            // WEATHER
+            const weatherResponse =
             await fetch(
                 `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current=temperature_2m,relative_humidity_2m,wind_speed_10m,weather_code`
             );
 
-            const json =
-            await response.json();
+            const weather =
+            await weatherResponse.json();
 
-            this.data =
-            json.current;
+            // CITY NAME
+            const locationResponse =
+            await fetch(
+                `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`
+            );
+
+            const location =
+            await locationResponse.json();
+
+            this.data.city =
+                location.city ||
+                location.locality ||
+                location.principalSubdivision ||
+                "Unknown";
+
+            this.data.temperature =
+                Math.round(weather.current.temperature_2m);
+
+            this.data.humidity =
+                weather.current.relative_humidity_2m;
+
+            this.data.wind =
+                weather.current.wind_speed_10m;
+
+            this.data.code =
+                weather.current.weather_code;
+
+            this.data.condition =
+                this.describe(weather.current.weather_code);
+
+            this.data.updated =
+                new Date().toLocaleTimeString();
 
             this.render();
+
+            console.log("🌤 Weather Loaded", this.data);
 
         }
 
@@ -67,9 +105,7 @@ const Weather = {
 
             console.error(error);
 
-            this.showError(
-                "Unable to load weather."
-            );
+            this.showError("Unable to load weather.");
 
         }
 
@@ -77,20 +113,20 @@ const Weather = {
 
     render(){
 
-        document.getElementById("weatherTemp").innerHTML =
-        Math.round(this.data.temperature_2m) + "°C";
+        document.getElementById("weatherTemp").textContent =
+            this.data.temperature + "°C";
 
-        document.getElementById("humidity").innerHTML =
-        this.data.relative_humidity_2m + "%";
+        document.getElementById("weatherCity").textContent =
+            "📍 " + this.data.city;
 
-        document.getElementById("wind").innerHTML =
-        this.data.wind_speed_10m + " km/h";
+        document.getElementById("weatherDesc").textContent =
+            this.data.condition;
 
-        document.getElementById("weatherDesc").innerHTML =
-        this.describe(this.data.weather_code);
+        document.getElementById("humidity").textContent =
+            this.data.humidity + "%";
 
-        document.getElementById("weatherCity").innerHTML =
-        "📍 Current Location";
+        document.getElementById("wind").textContent =
+            this.data.wind + " km/h";
 
     },
 
@@ -103,14 +139,13 @@ const Weather = {
         if(code<=82) return "🌦 Showers";
         if(code<=99) return "⛈ Thunderstorm";
 
-        return "Weather";
+        return "Unknown";
 
     },
 
     showError(message){
 
-        document.getElementById("weatherCity").innerHTML =
-        message;
+        document.getElementById("weatherCity").textContent = message;
 
     }
 
