@@ -311,54 +311,231 @@ const AlphaCore = {
 
 
 
-
-    status(){
-
-
-        return {
+// ==============================================
+// 🧠 ALPHA MEMORY SYSTEM
+// ==============================================
 
 
-            version:this.version,
+memory:{
 
 
-            user:this.user,
+    history:[],
 
 
-            systems:this.systems,
+    save(event){
 
 
-            data:this.data
+        this.history.push({
 
 
-        };
+            event:event,
+
+
+            time:new Date().toLocaleString()
+
+
+        });
+
+
+
+        localStorage.setItem(
+
+            "alphaMemory",
+
+            JSON.stringify(this.history)
+
+        );
+
+
+    },
+
+
+
+    load(){
+
+
+        const saved =
+
+        localStorage.getItem(
+
+            "alphaMemory"
+
+        );
+
+
+
+        if(saved){
+
+
+            this.history =
+
+            JSON.parse(saved);
+
+
+        }
 
 
     }
 
 
-};
+
+},
 
 
 
 
 
-window.AlphaCore = AlphaCore;
+// ==============================================
+// 🌍 GLOBAL PROFILE SYSTEM
+// ==============================================
+
+
+updateProfile(setting,value){
+
+
+
+    this.user[setting]=value;
+
+
+
+    this.saveSettings();
+
+
+
+    this.memory.save(
+
+        `${setting} changed to ${value}`
+
+    );
+
+
+
+    this.updateInterface();
+
+
+},
 
 
 
 
 
-document.addEventListener(
-
-"DOMContentLoaded",
-
-()=>{
+// ==============================================
+// 💰 FINANCIAL DATA SYNC
+// ==============================================
 
 
-    AlphaCore.init();
+syncFinance(data){
+
+
+    if(!data) return;
+
+
+
+    this.data.income =
+
+    data.income || 0;
+
+
+
+    this.data.expenses =
+
+    data.expenses || 0;
+
+
+
+    this.data.netWorth =
+
+
+    this.data.income -
+
+    this.data.expenses;
+
+
+
+    this.updateInterface();
+
+
+
+},
+
+
+
+
+
+// ==============================================
+// 🤖 DAILY AI BRIEFING
+// ==============================================
+
+
+generateBriefing(){
+
+
+
+    let message =
+
+
+
+    `Good day ${this.user.name}. `;
+
+
+
+    if(this.data.netWorth > 0){
+
+
+        message +=
+
+
+        `Your current balance is ${
+        this.formatMoney(
+        this.data.netWorth)
+        }. `;
+
+
+    }
+
+
+
+    message +=
+
+
+    "Alpha Core is monitoring your productivity, finance and environment.";
+
+
+
+    return message;
+
+
+},
+
+
+// ==============================================
+// 📊 SYSTEM REPORT
+// ==============================================
+
+
+report(){
+
+
+    return {
+
+
+        AlphaVersion:this.version,
+
+
+        User:this.user,
+
+
+        Systems:this.systems,
+
+
+        Memory:this.memory.history.length,
+
+
+        FinancialData:this.data
+
+
+
+    };
 
 
 }
-
-);
-
