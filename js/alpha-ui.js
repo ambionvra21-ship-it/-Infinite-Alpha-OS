@@ -1,8 +1,8 @@
 // ==========================================
-// 🤖 ALPHA UI v1.0
+// 💬 Alpha Interface v2
 // ==========================================
 
-console.log("💬 Alpha UI Ready");
+console.log("💬 Alpha Interface Online");
 
 window.askAlpha = async function(){
 
@@ -17,44 +17,20 @@ window.askAlpha = async function(){
     const question =
     input.value.trim();
 
-    if(question===""){
-
-        output.innerHTML =
-        "🤖 Ask me something.";
-
-        return;
-
-    }
+    if(question==="") return;
 
     output.innerHTML =
-    "🤖 Thinking...";
+    "🤖 Alpha is thinking...";
 
-    try{
+    const reply =
+    await Alpha.ask(question);
 
-        const reply =
-        await Alpha.ask(question);
-
-        output.innerHTML =
-        reply;
-
-    }
-
-    catch(error){
-
-        console.error(error);
-
-        output.innerHTML =
-        "⚠️ Alpha encountered an error.";
-
-    }
+    output.innerHTML =
+    reply;
 
     input.value="";
 
 };
-
-// ==========================================
-// ENTER KEY SUPPORT
-// ==========================================
 
 document.addEventListener("DOMContentLoaded",()=>{
 
@@ -63,11 +39,9 @@ document.addEventListener("DOMContentLoaded",()=>{
 
     if(!input) return;
 
-    input.addEventListener("keydown",(event)=>{
+    input.addEventListener("keydown",(e)=>{
 
-        if(event.key==="Enter"){
-
-            event.preventDefault();
+        if(e.key==="Enter"){
 
             askAlpha();
 
