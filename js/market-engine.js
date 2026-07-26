@@ -54,211 +54,120 @@ const MarketEngine = {
             this.render();
 
             this.updateTicker();
+generateInsight(){
 
-        }
+    if(!this.coins.length) return;
 
-        catch(error){
+    const top =
+    [...this.coins].sort(
+        (a,b)=>
+        b.price_change_percentage_24h-
+        a.price_change_percentage_24h
+    );
 
-            console.error("❌",error);
+    const winner = top[0];
 
-        }
+    const loser =
+    top[top.length-1];
 
-    },
+    const average =
+    (
+        this.coins.reduce(
 
+            (sum,coin)=>
 
+            sum+
 
-    render(){
+            coin.price_change_percentage_24h,
 
-        const grid =
+            0
 
-        document.getElementById(
+        )
 
-            "marketCenterGrid"
+        /
 
-        );
+        this.coins.length
 
+    ).toFixed(2);
 
+    const sentiment =
 
-        if(!grid) return;
+    average>=2
 
+    ? "🟢 Bullish"
 
+    : average>=0
 
-        grid.innerHTML = "";
+    ? "🟡 Neutral"
 
+    : "🔴 Bearish";
 
+    const panel =
 
-        this.coins.forEach(
+    document.getElementById(
 
-            coin=>{
+        "marketInsight"
 
-                grid.appendChild(
+    );
 
-                    this.createCard(
+    if(!panel) return;
 
-                        coin
+    panel.innerHTML = `
 
-                    )
+<ul>
 
-                );
+<li>
 
-            }
+<strong>Market Status:</strong>
 
-        );
+${sentiment}
 
+</li>
 
+<li>
 
-        this.updateClock();
+<strong>Top Gainer:</strong>
 
-    },
+${winner.symbol.toUpperCase()}
 
+▲${winner.price_change_percentage_24h.toFixed(2)}%
 
-  createCard(coin){
+</li>
 
-    const card =
-    document.createElement("div");
+<li>
 
-    card.className="market-tile";
+<strong>Top Loser:</strong>
 
-    const positive =
-    coin.price_change_percentage_24h>=0;
+${loser.symbol.toUpperCase()}
 
-    const marketCap =
-    (coin.market_cap/1000000000).toFixed(1);
+${loser.price_change_percentage_24h.toFixed(2)}%
 
-    const volume =
-    (coin.total_volume/1000000).toFixed(0);
+</li>
 
-    card.innerHTML = `
+<li>
 
-<div class="market-rank">
+<strong>Average Market Change:</strong>
 
-🏆 #${coin.market_cap_rank}
+${average}%
 
-</div>
+</li>
 
-<div class="market-top">
+<li>
 
-<img
-src="${coin.image}"
-class="market-logo">
+<strong>Alpha Insight:</strong>
 
-<div>
-
-<div class="market-name">
-
-${coin.name}
-
-</div>
-
-<div class="market-symbol">
-
-${coin.symbol.toUpperCase()}
-
-</div>
-
-</div>
-
-</div>
-
-<div class="market-price">
-
-$${coin.current_price.toLocaleString()}
-
-</div>
-
-<div class="market-change ${
-
-positive
-
+Momentum is ${
+average>0
 ?
-
-"market-positive"
-
+"currently positive across major assets."
 :
+"showing weakness across leading assets."
+}
 
-"market-negative"
+</li>
 
-}">
-
-${positive?"▲":"▼"}
-
-${Math.abs(
-coin.price_change_percentage_24h
-).toFixed(2)}%
-
-Today
-
-</div>
-
-<div class="market-bar">
-
-<div
-class="market-fill ${
-
-positive
-
-?
-
-"fill-green"
-
-:
-
-"fill-red"
-
-}"
-
-style="width:${Math.min(
-
-Math.abs(
-coin.price_change_percentage_24h
-)*12,
-
-100
-
-)}%">
-
-</div>
-
-</div>
-
-<div class="market-stats">
-
-<div>
-
-<span>Market Cap</span>
-
-<strong>
-
-$${marketCap}B
-
-</strong>
-
-</div>
-
-<div>
-
-<span>Volume</span>
-
-<strong>
-
-$${volume}M
-
-</strong>
-
-</div>
-
-</div>
-
-<div class="market-footer">
-
-Updated
-
-${this.lastUpdated.toLocaleTimeString()}
-
-</div>
+</ul>
 
 `;
-
-    return card;
 
 }
