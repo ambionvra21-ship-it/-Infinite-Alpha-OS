@@ -1,8 +1,10 @@
 // ==========================================
-// 🤖 INFINITY ALPHA AI ASSISTANT v2
+// 🤖 INFINITY ALPHA AI ASSISTANT v3
+// Unified Alpha Core Interface
 // ==========================================
 
-console.log("🤖 Alpha AI v2 Loaded");
+console.log("🤖 Alpha AI v3 Loaded");
+
 
 
 window.runAlphaCommand = function(){
@@ -16,8 +18,10 @@ window.runAlphaCommand = function(){
     document.getElementById("alphaAssistantResponse");
 
 
-    if(!input || !response) return;
-
+    if(!input || !response){
+        console.log("Alpha interface missing");
+        return;
+    }
 
 
     const command =
@@ -25,36 +29,68 @@ window.runAlphaCommand = function(){
 
 
 
+    if(command.length === 0){
+
+        response.innerHTML =
+        "🤖 Please ask Alpha something.";
+
+        return;
+    }
+
+
+
     let answer = "";
 
 
 
-    if(command.length === 0){
+    // ==================================
+    // GREETING
+    // ==================================
 
-        answer = "🤖 Please ask Alpha something.";
-
-    }
-
-
-
-    else if(
+    if(
         command.includes("hello") ||
         command.includes("hi") ||
-        command.includes("hey") ||
-        command.includes("good morning")
+        command.includes("hey")
     ){
 
         answer =
-        "👋 Hello! I am Infinity Alpha. How can I help you today?";
+        "👋 Hello! I am Infinity Alpha AI. Your personal intelligence assistant.";
 
     }
 
 
+
+    // ==================================
+    // WEATHER
+    // ==================================
+
+    else if(
+        command.includes("weather") ||
+        command.includes("temperature") ||
+        command.includes("rain") ||
+        command.includes("forecast")
+    ){
+
+        answer =
+        `
+        🌤 Weather system activated.<br><br>
+        Alpha detected a weather request.<br>
+        Connecting weather intelligence module...
+        `;
+
+    }
+
+
+
+    // ==================================
+    // FINANCE
+    // ==================================
 
     else if(
         command.includes("balance") ||
         command.includes("money") ||
-        command.includes("finance")
+        command.includes("finance") ||
+        command.includes("budget")
     ){
 
 
@@ -62,39 +98,54 @@ window.runAlphaCommand = function(){
         let expenses = 0;
 
 
+
         if(typeof alphaFinance !== "undefined"){
+
 
             alphaFinance.forEach(item => {
 
+
                 if(item.category === "Income"){
 
-                    income += item.amount;
+                    income += Number(item.amount);
 
-                } else {
+                }
+                else{
 
-                    expenses += item.amount;
+                    expenses += Number(item.amount);
 
                 }
 
+
             });
+
 
         }
 
 
-        let balance = income - expenses;
+
+        let balance =
+        income - expenses;
+
 
 
         answer =
-        "💰 Your current balance is $" 
+        "💰 Current balance: $" 
         + balance.toFixed(2);
+
 
     }
 
 
 
+    // ==================================
+    // TASKS
+    // ==================================
+
     else if(
         command.includes("task")
     ){
+
 
         let total = 0;
 
@@ -107,7 +158,7 @@ window.runAlphaCommand = function(){
 
 
         answer =
-        "✅ You currently have "
+        "✅ You have "
         + total
         + " tasks in Alpha.";
 
@@ -115,45 +166,92 @@ window.runAlphaCommand = function(){
 
 
 
+    // ==================================
+    // NOTES
+    // ==================================
+
     else if(
         command.includes("note")
     ){
 
         answer =
-        "📝 Smart Notes is ready. Capture your ideas anytime.";
+        "📝 Smart Notes system is ready.";
 
     }
 
 
+
+    // ==================================
+    // POMODORO
+    // ==================================
 
     else if(
         command.includes("focus") ||
-        command.includes("pomodoro")
+        command.includes("pomodoro") ||
+        command.includes("timer")
     ){
 
         answer =
-        "⏱️ Start a Pomodoro session and focus for 25 minutes.";
+        "⏱️ Pomodoro Focus Mode activated.";
 
     }
 
 
+
+    // ==================================
+    // TIME
+    // ==================================
 
     else if(
         command.includes("time")
     ){
 
         answer =
-        "🕒 Current time is "
+        "🕒 Current time: "
         + new Date().toLocaleTimeString();
 
     }
 
 
 
-    else {
+    // ==================================
+    // CRYPTO / MARKET
+    // ==================================
+
+    else if(
+        command.includes("crypto") ||
+        command.includes("bitcoin") ||
+        command.includes("stock") ||
+        command.includes("market")
+    ){
 
         answer =
-        "🤖 I am still learning. Try asking about balance, tasks, notes, focus, or time.";
+        "📈 Market intelligence module activated.";
+
+    }
+
+
+
+    // ==================================
+    // DEFAULT
+    // ==================================
+
+    else{
+
+
+        answer =
+        `
+        🤖 Alpha is learning.<br><br>
+
+        Try asking:<br>
+        🌤 Weather<br>
+        💰 Finance<br>
+        ⏱ Pomodoro<br>
+        📝 Notes<br>
+        📈 Crypto<br>
+        🕒 Time
+        `;
+
 
     }
 
@@ -166,37 +264,9 @@ window.runAlphaCommand = function(){
 
 
     console.log(
-        "Alpha Command:",
+        "Alpha:",
         command
     );
 
-
-};
-
-// ==========================================
-// 🤖 ALPHA CORE TEST CONNECTOR
-// ==========================================
-
-window.askAlphaCore = function(){
-
-    const input = document.getElementById("alphaInput");
-    const output = document.getElementById("alphaResponse");
-
-    if(!input || !output){
-        console.log("Alpha chat elements not found");
-        return;
-    }
-
-
-    let userText = input.value;
-
-
-    let reply = AlphaCore.process(userText);
-
-
-    output.innerHTML = reply;
-
-
-    input.value = "";
 
 };
