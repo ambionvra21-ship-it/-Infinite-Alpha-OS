@@ -1,34 +1,22 @@
 // ==========================================
-// 🤖 INFINITY ALPHA AI ASSISTANT MODULE
+// 🤖 INFINITY ALPHA AI ASSISTANT v2
 // ==========================================
 
-console.log("🤖 Alpha AI Module Loaded");
+console.log("🤖 Alpha AI v2 Loaded");
 
 
-
-// Main Alpha Command
 window.runAlphaCommand = function(){
 
 
     const input =
-    document.getElementById(
-        "alphaCommandInput"
-    );
+    document.getElementById("alphaCommandInput");
 
 
     const response =
-    document.getElementById(
-        "alphaAssistantResponse"
-    );
+    document.getElementById("alphaAssistantResponse");
 
 
-
-    if(!input || !response){
-
-        console.log("⚠️ Alpha AI elements missing");
-        return;
-
-    }
+    if(!input || !response) return;
 
 
 
@@ -37,100 +25,106 @@ window.runAlphaCommand = function(){
 
 
 
-    if(command === ""){
-
-        response.textContent =
-        "🤖 Please ask Alpha something.";
-
-        return;
-
-    }
-
-
-
     let answer = "";
 
 
 
+    if(command.length === 0){
+
+        answer = "🤖 Please ask Alpha something.";
+
+    }
 
 
-    // =========================
-    // GREETING
-    // =========================
 
-    if(
+    else if(
         command.includes("hello") ||
         command.includes("hi") ||
-        command.includes("hey")
+        command.includes("hey") ||
+        command.includes("good morning")
     ){
 
         answer =
-        "👋 Hello! I am Infinity Alpha. Your personal productivity assistant.";
+        "👋 Hello! I am Infinity Alpha. How can I help you today?";
 
     }
 
 
 
-
-
-    // =========================
-    // TASKS
-    // =========================
-
     else if(
-        command.includes("task") ||
-        command.includes("todo")
-    ){
-
-        answer =
-        "✅ Open Smart Tasks. I recommend completing your highest priority task first.";
-
-    }
-
-
-
-
-
-    // =========================
-    // NOTES
-    // =========================
-
-    else if(
-        command.includes("note") ||
-        command.includes("idea")
-    ){
-
-        answer =
-        "📝 Smart Notes is ready. Capture your thoughts before they disappear.";
-
-    }
-
-
-
-
-
-    // =========================
-    // FINANCE
-    // =========================
-
-    else if(
+        command.includes("balance") ||
         command.includes("money") ||
-        command.includes("finance") ||
-        command.includes("budget")
+        command.includes("finance")
     ){
 
+
+        let income = 0;
+        let expenses = 0;
+
+
+        if(typeof alphaFinance !== "undefined"){
+
+            alphaFinance.forEach(item => {
+
+                if(item.category === "Income"){
+
+                    income += item.amount;
+
+                } else {
+
+                    expenses += item.amount;
+
+                }
+
+            });
+
+        }
+
+
+        let balance = income - expenses;
+
+
         answer =
-        "📈 Finance Alpha is monitoring your transactions. Check your Financial Advisor for analysis.";
+        "💰 Your current balance is $" 
+        + balance.toFixed(2);
 
     }
 
 
 
+    else if(
+        command.includes("task")
+    ){
+
+        let total = 0;
 
 
-    // =========================
-    // PRODUCTIVITY
-    // =========================
+        if(typeof alphaTasks !== "undefined"){
+
+            total = alphaTasks.length;
+
+        }
+
+
+        answer =
+        "✅ You currently have "
+        + total
+        + " tasks in Alpha.";
+
+    }
+
+
+
+    else if(
+        command.includes("note")
+    ){
+
+        answer =
+        "📝 Smart Notes is ready. Capture your ideas anytime.";
+
+    }
+
+
 
     else if(
         command.includes("focus") ||
@@ -138,88 +132,30 @@ window.runAlphaCommand = function(){
     ){
 
         answer =
-        "⏱️ Start a Pomodoro session. Focus for 25 minutes with no distractions.";
+        "⏱️ Start a Pomodoro session and focus for 25 minutes.";
 
     }
 
 
-
-
-
-    // =========================
-    // TIME
-    // =========================
 
     else if(
         command.includes("time")
     ){
 
         answer =
-        "🕒 Current time: "
+        "🕒 Current time is "
         + new Date().toLocaleTimeString();
 
     }
 
 
 
-
-
-    // =========================
-    // DATE
-    // =========================
-
-    else if(
-        command.includes("date")
-    ){
-
-        answer =
-        "📅 Today is "
-        + new Date().toLocaleDateString();
-
-    }
-
-
-
-
-
-    // =========================
-    // HELP
-    // =========================
-
-    else if(
-        command.includes("help")
-    ){
-
-        answer =
-        `
-        🤖 Alpha Commands:
-
-        • tasks
-        • notes
-        • finance
-        • focus
-        • time
-        • date
-        `;
-
-    }
-
-
-
-
-
-    // =========================
-    // DEFAULT RESPONSE
-    // =========================
-
     else {
 
         answer =
-        "🤖 I am still learning. Try asking about tasks, notes, finance, focus, or time.";
+        "🤖 I am still learning. Try asking about balance, tasks, notes, focus, or time.";
 
     }
-
-
 
 
 
@@ -227,7 +163,6 @@ window.runAlphaCommand = function(){
 
 
     input.value = "";
-
 
 
     console.log(
