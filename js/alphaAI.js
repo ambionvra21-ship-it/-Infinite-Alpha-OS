@@ -172,3 +172,31 @@ window.runAlphaCommand = function(){
 
 
 };
+
+// ==========================================
+// 🤖 ALPHA CORE TEST CONNECTOR
+// ==========================================
+
+window.askAlphaCore = function(){
+
+    const input = document.getElementById("alphaInput");
+    const output = document.getElementById("alphaResponse");
+
+    if(!input || !output){
+        console.log("Alpha chat elements not found");
+        return;
+    }
+
+
+    let userText = input.value;
+
+
+    let reply = AlphaCore.process(userText);
+
+
+    output.innerHTML = reply;
+
+
+    input.value = "";
+
+};
