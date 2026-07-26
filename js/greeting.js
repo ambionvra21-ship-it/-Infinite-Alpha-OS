@@ -1,53 +1,43 @@
 // ==========================================
-// GREETING ENGINE
+// 👋 INFINITY ALPHA GREETING MODULE
 // ==========================================
 
-function initGreeting(){
+console.log("👋 Greeting Module Loaded");
 
-    const title =
-    document.getElementById("greetingTitle");
+function updateGreeting() {
 
-    const message =
-    document.getElementById("greetingMessage");
+    const title = document.getElementById("greetingTitle");
+    const message = document.getElementById("greetingMessage");
 
-    if(!title || !message) return;
+    if (!title || !message) return;
 
-    const hour =
-    new Date().getHours();
+    const hour = new Date().getHours();
 
-    if(hour < 12){
+    if (hour < 12) {
 
-        title.innerHTML="☀️ Good Morning";
-
-        message.innerHTML=
-        "Ready to build something amazing today?";
+        title.textContent = "☀️ Good Morning";
+        message.textContent = "Let's build something amazing today.";
 
     }
 
-    else if(hour < 18){
+    else if (hour < 18) {
 
-        title.innerHTML="🌤 Good Afternoon";
-
-        message.innerHTML=
-        "Keep your momentum going.";
+        title.textContent = "🌤 Good Afternoon";
+        message.textContent = "Keep your momentum going.";
 
     }
 
-    else if(hour < 22){
+    else if (hour < 22) {
 
-        title.innerHTML="🌇 Good Evening";
-
-        message.innerHTML=
-        "Let's finish today strong.";
+        title.textContent = "🌇 Good Evening";
+        message.textContent = "Finish the day strong.";
 
     }
 
-    else{
+    else {
 
-        title.innerHTML="🌙 Working Late?";
-
-        message.innerHTML=
-        "Don't forget to recharge.";
+        title.textContent = "🌙 Working Late?";
+        message.textContent = "Remember to recharge.";
 
     }
 
