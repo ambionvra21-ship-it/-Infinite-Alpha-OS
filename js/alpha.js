@@ -1,177 +1,263 @@
 // ==========================================
-// 🤖 INFINITY ALPHA v1.0
-// Alpha Intelligence Engine
+// 🤖 INFINITY ALPHA OS
+// Alpha Brain v2.0
 // ==========================================
 
-console.log("🤖 Infinity Alpha Intelligence Engine Online");
+console.log("🧠 Alpha Brain v2 Online");
 
 const Alpha = {
 
-    version: "1.0",
+    version: "2.0",
 
-    intents: {
+    async ask(text){
 
-        weather: [
-            "weather","temperature","forecast","rain","storm",
-            "cloud","humidity","wind","hot","cold","umbrella","outside"
-        ],
+        text = text.toLowerCase().trim();
 
-        finance: [
-            "finance","money","balance","income","expense","expenses",
-            "budget","saving","savings","cash","wallet","salary","pay"
-        ],
+        console.log("🤖 User:", text);
 
-        crypto: [
-            "crypto","bitcoin","btc","ethereum","eth",
-            "solana","xrp","doge","coin","coinbase"
-        ],
+        // ==========================
+        // Greetings
+        // ==========================
 
-        stocks: [
-            "stock","stocks","share","shares",
-            "nasdaq","dow","s&p","apple","tesla",
-            "nvidia","amazon","microsoft","google"
-        ],
+        if(
+            text.includes("hello") ||
+            text.includes("hi") ||
+            text.includes("hey")
+        ){
 
-        news: [
-            "news","headline","breaking",
-            "market news","today","update"
-        ],
+            return `
+👋 Hello!
 
-        currency: [
-            "currency","convert","exchange",
-            "usd","php","eur","jpy","gbp"
-        ],
+Welcome back to <b>Infinity Alpha OS</b>.
 
-        pomodoro: [
-            "pomodoro","focus","timer",
-            "study","work","productive"
-        ],
+Everything is online and ready.
+`;
 
-        notes: [
-            "note","notes","remember",
-            "journal","write"
-        ],
+        }
 
-        tasks: [
-            "task","tasks","todo",
-            "checklist","reminder"
-        ],
+        // ==========================
+        // WEATHER
+        // ==========================
 
-        greeting: [
-            "hello","hi","hey",
-            "good morning","good afternoon",
-            "good evening"
-        ]
-    },
+        if(
+            text.includes("weather") ||
+            text.includes("temperature") ||
+            text.includes("rain") ||
+            text.includes("forecast")
+        ){
 
-    detectIntent(text){
+            if(window.Weather && Weather.data){
 
-        text = text.toLowerCase();
+                return `
+🌤 <b>Current Weather</b>
 
-        for(const intent in this.intents){
+📍 ${Weather.data.city}
 
-            const words = this.intents[intent];
+🌡 ${Weather.data.temperature}°C
 
-            for(const word of words){
+${Weather.data.condition}
 
-                if(text.includes(word)){
+💧 Humidity : ${Weather.data.humidity}%
 
-                    return intent;
+🌬 Wind : ${Weather.data.wind} km/h
 
-                }
+🕒 Updated : ${Weather.data.updated}
+`;
 
             }
 
+            return "Weather information is unavailable.";
+
         }
 
-        return "unknown";
+        // ==========================
+        // FINANCE
+        // ==========================
 
-    },
+        if(
+            text.includes("finance") ||
+            text.includes("balance") ||
+            text.includes("money") ||
+            text.includes("income") ||
+            text.includes("expense")
+        ){
 
-    async ask(message){
+            return `
+💰 Finance Module
 
-        const intent = this.detectIntent(message);
+Your financial dashboard is active.
 
-        console.log("Detected Intent:",intent);
-
-        switch(intent){
-
-            case "greeting":
-
-                return `
-👋 Hello!
-
-I'm <strong>Infinity Alpha v1.0</strong>
-
-Your Financial Intelligence &
-Productivity Operating System.
-
-How can I help today?
-`;
-
-            case "weather":
-
-                return "🌤 Weather module loading...";
-
-            case "finance":
-
-                return "💰 Finance Intelligence loading...";
-
-            case "crypto":
-
-                return "₿ Crypto Intelligence loading...";
-
-            case "stocks":
-
-                return "📈 Stock Market Intelligence loading...";
-
-            case "news":
-
-                return "📰 News Intelligence loading...";
-
-            case "currency":
-
-                return "💱 Currency Intelligence loading...";
-
-            case "pomodoro":
-
-                return "⏱ Focus System loading...";
-
-            case "notes":
-
-                return "📝 Smart Notes loading...";
-
-            case "tasks":
-
-                return "✅ Smart Tasks loading...";
-
-            default:
-
-                return `
-🤖 I understand many things.
-
-Try asking me:
-
-🌤 What's the weather?
-
-₿ Bitcoin price
-
-📈 Tesla stock
-
-📰 Market news
-
-💰 Analyze my finances
-
-💱 Convert USD to PHP
-
-⏱ Start Pomodoro
-
-📝 Open notes
-
-✅ Show tasks
+Use the Finance widget below to
+track income, expenses and balance.
 `;
 
         }
+
+        // ==========================
+        // CRYPTO
+        // ==========================
+
+        if(
+            text.includes("bitcoin") ||
+            text.includes("btc") ||
+            text.includes("crypto") ||
+            text.includes("ethereum") ||
+            text.includes("eth")
+        ){
+
+            return `
+₿ Crypto Module
+
+Live crypto dashboard
+coming next.
+
+Soon you'll see:
+
+• Bitcoin
+• Ethereum
+• Solana
+• XRP
+• Live charts
+`;
+
+        }
+
+        // ==========================
+        // STOCKS
+        // ==========================
+
+        if(
+            text.includes("stock") ||
+            text.includes("tesla") ||
+            text.includes("apple") ||
+            text.includes("nvidia") ||
+            text.includes("market")
+        ){
+
+            return `
+📈 Stock Market
+
+Live stock dashboard
+coming next.
+
+Watch:
+
+• Apple
+
+• Tesla
+
+• NVIDIA
+
+• Microsoft
+
+• Google
+`;
+
+        }
+
+        // ==========================
+        // NEWS
+        // ==========================
+
+        if(
+            text.includes("news") ||
+            text.includes("headline")
+        ){
+
+            return `
+📰 Financial News
+
+News Intelligence
+will be connected
+after Stocks.
+`;
+
+        }
+
+        // ==========================
+        // TASKS
+        // ==========================
+
+        if(
+            text.includes("task")
+        ){
+
+            return `
+✅ Tasks
+
+Task manager is online.
+`;
+
+        }
+
+        // ==========================
+        // NOTES
+        // ==========================
+
+        if(
+            text.includes("note")
+        ){
+
+            return `
+📝 Notes
+
+Smart Notes is ready.
+`;
+
+        }
+
+        // ==========================
+        // POMODORO
+        // ==========================
+
+        if(
+            text.includes("focus") ||
+            text.includes("pomodoro")
+        ){
+
+            return `
+⏱ Focus Mode
+
+Ready for your next
+25-minute session.
+`;
+
+        }
+
+        // ==========================
+        // DEFAULT
+        // ==========================
+
+        return `
+🤖 Infinity Alpha
+
+I currently understand:
+
+🌤 Weather
+
+💰 Finance
+
+₿ Crypto
+
+📈 Stocks
+
+📰 News
+
+📝 Notes
+
+✅ Tasks
+
+⏱ Pomodoro
+
+Try asking:
+
+"What's the weather?"
+
+or
+
+"Bitcoin"
+
+`;
 
     }
 
