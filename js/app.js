@@ -1,46 +1,48 @@
 // ==========================================
 // 🚀 INFINITY ALPHA APP ENGINE
-// Version 0.3 Stable
+// v0.3 PHOENIX
 // ==========================================
 
-console.clear();
+console.log("🚀 App Engine Online.");
 
-const Alpha = {
-
-    version: "0.3",
-
-    name: "Infinity Alpha",
-
-    start() {
-
-        console.log("🚀 Starting Infinity Alpha...");
-
-        if (typeof initGreeting === "function") initGreeting();
-
-        if (typeof initPomodoro === "function") initPomodoro();
-
-        if (typeof initCalculator === "function") initCalculator();
-
-        if (typeof initCurrency === "function") initCurrency();
-
-        if (typeof initNotes === "function") initNotes();
-
-        if (typeof initTasks === "function") initTasks();
-
-        if (typeof initWeather === "function") initWeather();
-
-        if (typeof initFinance === "function") initFinance();
-
-        if (typeof initAlphaAI === "function") initAlphaAI();
-
-        console.log("✅ Infinity Alpha Ready");
-
-    }
-
-};
+// ==========================================
+// APPLICATION STARTUP
+// ==========================================
 
 document.addEventListener("DOMContentLoaded", () => {
 
-    Alpha.start();
+    console.log("✅ Initializing Infinity Alpha...");
+
+    // Greeting
+    if (typeof updateGreeting === "function") {
+        updateGreeting();
+    }
+
+    // Pomodoro
+    if (typeof updatePomodoroDisplay === "function") {
+        updatePomodoroDisplay();
+    }
+
+    // Notes
+    if (typeof displayNotes === "function") {
+        displayNotes();
+    }
+
+    // Tasks
+    if (typeof renderTasks === "function") {
+        renderTasks();
+    }
+
+    // Finance
+    if (typeof updateFinanceDashboard === "function") {
+        updateFinanceDashboard();
+    }
+
+    // Weather
+    if (typeof loadWeather === "function") {
+        loadWeather();
+    }
+
+    console.log("🚀 Infinity Alpha Ready.");
 
 });
