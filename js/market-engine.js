@@ -112,45 +112,51 @@ const MarketEngine = {
     },
 
 
+  createCard(coin){
 
-    createCard(coin){
+    const card =
+    document.createElement("div");
 
-        const card =
+    card.className="market-tile";
 
-        document.createElement("div");
+    const positive =
+    coin.price_change_percentage_24h>=0;
 
+    const marketCap =
+    (coin.market_cap/1000000000).toFixed(1);
 
+    const volume =
+    (coin.total_volume/1000000).toFixed(0);
 
-        card.className="market-tile";
-
-
-
-        const positive =
-
-        coin.price_change_percentage_24h>=0;
-
-
-
-        card.innerHTML = `
+    card.innerHTML = `
 
 <div class="market-rank">
 
-#${coin.market_cap_rank}
+🏆 #${coin.market_cap_rank}
+
+</div>
+
+<div class="market-top">
+
+<img
+src="${coin.image}"
+class="market-logo">
+
+<div>
+
+<div class="market-name">
+
+${coin.name}
 
 </div>
 
 <div class="market-symbol">
 
-<img
-src="${coin.image}"
-width="36"
-height="36">
+${coin.symbol.toUpperCase()}
 
 </div>
 
-<div class="market-name">
-
-${coin.name}
+</div>
 
 </div>
 
@@ -177,130 +183,82 @@ positive
 ${positive?"▲":"▼"}
 
 ${Math.abs(
-
 coin.price_change_percentage_24h
-
 ).toFixed(2)}%
 
-</div>
-
-<div class="market-spark"></div>
-
-<div class="market-footer">
-
-<span>${coin.symbol.toUpperCase()}</span>
-
-<span>${coin.market_cap_rank}</span>
+Today
 
 </div>
 
-`;
+<div class="market-bar">
 
-        return card;
+<div
+class="market-fill ${
 
-    },
+positive
 
+?
 
+"fill-green"
 
-    updateClock(){
+:
 
-        const box=
+"fill-red"
 
-        document.getElementById(
+}"
 
-            "marketLastUpdate"
+style="width:${Math.min(
 
-        );
+Math.abs(
+coin.price_change_percentage_24h
+)*12,
 
+100
 
+)}%">
 
-        if(!box) return;
+</div>
 
+</div>
 
+<div class="market-stats">
 
-        box.innerHTML=
+<div>
 
-        "LIVE ● "
-
-        +
-
-        this.lastUpdated
-
-        .toLocaleTimeString();
-
-    },
-
-
-
- updateTicker(){
-
-    const ticker =
-
-    document.getElementById(
-
-        "marketTicker"
-
-    );
-
-    if(!ticker) return;
-
-    let html="";
-
-    this.coins.forEach(
-
-        coin=>{
-
-            const positive=
-
-            coin.price_change_percentage_24h>=0;
-
-            html+=`
-
-<div class="market-item">
-
-<img
-src="${coin.image}"
-width="22"
-height="22">
+<span>Market Cap</span>
 
 <strong>
 
-${coin.symbol.toUpperCase()}
+$${marketCap}B
 
 </strong>
 
-<span class="market-price">
+</div>
 
-$${coin.current_price.toLocaleString()}
+<div>
 
-</span>
+<span>Volume</span>
 
-<span class="${
-positive
-?
-"market-positive"
-:
-"market-negative"
-}">
+<strong>
 
-${positive?"▲":"▼"}
+$${volume}M
 
-${Math.abs(
-coin.price_change_percentage_24h
-).toFixed(2)}%
+</strong>
 
-</span>
+</div>
+
+</div>
+
+<div class="market-footer">
+
+Updated
+
+${this.lastUpdated.toLocaleTimeString()}
 
 </div>
 
 `;
 
-        }
-
-    );
-
-    html+=html;
-
-    ticker.innerHTML=html;
+    return card;
 
 }
