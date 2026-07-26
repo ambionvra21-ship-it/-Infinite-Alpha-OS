@@ -11,10 +11,11 @@ function updateGreeting() {
     const message = document.getElementById("greetingMessage");
 
 
-    // Stop if HTML elements do not exist
     if (!title || !message) {
-        console.log("⚠️ Greeting elements not found");
+
+        console.log("⚠️ Greeting elements missing");
         return;
+
     }
 
 
@@ -26,22 +27,22 @@ function updateGreeting() {
         title.textContent = "☀️ Good Morning";
         message.textContent = "Let's build something amazing today.";
 
-    } 
-    
+    }
+
     else if (hour < 18) {
 
         title.textContent = "🌤 Good Afternoon";
         message.textContent = "Keep your momentum going.";
 
-    } 
-    
+    }
+
     else if (hour < 22) {
 
         title.textContent = "🌇 Good Evening";
         message.textContent = "Finish the day strong.";
 
-    } 
-    
+    }
+
     else {
 
         title.textContent = "🌙 Working Late?";
@@ -55,8 +56,9 @@ function updateGreeting() {
 }
 
 
-// Automatically start greeting when page loads
-window.addEventListener("DOMContentLoaded", function(){
+
+// Start after page loads
+window.addEventListener("load", () => {
 
     updateGreeting();
 
