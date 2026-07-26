@@ -1783,3 +1783,58 @@ margin-bottom:4px;
 font-size:15px;
 
 }
+/* ===========================================
+   ALPHA MARKET INTELLIGENCE
+=========================================== */
+
+.market-intelligence{
+
+margin-top:30px;
+
+padding:24px;
+
+border-radius:20px;
+
+background:linear-gradient(
+135deg,
+rgba(79,140,255,.12),
+rgba(0,224,255,.08)
+);
+
+border:1px solid rgba(79,140,255,.20);
+
+}
+
+.market-intelligence-title{
+
+font-size:22px;
+
+font-weight:700;
+
+margin-bottom:18px;
+
+}
+
+.market-intelligence ul{
+
+list-style:none;
+
+padding:0;
+
+margin:0;
+
+}
+
+.market-intelligence li{
+
+padding:8px 0;
+
+border-bottom:1px solid rgba(255,255,255,.05);
+
+}
+
+.market-intelligence li:last-child{
+
+border:none;
+
+}
