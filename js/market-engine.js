@@ -1,131 +1,253 @@
 // ==========================================
-// 📈 INFINITY ALPHA X
-// MARKET ENGINE v1.0
-// Live Crypto Prices
+// 🌍 INFINITY ALPHA X
+// GLOBAL MARKET ENGINE v1.1
 // ==========================================
-updateDashboard(){
 
-    const btc =
-    this.crypto.bitcoin;
+console.log("🌍 Global Market Engine Online");
 
-    const eth =
-    this.crypto.ethereum;
+const MarketEngine = {
 
-    document.getElementById("cryptoStatus").innerHTML =
+    refreshRate: 60000,
 
-    `
-    <strong>BTC</strong><br>
+    coins: [],
 
-    $${btc.usd.toLocaleString()}
+    lastUpdated: null,
 
-    <br>
+    async init(){
 
-    <span class="${
-        btc.usd_24h_change>=0
-        ?"market-up"
-        :"market-down"
-    }">
+        console.log("🚀 Connecting to CoinGecko...");
 
-    ${btc.usd_24h_change.toFixed(2)}%
+        await this.loadMarkets();
 
-    </span>
-    `;
+        setInterval(()=>{
+
+            this.loadMarkets();
+
+        },this.refreshRate);
+
+    },
 
 
 
-    document.getElementById("stockStatus").innerHTML=
+    async loadMarkets(){
 
-    `
-    <strong>ETH</strong><br>
+        try{
 
-    $${eth.usd.toLocaleString()}
+            const response = await fetch(
 
-    <br>
+                "https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=false&price_change_percentage=24h"
 
-    <span class="${
-        eth.usd_24h_change>=0
-        ?"market-up"
-        :"market-down"
-    }">
+            );
 
-    ${eth.usd_24h_change.toFixed(2)}%
+            if(!response.ok){
 
-    </span>
-    `;
+                throw new Error("Unable to load market data.");
+
+            }
+
+            this.coins = await response.json();
+
+            this.lastUpdated = new Date();
+
+            console.log("✅ Market Data Loaded");
+
+            this.render();
+
+            this.updateTicker();
+
+        }
+
+        catch(error){
+
+            console.error("❌",error);
+
+        }
+
+    },
 
 
 
-    const ticker =
+    render(){
 
-    document.getElementById(
+        const grid =
 
-        "marketTicker"
+        document.getElementById(
 
-    );
+            "marketCenterGrid"
 
-
-
-    if(!ticker) return;
+        );
 
 
 
-    ticker.innerHTML = `
+        if(!grid) return;
 
-<div class="market-item">
 
-₿ BTC
 
-<strong>
+        grid.innerHTML = "";
 
-$${btc.usd.toLocaleString()}
 
-</strong>
 
-<span class="${
-btc.usd_24h_change>=0
-?"market-up"
-:"market-down"
+        this.coins.forEach(
+
+            coin=>{
+
+                grid.appendChild(
+
+                    this.createCard(
+
+                        coin
+
+                    )
+
+                );
+
+            }
+
+        );
+
+
+
+        this.updateClock();
+
+    },
+
+
+
+    createCard(coin){
+
+        const card =
+
+        document.createElement("div");
+
+
+
+        card.className="market-tile";
+
+
+
+        const positive =
+
+        coin.price_change_percentage_24h>=0;
+
+
+
+        card.innerHTML = `
+
+<div class="market-rank">
+
+#${coin.market_cap_rank}
+
+</div>
+
+<div class="market-symbol">
+
+<img
+src="${coin.image}"
+width="36"
+height="36">
+
+</div>
+
+<div class="market-name">
+
+${coin.name}
+
+</div>
+
+<div class="market-price">
+
+$${coin.current_price.toLocaleString()}
+
+</div>
+
+<div class="market-change ${
+
+positive
+
+?
+
+"market-positive"
+
+:
+
+"market-negative"
+
 }">
 
-${btc.usd_24h_change.toFixed(2)}%
+${positive?"▲":"▼"}
 
-</span>
+${Math.abs(
 
-</div>
+coin.price_change_percentage_24h
 
-<div class="market-item">
-
-Ξ ETH
-
-<strong>
-
-$${eth.usd.toLocaleString()}
-
-</strong>
-
-<span class="${
-eth.usd_24h_change>=0
-?"market-up"
-:"market-down"
-}">
-
-${eth.usd_24h_change.toFixed(2)}%
-
-</span>
+).toFixed(2)}%
 
 </div>
 
-<div class="market-item">
+<div class="market-spark"></div>
 
-🤖 Alpha Live Markets
+<div class="market-footer">
 
-</div>
+<span>${coin.symbol.toUpperCase()}</span>
 
-<div class="market-item">
-
-Refresh 60 Seconds
+<span>${coin.market_cap_rank}</span>
 
 </div>
 
 `;
-}
+
+        return card;
+
+    },
+
+
+
+    updateClock(){
+
+        const box=
+
+        document.getElementById(
+
+            "marketLastUpdate"
+
+        );
+
+
+
+        if(!box) return;
+
+
+
+        box.innerHTML=
+
+        "LIVE ● "
+
+        +
+
+        this.lastUpdated
+
+        .toLocaleTimeString();
+
+    },
+
+
+
+    updateTicker(){
+
+        // Batch 2
+
+    }
+
+};
+
+
+
+document.addEventListener(
+
+"DOMContentLoaded",
+
+()=>{
+
+MarketEngine.init();
+
+});
