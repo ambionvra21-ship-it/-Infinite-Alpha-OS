@@ -825,5 +825,186 @@ li{
 }
 
 /* ==========================================
+   PHOENIX PREMIUM UI
+========================================== */
+
+body{
+
+    background:
+    radial-gradient(circle at top right,#2563eb22,transparent 40%),
+    radial-gradient(circle at bottom left,#3b82f622,transparent 40%),
+    #0b1120;
+
+    animation: alphaBackground 18s ease infinite;
+
+}
+
+@keyframes alphaBackground{
+
+0%{
+
+background-position:0% 0%;
+
+}
+
+50%{
+
+background-position:100% 100%;
+
+}
+
+100%{
+
+background-position:0% 0%;
+
+}
+
+}
+
+/* ==========================================
+   PREMIUM GLASS
+========================================== */
+
+.widget{
+
+    backdrop-filter:blur(18px);
+
+    background:rgba(17,24,39,.80);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    transition:.35s;
+
+}
+
+.widget:hover{
+
+    transform:translateY(-8px);
+
+    border-color:#3b82f6;
+
+    box-shadow:
+
+    0 20px 45px rgba(37,99,235,.25);
+
+}
+
+/* ==========================================
+   HERO GLOW
+========================================== */
+
+.hero-card{
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.hero-card::before{
+
+content:"";
+
+position:absolute;
+
+width:500px;
+
+height:500px;
+
+background:
+
+radial-gradient(circle,#ffffff22,transparent);
+
+top:-250px;
+
+right:-150px;
+
+animation:heroGlow 12s linear infinite;
+
+}
+
+@keyframes heroGlow{
+
+0%{
+
+transform:rotate(0deg);
+
+}
+
+100%{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+/* ==========================================
+   BUTTONS
+========================================== */
+
+.widget button,
+.primary-btn{
+
+transition:.30s;
+
+}
+
+.widget button:hover,
+.primary-btn:hover{
+
+transform:translateY(-2px);
+
+box-shadow:
+
+0 10px 25px rgba(37,99,235,.35);
+
+}
+
+/* ==========================================
+   SIDEBAR
+========================================== */
+
+.sidebar{
+
+box-shadow:
+
+8px 0 35px rgba(0,0,0,.35);
+
+}
+
+.sidebar a{
+
+transition:.30s;
+
+}
+
+.sidebar a:hover{
+
+padding-left:24px;
+
+}
+
+/* ==========================================
+   CARDS
+========================================== */
+
+.finance-card{
+
+transition:.30s;
+
+}
+
+.finance-card:hover{
+
+transform:scale(1.05);
+
+box-shadow:
+
+0 10px 25px rgba(59,130,246,.20);
+
+}
+
+/* ==========================================
    END
 ========================================== */
