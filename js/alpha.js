@@ -1,132 +1,179 @@
 // ==========================================
-// 🤖 INFINITY ALPHA v4
-// Unified AI Controller
+// 🤖 INFINITY ALPHA v1.0
+// Alpha Intelligence Engine
 // ==========================================
 
-console.log("🤖 Infinity Alpha v4 Started");
-
+console.log("🤖 Infinity Alpha Intelligence Engine Online");
 
 const Alpha = {
 
+    version: "1.0",
 
-    async ask(command){
+    intents: {
 
+        weather: [
+            "weather","temperature","forecast","rain","storm",
+            "cloud","humidity","wind","hot","cold","umbrella","outside"
+        ],
 
-        if(!command){
+        finance: [
+            "finance","money","balance","income","expense","expenses",
+            "budget","saving","savings","cash","wallet","salary","pay"
+        ],
 
-            return "🤖 Please ask me something.";
+        crypto: [
+            "crypto","bitcoin","btc","ethereum","eth",
+            "solana","xrp","doge","coin","coinbase"
+        ],
+
+        stocks: [
+            "stock","stocks","share","shares",
+            "nasdaq","dow","s&p","apple","tesla",
+            "nvidia","amazon","microsoft","google"
+        ],
+
+        news: [
+            "news","headline","breaking",
+            "market news","today","update"
+        ],
+
+        currency: [
+            "currency","convert","exchange",
+            "usd","php","eur","jpy","gbp"
+        ],
+
+        pomodoro: [
+            "pomodoro","focus","timer",
+            "study","work","productive"
+        ],
+
+        notes: [
+            "note","notes","remember",
+            "journal","write"
+        ],
+
+        tasks: [
+            "task","tasks","todo",
+            "checklist","reminder"
+        ],
+
+        greeting: [
+            "hello","hi","hey",
+            "good morning","good afternoon",
+            "good evening"
+        ]
+    },
+
+    detectIntent(text){
+
+        text = text.toLowerCase();
+
+        for(const intent in this.intents){
+
+            const words = this.intents[intent];
+
+            for(const word of words){
+
+                if(text.includes(word)){
+
+                    return intent;
+
+                }
+
+            }
 
         }
 
-
-        const text =
-        command.toLowerCase().trim();
-
-
-
-        if(this.detect(text,"weather")){
-
-            return await this.weather();
-
-        }
-
-
-
-        if(this.detect(text,"finance")){
-
-            return await this.finance();
-
-        }
-
-
-
-        if(this.detect(text,"focus")){
-
-            return await this.focus();
-
-        }
-
-
-
-        if(this.detect(text,"crypto")){
-
-            return await this.market();
-
-        }
-
-
-
-        if(
-            text.includes("hello") ||
-            text.includes("hi")
-        ){
-
-            return `
-            👋 Hello.
-            I am Infinity Alpha v4.
-            Your intelligent workspace assistant.
-            `;
-
-        }
-
-
-
-        return `
-        🤖 I am Alpha v4.
-
-        Available systems:
-
-        🌤 Weather
-        💰 Finance
-        ⏱ Focus
-        📈 Markets
-        💱 Currency
-        📰 News
-        `;
-
+        return "unknown";
 
     },
 
+    async ask(message){
 
+        const intent = this.detectIntent(message);
 
-    detect(text,word){
+        console.log("Detected Intent:",intent);
 
-        return text.includes(word);
+        switch(intent){
 
-    },
+            case "greeting":
 
+                return `
+👋 Hello!
 
+I'm <strong>Infinity Alpha v1.0</strong>
 
-    async weather(){
+Your Financial Intelligence &
+Productivity Operating System.
 
-        return "🌤 Weather intelligence online.";
+How can I help today?
+`;
 
-    },
+            case "weather":
 
+                return "🌤 Weather module loading...";
 
+            case "finance":
 
-    async finance(){
+                return "💰 Finance Intelligence loading...";
 
-        return "💰 Finance intelligence online.";
+            case "crypto":
 
-    },
+                return "₿ Crypto Intelligence loading...";
 
+            case "stocks":
 
+                return "📈 Stock Market Intelligence loading...";
 
-    async focus(){
+            case "news":
 
-        return "⏱ Focus intelligence online.";
+                return "📰 News Intelligence loading...";
 
-    },
+            case "currency":
 
+                return "💱 Currency Intelligence loading...";
 
+            case "pomodoro":
 
-    async market(){
+                return "⏱ Focus System loading...";
 
-        return "📈 Market intelligence online.";
+            case "notes":
+
+                return "📝 Smart Notes loading...";
+
+            case "tasks":
+
+                return "✅ Smart Tasks loading...";
+
+            default:
+
+                return `
+🤖 I understand many things.
+
+Try asking me:
+
+🌤 What's the weather?
+
+₿ Bitcoin price
+
+📈 Tesla stock
+
+📰 Market news
+
+💰 Analyze my finances
+
+💱 Convert USD to PHP
+
+⏱ Start Pomodoro
+
+📝 Open notes
+
+✅ Show tasks
+`;
+
+        }
 
     }
-
 
 };
 
