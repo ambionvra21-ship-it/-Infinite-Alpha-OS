@@ -495,49 +495,99 @@ body{
 
 }
 /* ==========================================
-   📈 FINANCE SUMMARY FIX
+   📈 FINANCE ALPHA DASHBOARD FIX
 ========================================== */
+
+#finance {
+    width: 100%;
+    overflow: hidden;
+}
+
 
 .finance-summary {
 
     display: grid;
 
-    grid-template-columns: repeat(
-        3,
-        minmax(0, 1fr)
-    );
+    grid-template-columns:
+    repeat(3, 1fr);
 
     gap: 15px;
 
-    width: 100%;
+    margin-bottom: 20px;
 
 }
 
 
 .finance-card {
 
+    padding: 15px;
+
     min-width: 0;
 
-    overflow: hidden;
+    border-radius: 12px;
 
-    padding: 15px;
+    overflow: hidden;
 
 }
 
 
 .finance-card h2 {
 
-    font-size: clamp(
-        1.2rem,
-        2vw,
-        2rem
-    );
-
-    white-space: nowrap;
+    font-size: 1.4rem;
 
     overflow: hidden;
 
     text-overflow: ellipsis;
+
+    white-space: nowrap;
+
+}
+
+
+#finance input,
+#finance select {
+
+    width: 100%;
+
+    box-sizing: border-box;
+
+    margin-bottom: 10px;
+
+}
+
+
+#finance button {
+
+    width: 100%;
+
+}
+
+
+
+/* Desktop improvement */
+
+@media(min-width:900px){
+
+    #finance {
+
+        max-width: 100%;
+
+    }
+
+
+    #finance input,
+    #finance select {
+
+        max-width: 350px;
+
+    }
+
+
+    #finance button {
+
+        max-width:350px;
+
+    }
 
 }
 
@@ -547,21 +597,13 @@ body{
 
 @media(max-width:768px){
 
-    .finance-summary{
+    .finance-summary {
 
         grid-template-columns:1fr;
 
     }
 
-
-    .finance-card h2{
-
-        white-space:normal;
-
-    }
-
 }
-
 /* ==========================================
    NOTES
 ========================================== */
