@@ -54,8 +54,30 @@ const MarketEngine = {
             this.render();
 
             this.updateTicker();
-generateInsight(){
+render(){
 
+    const grid =
+    document.getElementById(
+        "marketCenterGrid"
+    );
+
+    if(!grid) return;
+
+    grid.innerHTML = "";
+
+    this.coins.forEach(
+        coin=>{
+            grid.appendChild(
+                this.createCard(coin)
+            );
+        }
+    );
+
+    this.updateClock();
+
+    this.generateInsight();
+
+}
     if(!this.coins.length) return;
 
     const top =
