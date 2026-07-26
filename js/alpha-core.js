@@ -78,23 +78,41 @@ const AlphaCore = {
 
 
 
-
-    init(){
-
-
-        console.log(
-            "🚀 Alpha Core Online"
-        );
+init(){
 
 
-        this.loadSettings();
+    console.log(
+        "🚀 Alpha Core Online"
+    );
 
 
-        this.connectSystems();
+    this.loadSettings();
 
 
-        this.updateInterface();
+    this.memory.load();
 
+
+    this.connectSystems();
+
+
+    this.memory.save(
+
+        "Alpha Core initialized"
+
+    );
+
+
+    this.updateInterface();
+
+
+    console.log(
+
+        "🤖 Alpha Briefing:",
+
+        this.generateBriefing()
+
+    
+},
 
     },
 
