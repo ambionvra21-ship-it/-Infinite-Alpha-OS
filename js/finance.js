@@ -5,30 +5,46 @@
 console.log("📈 Finance Module Loaded");
 
 
+// Load saved finance data
 let alphaFinance = JSON.parse(
     localStorage.getItem("alphaFinance")
 ) || [];
 
 
 
-// Add Transaction
-function addFinanceTransaction() {
+// ==========================================
+// ADD TRANSACTION
+// ==========================================
+
+window.addFinanceTransaction = function() {
 
 
     const description =
-    document.getElementById("financeDescription").value;
+    document.getElementById("financeDescription");
 
 
     const amount =
-    Number(document.getElementById("financeAmount").value);
+    document.getElementById("financeAmount");
 
 
     const category =
-    document.getElementById("financeCategory").value;
+    document.getElementById("financeCategory");
 
 
 
-    if(description.trim() === "" || amount <= 0) {
+    if(!description || !amount || !category) {
+
+        console.log("Finance inputs missing");
+        return;
+
+    }
+
+
+
+    if(
+        description.value.trim() === "" ||
+        Number(amount.value) <= 0
+    ){
 
         alert("Please enter valid transaction details.");
         return;
@@ -41,11 +57,11 @@ function addFinanceTransaction() {
 
         id: Date.now(),
 
-        description: description,
+        description: description.value,
 
-        amount: amount,
+        amount: Number(amount.value),
 
-        category: category,
+        category: category.value,
 
         date: new Date().toLocaleString()
 
@@ -54,7 +70,6 @@ function addFinanceTransaction() {
 
 
     alphaFinance.push(transaction);
-
 
 
     saveFinance();
@@ -68,14 +83,16 @@ function addFinanceTransaction() {
 
     console.log("✅ Transaction Added");
 
-
-}
-
+};
 
 
 
-// Display Transactions
-function displayFinance() {
+
+// ==========================================
+// DISPLAY TRANSACTIONS
+// ==========================================
+
+function displayFinance(){
 
 
     const list =
@@ -93,24 +110,23 @@ function displayFinance() {
     alphaFinance.forEach(item => {
 
 
-        const li = document.createElement("li");
+        const li =
+        document.createElement("li");
 
 
         li.innerHTML = `
 
         ${item.category}
-        - ${item.description}
+        -
+        ${item.description}
         :
         $${item.amount.toFixed(2)}
 
         <button onclick="deleteFinance(${item.id})">
-
         ❌
-
         </button>
 
         `;
-
 
 
         list.appendChild(li);
@@ -128,8 +144,12 @@ function displayFinance() {
 
 
 
-// Update Totals
-function updateFinanceSummary() {
+
+// ==========================================
+// UPDATE SUMMARY
+// ==========================================
+
+function updateFinanceSummary(){
 
 
     let income = 0;
@@ -141,7 +161,7 @@ function updateFinanceSummary() {
     alphaFinance.forEach(item => {
 
 
-        if(item.category === "Income") {
+        if(item.category === "Income"){
 
             income += item.amount;
 
@@ -158,24 +178,38 @@ function updateFinanceSummary() {
 
 
 
-    const balance = income - expenses;
+    const balance =
+    income - expenses;
 
 
 
-    document.getElementById("totalIncome")
-    .textContent =
+    const totalIncome =
+    document.getElementById("totalIncome");
+
+
+    const totalExpenses =
+    document.getElementById("totalExpenses");
+
+
+    const totalBalance =
+    document.getElementById("totalBalance");
+
+
+
+    if(totalIncome)
+    totalIncome.textContent =
     "$" + income.toFixed(2);
 
 
 
-    document.getElementById("totalExpenses")
-    .textContent =
+    if(totalExpenses)
+    totalExpenses.textContent =
     "$" + expenses.toFixed(2);
 
 
 
-    document.getElementById("totalBalance")
-    .textContent =
+    if(totalBalance)
+    totalBalance.textContent =
     "$" + balance.toFixed(2);
 
 
@@ -185,17 +219,18 @@ function updateFinanceSummary() {
 
 
 
-// Delete Transaction
-function deleteFinance(id) {
+
+// ==========================================
+// DELETE TRANSACTION
+// ==========================================
+
+window.deleteFinance = function(id){
 
 
     alphaFinance =
     alphaFinance.filter(
-
         item => item.id !== id
-
     );
-
 
 
     saveFinance();
@@ -204,13 +239,17 @@ function deleteFinance(id) {
     displayFinance();
 
 
-}
+};
 
 
 
 
-// Save Finance Data
-function saveFinance() {
+
+// ==========================================
+// SAVE DATA
+// ==========================================
+
+function saveFinance(){
 
 
     localStorage.setItem(
@@ -227,51 +266,69 @@ function saveFinance() {
 
 
 
-// Clear Inputs
-function clearFinanceInputs() {
+
+// ==========================================
+// CLEAR INPUTS
+// ==========================================
+
+function clearFinanceInputs(){
 
 
-    document.getElementById("financeDescription").value = "";
+    const description =
+    document.getElementById("financeDescription");
 
-    document.getElementById("financeAmount").value = "";
+
+    const amount =
+    document.getElementById("financeAmount");
+
+
+
+    if(description)
+    description.value = "";
+
+
+    if(amount)
+    amount.value = "";
+
 
 }
 
 
 
 
-// Load Finance
-window.addEventListener("load", function(){
-
-
-    displayFinance();
-
-
-});
 
 // ==========================================
 // 🤖 ALPHA FINANCIAL ADVISOR AI
 // ==========================================
 
-function runAlphaFinanceAI() {
+window.runAlphaFinanceAI = function(){
 
 
     const report =
-    document.getElementById("alphaFinanceReport");
+    document.getElementById(
+        "alphaFinanceReport"
+    );
 
 
     const score =
-    document.getElementById("alphaFinanceScore");
+    document.getElementById(
+        "alphaFinanceScore"
+    );
 
 
     const advice =
-    document.getElementById("alphaFinanceAdvice");
+    document.getElementById(
+        "alphaFinanceAdvice"
+    );
 
 
 
-    if(!report || !score || !advice) {
+    if(!report || !score || !advice){
 
-        console.log("Finance AI elements missing");
+        console.log(
+        "⚠️ Advisor boxes missing"
+        );
+
         return;
 
     }
@@ -287,13 +344,13 @@ function runAlphaFinanceAI() {
     alphaFinance.forEach(item => {
 
 
-        if(item.category === "Income") {
+        if(item.category === "Income"){
 
             income += item.amount;
 
         }
 
-        else {
+        else{
 
             expenses += item.amount;
 
@@ -304,7 +361,8 @@ function runAlphaFinanceAI() {
 
 
 
-    let balance = income - expenses;
+    const balance =
+    income - expenses;
 
 
 
@@ -312,31 +370,22 @@ function runAlphaFinanceAI() {
 
 
 
-    if(income > 0) {
-
-        healthScore += 40;
-
-    }
+    if(income > 0)
+    healthScore += 40;
 
 
-    if(expenses < income) {
-
-        healthScore += 40;
-
-    }
+    if(expenses < income)
+    healthScore += 40;
 
 
-    if(balance > 0) {
-
-        healthScore += 20;
-
-    }
+    if(balance > 0)
+    healthScore += 20;
 
 
 
     report.innerHTML = `
 
-    📊 Income:
+    💵 Income:
     $${income.toFixed(2)}
 
     <br>
@@ -354,43 +403,54 @@ function runAlphaFinanceAI() {
 
 
     score.innerHTML =
-
-    "Financial Health Score: " 
+    "📊 Financial Health Score: "
     + healthScore
     + "/100";
 
 
 
-    if(healthScore >= 80) {
-
+    if(healthScore >= 80){
 
         advice.innerHTML =
-        "🟢 Excellent! Your finances look healthy. Keep saving and investing.";
-
+        "🟢 Excellent! Your finances are healthy. Keep saving and investing.";
 
     }
 
-    else if(healthScore >= 50) {
-
+    else if(healthScore >= 50){
 
         advice.innerHTML =
-        "🟡 Good progress. Watch your expenses and increase savings.";
-
+        "🟡 Good progress. Monitor spending and increase savings.";
 
     }
 
-    else {
-
+    else{
 
         advice.innerHTML =
-        "🔴 Attention needed. Reduce unnecessary spending and build your income.";
-
+        "🔴 Improve your budget and reduce unnecessary expenses.";
 
     }
 
 
 
-    console.log("🤖 Alpha Financial Analysis Complete");
+    console.log(
+    "🤖 Alpha Financial Advisor Complete"
+    );
 
 
-}
+};
+
+
+
+
+
+// ==========================================
+// START MODULE
+// ==========================================
+
+window.addEventListener(
+"load",
+function(){
+
+    displayFinance();
+
+});
