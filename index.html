@@ -581,42 +581,67 @@ Waiting for analysis...
 </div>
 
 
-
 <!-- ===================================== -->
-<!-- 🤖 ALPHA AI -->
+<!-- 🤖 INFINITY ALPHA AI -->
 <!-- ===================================== -->
 
-<div class="widget" id="assistant">
+<div class="widget alpha-widget" id="assistant">
 
-<h2>🤖 Alpha AI Assistant</h2>
+    <div class="alpha-header">
 
-<input
+        <h2>🤖 Infinity Alpha</h2>
 
-type="text"
+        <span class="alpha-status">
+            🟢 ONLINE
+        </span>
 
-id="alphaCommandInput"
+    </div>
 
-placeholder="Ask Alpha anything...">
+    <p class="alpha-subtitle">
+        Financial Intelligence & Productivity Assistant
+    </p>
 
-<button
+    <div
+        id="alphaAssistantResponse"
+        class="alpha-response">
 
-onclick="runAlphaCommand()">
+        👋 Welcome to <strong>Infinity Alpha OS v1.0</strong>
 
-Ask
+        <br><br>
 
-</button>
+        Ask me anything about:
 
-<div id="alphaAssistantResponse">
+        <br><br>
 
-Hello! I am Infinity Alpha.
+        🌤 Weather<br>
+        📈 Crypto<br>
+        📊 Stocks<br>
+        📰 Financial News<br>
+        💰 Finance<br>
+        💱 Currency<br>
+        📝 Notes<br>
+        ✅ Tasks<br>
+        ⏱ Pomodoro
 
-</div>
+    </div>
 
-</div>
+    <div class="alpha-input">
 
-</section>
+        <input
+            type="text"
+            id="alphaCommandInput"
+            placeholder="Ask Alpha anything..."
+            autocomplete="off">
 
-</main>
+        <button
+            id="alphaAskBtn"
+            onclick="askAlpha()">
+
+            🚀 Ask
+
+        </button>
+
+    </div>
 
 </div>
 
