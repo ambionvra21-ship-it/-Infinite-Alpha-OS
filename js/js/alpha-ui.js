@@ -51,3 +51,28 @@ window.askAlpha = async function(){
     input.value="";
 
 };
+
+// ==========================================
+// ENTER KEY SUPPORT
+// ==========================================
+
+document.addEventListener("DOMContentLoaded",()=>{
+
+    const input =
+    document.getElementById("alphaCommandInput");
+
+    if(!input) return;
+
+    input.addEventListener("keydown",(event)=>{
+
+        if(event.key==="Enter"){
+
+            event.preventDefault();
+
+            askAlpha();
+
+        }
+
+    });
+
+});
