@@ -75,11 +75,15 @@ render(){
 
     this.updateClock();
 
-    this.generateInsight();
+ this.generateInsight();
 
-}
+},
+
+
+generateInsight(){
+
     if(!this.coins.length) return;
-
+    
     const top =
     [...this.coins].sort(
         (a,b)=>
