@@ -1,151 +1,1029 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Infinity Alpha X</title>
-<meta name="description" content="Infinity Alpha Operating System">
-<meta name="theme-color" content="#0b1120">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style.css">
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-0: #080B14;
+    --bg-1: #0F1526;
+    --bg-2: #161D33;
+    --line: #212A46;
+    --accent: #4C82F7;
+    --accent-soft: rgba(76,130,247,0.12);
+    --alpha: #7DE0C7;
+    --alpha-soft: rgba(125,224,199,0.12);
+    --text-hi: #EEF1FA;
+    --text-mid: #A7B0C8;
+    --text-lo: #616B88;
+    --up: #22C55E;
+    --down: #EF4444;
+    --warn: #F5A623;
+    --font-display: 'Sora', sans-serif;
+    --font-body: 'Inter', sans-serif;
+    --font-mono: 'IBM Plex Mono', monospace;
+    --r-card: 16px;
+    --r-ctrl: 8px;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg-0);
+    color: var(--text-hi);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: inherit; }
+  ::selection { background: var(--accent-soft); color: var(--text-hi); }
+
+  :focus-visible {
+    outline: 2px solid var(--alpha);
+    outline-offset: 2px;
+  }
+
+  /* ---------- Shell layout ---------- */
+  .shell {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    min-height: 100vh;
+  }
+  @media (max-width: 880px) {
+    .shell { grid-template-columns: 1fr; }
+    .sidebar { display: none; }
+    .sidebar.open { display: flex; }
+  }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar {
+    background: var(--bg-1);
+    border-right: 1px solid var(--line);
+    padding: 24px 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .brand-mark {
+    width: 34px; height: 34px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--accent), var(--alpha));
+    flex-shrink: 0;
+  }
+  .brand-text {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 15px;
+    line-height: 1.2;
+  }
+  .brand-sub {
+    font-size: 10px;
+    color: var(--text-lo);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-top: 2px;
+  }
+  .nav { display: flex; flex-direction: column; gap: 2px; }
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 10px;
+    border-radius: var(--r-ctrl);
+    font-size: 13px;
+    color: var(--text-mid);
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .nav-item:hover { background: var(--bg-2); color: var(--text-hi); }
+  .nav-item.active {
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 500;
+  }
+  .nav-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: currentColor; opacity: 0.6; flex-shrink: 0;
+  }
+
+  /* ---------- Main ---------- */
+  .main { padding: 20px 28px 60px; max-width: 1180px; }
+  .topbar {
+    display: flex; align-items: center; justify-content: space-between;
+    gap: 16px; margin-bottom: 28px;
+  }
+  .menu-btn {
+    display: none;
+    background: var(--bg-1); border: 1px solid var(--line);
+    color: var(--text-hi); border-radius: var(--r-ctrl);
+    width: 36px; height: 36px; cursor: pointer; font-size: 16px;
+  }
+  @media (max-width: 880px) { .menu-btn { display: block; } }
+  .topbar-search {
+    flex: 1; max-width: 420px;
+    display: flex; align-items: center; gap: 8px;
+    background: var(--bg-1); border: 1px solid var(--line);
+    border-radius: var(--r-ctrl); padding: 8px 12px;
+  }
+  .topbar-search input {
+    background: transparent; border: none; outline: none;
+    color: var(--text-hi); font-size: 13px; width: 100%;
+  }
+  .topbar-search input::placeholder { color: var(--text-lo); }
+  .topbar-right { display: flex; align-items: center; gap: 14px; }
+  .status-pill {
+    display: flex; align-items: center; gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 11px; color: var(--alpha);
+    background: var(--alpha-soft);
+    border-radius: 999px; padding: 5px 10px;
+  }
+  .status-pulse {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--alpha);
+    animation: pulse 1.6s infinite;
+  }
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(125,224,199,0.55); }
+    70% { box-shadow: 0 0 0 6px rgba(125,224,199,0); }
+    100% { box-shadow: 0 0 0 0 rgba(125,224,199,0); }
+  }
+  .avatar {
+    width: 32px; height: 32px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--alpha));
+  }
+
+  /* ---------- Hero / orbital dial ---------- */
+  .hero {
+    display: grid;
+    grid-template-columns: 1fr 220px;
+    align-items: center;
+    gap: 24px;
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 32px;
+    margin-bottom: 24px;
+  }
+  @media (max-width: 700px) {
+    .hero { grid-template-columns: 1fr; text-align: center; }
+    .dial-wrap { justify-self: center; }
+  }
+  .hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--alpha); margin: 0 0 10px;
+  }
+  .hero h1 {
+    font-family: var(--font-display);
+    font-size: 30px; font-weight: 700; line-height: 1.15;
+    margin: 0 0 10px;
+  }
+  .hero p {
+    color: var(--text-mid); font-size: 14px; line-height: 1.6;
+    margin: 0; max-width: 46ch;
+  }
+  @media (max-width: 700px) { .hero p { margin: 0 auto; } }
+
+  .dial-wrap { position: relative; width: 200px; height: 200px; }
+  .dial-svg { width: 100%; height: 100%; }
+  .dial-center {
+    position: absolute; inset: 0;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .dial-score {
+    font-family: var(--font-mono); font-weight: 600;
+    font-size: 30px; color: var(--text-hi); line-height: 1;
+  }
+  .dial-label {
+    font-size: 10px; color: var(--text-lo); letter-spacing: 0.06em;
+    text-transform: uppercase; margin-top: 4px;
+  }
+  .dial-sweep { transform-origin: 100px 100px; animation: spin 6s linear infinite; }
+  @media (prefers-reduced-motion: reduce) {
+    .dial-sweep { animation: none; }
+    .status-pulse { animation: none; }
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .dial-node-label {
+    font-family: var(--font-mono); font-size: 8px; fill: var(--text-lo);
+  }
+
+  /* ---------- Grid / cards ---------- */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 18px;
+    margin-bottom: 18px;
+  }
+  .card {
+    background: var(--bg-1);
+    border: 1px solid var(--line);
+    border-radius: var(--r-card);
+    padding: 20px;
+  }
+  .card-head {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 16px;
+  }
+  .card-title {
+    font-family: var(--font-display); font-size: 14px; font-weight: 600;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .card-title .sw { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+  .card-tag {
+    font-family: var(--font-mono); font-size: 10px; color: var(--text-lo);
+    border: 1px solid var(--line); border-radius: 999px; padding: 3px 8px;
+  }
+
+  .stat-row { display: flex; gap: 20px; margin-top: 6px; }
+  .stat { flex: 1; }
+  .stat-label { font-size: 11px; color: var(--text-lo); margin-bottom: 4px; }
+  .stat-value { font-family: var(--font-mono); font-size: 18px; font-weight: 500; color: var(--text-hi); }
+  .stat-value.up { color: var(--up); }
+  .stat-value.down { color: var(--down); }
+
+  .placeholder-note {
+    font-size: 11px; color: var(--text-lo); margin-top: 14px;
+    border-top: 1px dashed var(--line); padding-top: 10px;
+  }
+
+  .mini-list { display: flex; flex-direction: column; gap: 10px; }
+  .mini-row { display: flex; justify-content: space-between; align-items: center; font-size: 12px; }
+  .mini-row .k { color: var(--text-mid); }
+  .mini-row .v { font-family: var(--font-mono); color: var(--text-hi); }
+
+  /* ---------- Crypto module (namespaced cx-) ---------- */
+  .cx-dash { display: flex; flex-direction: column; gap: 18px; }
+  .cx-search-wrap { position: relative; }
+  .cx-search-box {
+    display: flex; align-items: center; gap: 8px;
+    background: var(--bg-2); border: 1px solid var(--line);
+    border-radius: var(--r-ctrl); padding: 10px 14px;
+  }
+  .cx-search-box input {
+    background: transparent; border: none; outline: none;
+    color: var(--text-hi); font-size: 13px; width: 100%; font-family: var(--font-body);
+  }
+  .cx-search-box input::placeholder { color: var(--text-lo); }
+  .cx-search-icon { font-size: 13px; opacity: 0.5; }
+  .cx-search-results {
+    position: absolute; top: calc(100% + 6px); left: 0; right: 0;
+    background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--r-ctrl);
+    max-height: 260px; overflow-y: auto; z-index: 20; display: none;
+  }
+  .cx-search-results.open { display: block; }
+  .cx-search-item {
+    display: flex; align-items: center; gap: 10px; padding: 9px 14px;
+    cursor: pointer; font-size: 13px;
+  }
+  .cx-search-item:hover { background: var(--bg-1); }
+  .cx-search-item img { width: 20px; height: 20px; border-radius: 50%; }
+  .cx-search-item .sym { color: var(--text-lo); font-size: 11px; margin-left: auto; font-family: var(--font-mono); }
+  .cx-search-empty { padding: 12px 14px; font-size: 12px; color: var(--text-lo); }
+
+  .cx-board, .cx-detail {
+    background: var(--bg-1); border: 1px solid var(--line);
+    border-radius: var(--r-card); padding: 20px;
+  }
+  .cx-board-header, .cx-detail-header {
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 10px; margin-bottom: 16px;
+  }
+  .cx-title, .cx-detail-title {
+    display: flex; align-items: center; gap: 8px;
+    font-family: var(--font-display); font-size: 14px; font-weight: 600;
+  }
+  .cx-detail-icon { width: 22px; height: 22px; border-radius: 50%; }
+  .cx-detail-symbol { color: var(--text-lo); font-size: 12px; font-weight: 500; font-family: var(--font-mono); }
+  .cx-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); display: inline-block; }
+  .cx-header-right { display: flex; align-items: center; gap: 10px; font-family: var(--font-mono); font-size: 11px; color: var(--text-lo); }
+  .cx-live-badge { display: flex; align-items: center; gap: 5px; color: var(--alpha); font-weight: 500; letter-spacing: 0.04em; }
+  .cx-pulse { width: 6px; height: 6px; border-radius: 50%; background: var(--alpha); animation: pulse 1.6s infinite; }
+
+  .cx-table-wrap { overflow-x: auto; }
+  .cx-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .cx-table th {
+    text-align: left; color: var(--text-lo); font-weight: 500; font-size: 10px;
+    text-transform: uppercase; letter-spacing: 0.06em; font-family: var(--font-mono);
+    padding: 8px 10px; border-bottom: 1px solid var(--line);
+  }
+  .cx-table td { padding: 10px; border-bottom: 1px solid var(--bg-2); vertical-align: middle; }
+  .cx-table tbody tr { cursor: pointer; }
+  .cx-table tbody tr:hover { background: var(--bg-2); }
+  .cx-table tbody tr:last-child td { border-bottom: none; }
+  .cx-col-rank { width: 28px; color: var(--text-lo); font-family: var(--font-mono); }
+  .cx-col-price, .cx-col-change, .cx-col-cap { text-align: right; font-family: var(--font-mono); }
+  .cx-col-spark { width: 90px; }
+  .cx-coin-cell { display: flex; align-items: center; gap: 8px; }
+  .cx-coin-icon { width: 22px; height: 22px; border-radius: 50%; }
+  .cx-coin-name { font-weight: 500; color: var(--text-hi); }
+  .cx-coin-symbol { color: var(--text-lo); font-size: 11px; margin-left: 4px; font-family: var(--font-mono); }
+  .cx-change-up { color: var(--up); font-weight: 500; }
+  .cx-change-down { color: var(--down); font-weight: 500; }
+  .cx-loading-row, .cx-error-row { text-align: center; color: var(--text-lo); padding: 24px 0; }
+  .cx-spark-canvas { width: 90px; height: 32px; display: block; }
+
+  .cx-range { display: flex; background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--r-ctrl); overflow: hidden; }
+  .cx-range-btn { background: transparent; border: none; color: var(--text-mid); font-size: 12px; padding: 6px 10px; cursor: pointer; font-family: var(--font-mono); }
+  .cx-range-btn.active { background: var(--accent); color: #fff; }
+  .cx-price-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 10px; }
+  .cx-price { font-family: var(--font-mono); font-size: 26px; font-weight: 600; color: var(--text-hi); }
+  .cx-change { font-family: var(--font-mono); font-size: 13px; font-weight: 500; padding: 2px 8px; border-radius: 6px; }
+  .cx-change.up { color: var(--up); background: rgba(34,197,94,0.12); }
+  .cx-change.down { color: var(--down); background: rgba(239,68,68,0.12); }
+  .cx-chart-wrap { position: relative; width: 100%; height: 220px; }
+  .cx-footer { margin-top: 10px; font-family: var(--font-mono); font-size: 11px; color: var(--text-lo); }
+
+  /* ---------- View routing ---------- */
+  .view { display: none; }
+  .view.active { display: block; }
+  .page-head { margin-bottom: 20px; }
+  .page-eyebrow {
+    font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--accent); margin: 0 0 6px;
+  }
+  .page-title { font-family: var(--font-display); font-size: 22px; font-weight: 700; margin: 0; }
+  .page-sub { color: var(--text-mid); font-size: 13px; margin: 6px 0 0; }
+  .link-btn {
+    font-family: var(--font-mono); font-size: 11px; color: var(--accent);
+    background: none; border: none; cursor: pointer; padding: 0;
+    text-decoration: underline; text-underline-offset: 3px;
+  }
+
+  .demo-list { display: flex; flex-direction: column; gap: 0; }
+  .demo-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 0; border-bottom: 1px solid var(--bg-2); font-size: 13px;
+  }
+  .demo-row:last-child { border-bottom: none; }
+  .demo-row .k { color: var(--text-hi); }
+  .demo-row .meta { color: var(--text-lo); font-size: 11px; font-family: var(--font-mono); }
+  .demo-row .v { font-family: var(--font-mono); color: var(--text-hi); }
+
+  .chip {
+    display: inline-block; font-family: var(--font-mono); font-size: 10px;
+    padding: 3px 8px; border-radius: 999px; border: 1px solid var(--line); color: var(--text-lo);
+  }
+  .chip.todo { color: var(--warn); border-color: rgba(245,166,35,0.3); }
+  .chip.done { color: var(--up); border-color: rgba(34,197,94,0.3); }
+
+  .ai-thread { display: flex; flex-direction: column; gap: 12px; margin-bottom: 16px; }
+  .ai-msg {
+    max-width: 75%; padding: 10px 14px; border-radius: 12px; font-size: 13px; line-height: 1.5;
+  }
+  .ai-msg.bot { background: var(--bg-2); align-self: flex-start; border: 1px solid var(--line); }
+  .ai-msg.user { background: var(--accent-soft); color: var(--text-hi); align-self: flex-end; }
+  .ai-input-row { display: flex; gap: 8px; }
+  .ai-input-row input {
+    flex: 1; background: var(--bg-2); border: 1px solid var(--line); border-radius: var(--r-ctrl);
+    padding: 10px 12px; color: var(--text-hi); font-size: 13px; outline: none;
+  }
+  .ai-input-row button {
+    background: var(--accent); border: none; color: #fff; border-radius: var(--r-ctrl);
+    padding: 0 16px; font-size: 13px; cursor: pointer; font-family: var(--font-body); font-weight: 500;
+  }
+
+  .settings-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 0; border-bottom: 1px solid var(--bg-2);
+  }
+  .settings-row:last-child { border-bottom: none; }
+  .settings-row .k { font-size: 13px; color: var(--text-hi); }
+  .settings-row .d { font-size: 11px; color: var(--text-lo); margin-top: 2px; }
+  .toggle {
+    width: 38px; height: 22px; border-radius: 999px; background: var(--bg-2);
+    border: 1px solid var(--line); position: relative; cursor: pointer;
+  }
+  .toggle::after {
+    content: ''; position: absolute; top: 2px; left: 2px;
+    width: 16px; height: 16px; border-radius: 50%; background: var(--text-lo);
+  }
+  .toggle.on { background: var(--accent-soft); border-color: var(--accent); }
+  .toggle.on::after { background: var(--accent); left: 18px; }
+</style>
 </head>
 <body>
-<div class="alpha-os">
 
-<!-- SIDEBAR -->
-<aside class="alpha-sidebar">
-<div class="brand">
-<div class="brand-logo">∞</div>
-<div>
-<h2>Infinity Alpha</h2>
-<p>X Operating System</p>
-</div>
-</div>
-<nav>
-<ul>
-<li class="active">🏠 Dashboard</li>
-<li>🧠 Alpha Core</li>
-<li>💰 Wealth OS</li>
-<li>📊 Markets</li>
-<li>🌍 Global</li>
-<li>⚡ Productivity</li>
-<li>🤖 AI Assistant</li>
-<li>⚙ Settings</li>
-</ul>
-</nav>
-<div class="sidebar-status">
-<div class="status-dot"></div>
-<div>
-<strong>ALPHA CORE</strong>
-<small>ONLINE</small>
-</div>
-</div>
-</aside>
+<div class="shell">
 
-<!-- MAIN -->
-<main class="alpha-main">
+  <aside class="sidebar" id="sidebar">
+    <div class="brand">
+      <div class="brand-mark"></div>
+      <div>
+        <div class="brand-text">Infinity Alpha</div>
+        <div class="brand-sub">X operating system</div>
+      </div>
+    </div>
+    <nav class="nav">
+      <a class="nav-item active" data-view="dashboard"><span class="nav-dot"></span>Dashboard</a>
+      <a class="nav-item" data-view="alpha-core"><span class="nav-dot"></span>Alpha Core</a>
+      <a class="nav-item" data-view="wealth"><span class="nav-dot"></span>Wealth OS</a>
+      <a class="nav-item" data-view="markets"><span class="nav-dot"></span>Markets</a>
+      <a class="nav-item" data-view="global"><span class="nav-dot"></span>Global</a>
+      <a class="nav-item" data-view="productivity"><span class="nav-dot"></span>Productivity</a>
+      <a class="nav-item" data-view="ai"><span class="nav-dot"></span>AI Assistant</a>
+      <a class="nav-item" data-view="settings"><span class="nav-dot"></span>Settings</a>
+    </nav>
+  </aside>
 
-<header class="alpha-header">
-<div>
-<h1>Infinity Alpha X</h1>
-<p id="greetingMessage">Initializing Alpha Core...</p>
-</div>
-<div class="alpha-tools">
-<input type="search" placeholder="Search Alpha..." id="globalSearch">
-<button id="themeToggle">🌙</button>
-</div>
-</header>
+  <main class="main">
+    <div class="topbar">
+      <button class="menu-btn" id="menuBtn" aria-label="Toggle menu">&#9776;</button>
+      <div class="topbar-search">
+        <span class="cx-search-icon">&#128269;</span>
+        <input type="text" placeholder="Search Alpha..." />
+      </div>
+      <div class="topbar-right">
+        <span class="status-pill"><span class="status-pulse"></span>SYSTEM ONLINE</span>
+        <div class="avatar"></div>
+      </div>
+    </div>
 
-<!-- LIVE MARKET RIBBON -->
-<section class="market-ribbon">
-<div id="marketTicker" class="market-track">
-<span class="market-live">🌍 Loading Global Markets...</span>
-</div>
-</section>
+    <div class="view active" id="view-dashboard">
 
-<!-- COMMAND CENTER -->
-<section class="alpha-command">
-<div>
-<span class="alpha-badge">AI OPERATING SYSTEM</span>
-<h1>One Dashboard. Infinite Intelligence.</h1>
-<p>Manage wealth, productivity, markets, weather and AI from one intelligent operating system.</p>
-<div class="hero-buttons">
-<button>Launch Alpha</button>
-<button>Documentation</button>
-</div>
-</div>
-<div class="ai-orb">
-<div class="orb-ring"></div>
-<div class="orb-ring delay"></div>
-<div class="orb-core">🧠</div>
-</div>
-</section>
+    <section class="hero">
+      <div>
+        <p class="hero-eyebrow">AI operating system</p>
+        <h1>One dashboard. Infinite intelligence.</h1>
+        <p>Manage wealth, productivity, markets and AI from one live operating system. Every module below reports into the Alpha Core in real time.</p>
+      </div>
+      <div class="dial-wrap">
+        <svg class="dial-svg" viewBox="0 0 200 200" role="img" aria-label="Alpha Core status dial">
+          <circle cx="100" cy="100" r="92" fill="none" stroke="#161D33" stroke-width="1"/>
+          <circle cx="100" cy="100" r="74" fill="none" stroke="#212A46" stroke-width="1"/>
+          <circle cx="100" cy="100" r="74" fill="none" stroke="#4C82F7" stroke-width="2" stroke-dasharray="465" stroke-dashoffset="120" stroke-linecap="round" transform="rotate(-90 100 100)"/>
+          <g class="dial-sweep">
+            <line x1="100" y1="100" x2="100" y2="26" stroke="#7DE0C7" stroke-width="1.5" opacity="0.7"/>
+          </g>
+          <g>
+            <circle cx="100" cy="18" r="4" fill="#4C82F7"/>
+            <text x="100" y="12" text-anchor="middle" class="dial-node-label">WEALTH</text>
+          </g>
+          <g>
+            <circle cx="182" cy="100" r="4" fill="#7DE0C7"/>
+            <text x="182" y="94" text-anchor="middle" class="dial-node-label">MARKETS</text>
+          </g>
+          <g>
+            <circle cx="100" cy="182" r="4" fill="#4C82F7"/>
+            <text x="100" y="196" text-anchor="middle" class="dial-node-label">PRODUCTIVITY</text>
+          </g>
+          <g>
+            <circle cx="18" cy="100" r="4" fill="#7DE0C7"/>
+            <text x="18" y="94" text-anchor="middle" class="dial-node-label">AI</text>
+          </g>
+        </svg>
+        <div class="dial-center">
+          <div class="dial-score">74</div>
+          <div class="dial-label">Alpha score</div>
+        </div>
+      </div>
+    </section>
 
-<!-- DASHBOARD GRID -->
-<section class="alpha-grid">
+    <div class="grid">
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title"><span class="sw"></span>Wealth OS</div>
+          <button class="link-btn" data-goto="wealth">Open &#8594;</button>
+        </div>
+        <div class="stat-row">
+          <div class="stat"><div class="stat-label">Balance</div><div class="stat-value">$0.00</div></div>
+          <div class="stat"><div class="stat-label">Income</div><div class="stat-value up">$0.00</div></div>
+          <div class="stat"><div class="stat-label">Expenses</div><div class="stat-value down">$0.00</div></div>
+        </div>
+        <p class="placeholder-note">Static placeholder — connect your financial data source to make this live.</p>
+      </div>
 
-<!-- WEALTH OS -->
-<section class="alpha-card wealth-card">
-<div class="card-title">💰 Wealth OS</div>
-<div class="money-display">
-<small>Current Balance</small>
-<h1 id="wealthBalance">$0.00</h1>
-<p id="wealthStatus">Waiting for financial analysis...</p>
-</div>
-<div class="money-row">
-<div>
-<span>💵 Income</span>
-<strong id="wealthIncome">$0.00</strong>
-</div>
-<div>
-<span>💸 Expenses</span>
-<strong id="wealthExpenses">$0.00</strong>
-</div>
-</div>
-<div class="ai-score">
-<div class="score-ring">
-<span id="wealthScore">0</span>
-</div>
-<div>
-<h3>Financial Health</h3>
-<p>Alpha Score</p>
-</div>
-</div>
-</section>
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title"><span class="sw"></span>Markets</div>
+          <button class="link-btn" data-goto="markets">Open &#8594;</button>
+        </div>
+        <div class="mini-list">
+          <div class="mini-row"><span class="k">Top 10 board</span><span class="v">Live</span></div>
+          <div class="mini-row"><span class="k">Coin search</span><span class="v">Live</span></div>
+          <div class="mini-row"><span class="k">Detail chart</span><span class="v">Live</span></div>
+        </div>
+        <p class="placeholder-note">Powered by CoinGecko — open Markets for the full live board and chart.</p>
+      </div>
 
-<!-- ASSET INTELLIGENCE -->
-<section class="alpha-card asset-card">
-<div class="card-title">📊 Global Market Center</div>
-<div class="market-header">
-<div>
-<h3>Live Global Markets</h3>
-<p>Top cryptocurrencies & world markets</p>
-</div>
-<div id="marketLastUpdate">LIVE ●</div>
-</div>
-<div id="marketCenterGrid" class="market-center-grid">
-<div class="market-intelligence">
-<div class="market-intelligence-title">🧠 Alpha Market Intelligence</div>
-<div id="marketInsight">Waiting for live market analysis...</div>
-</div>
-</div>
-</section>
+      <div class="card">
+        <div class="card-head">
+          <div class="card-title"><span class="sw"></span>Global intelligence</div>
+          <button class="link-btn" data-goto="global">Open &#8594;</button>
+        </div>
+        <div class="mini-list">
+          <div class="mini-row"><span class="k">Weather</span><span class="v">--</span></div>
+          <div class="mini-row"><span class="k">Location</span><span class="v">Detecting...</span></div>
+          <div class="mini-row"><span class="k">Currency</span><span class="v">USD</span></div>
+        </div>
+        <p class="placeholder-note">Static placeholder — wire to a weather/geolocation API to make this live.</p>
+      </div>
+    </div>
 
-<!-- GLOBAL INTELLIGENCE -->
-<section class="alpha-card global-card">
-<div class="card-title">🌍 Global Intelligence</div>
-<div class="global-grid">
-<div>
-<h4>🌤 Weather</h4>
-<strong id="globalWeather">Loading...</strong>
+    </div>
+    <!-- /view-dashboard -->
+
+    <!-- ================= ALPHA CORE VIEW ================= -->
+    <div class="view" id="view-alpha-core">
+      <div class="page-head">
+        <p class="page-eyebrow">System</p>
+        <h2 class="page-title">Alpha Core</h2>
+        <p class="page-sub">Composite status across every connected module.</p>
+      </div>
+      <div class="grid">
+        <div class="card">
+          <div class="card-head"><div class="card-title"><span class="sw"></span>Module health</div><div class="card-tag">DEMO</div></div>
+          <div class="demo-list">
+            <div class="demo-row"><span class="k">Wealth OS</span><span class="chip todo">Not connected</span></div>
+            <div class="demo-row"><span class="k">Markets</span><span class="chip done">Live</span></div>
+            <div class="demo-row"><span class="k">Global intelligence</span><span class="chip todo">Not connected</span></div>
+            <div class="demo-row"><span class="k">Productivity</span><span class="chip todo">Not connected</span></div>
+            <div class="demo-row"><span class="k">AI Assistant</span><span class="chip todo">Not connected</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><div class="card-title"><span class="sw"></span>Alpha score</div><div class="card-tag">DEMO</div></div>
+          <div class="stat-row">
+            <div class="stat"><div class="stat-label">Current</div><div class="stat-value">74</div></div>
+            <div class="stat"><div class="stat-label">7d change</div><div class="stat-value up">+3</div></div>
+          </div>
+          <p class="placeholder-note">Static placeholder — this will average signals from each live module once connected.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= WEALTH OS VIEW ================= -->
+    <div class="view" id="view-wealth">
+      <div class="page-head">
+        <p class="page-eyebrow">Finance</p>
+        <h2 class="page-title">Wealth OS</h2>
+        <p class="page-sub">Balance, income, expenses and transactions.</p>
+      </div>
+      <div class="grid">
+        <div class="card">
+          <div class="card-head"><div class="card-title"><span class="sw"></span>Overview</div><div class="card-tag">DEMO</div></div>
+          <div class="stat-row">
+            <div class="stat"><div class="stat-label">Balance</div><div class="stat-value">$0.00</div></div>
+            <div class="stat"><div class="stat-label">Income</div><div class="stat-value up">$0.00</div></div>
+            <div class="stat"><div class="stat-label">Expenses</div><div class="stat-value down">$0.00</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-head"><div class="card-title"><span class="sw"></span>Recent transactions</div><div class="card-tag">DEMO</div></div>
+          <div class="demo-list">
+            <div class="demo-row"><span class="k">No transactions yet<br><span class="meta">Connect a source to populate this list</span></span></div>
+          </div>
+        </div>
+      </div>
+      <p class="placeholder-note">Static placeholder — connect a bank/finance API or manual entry system to make this live.</p>
+    </div>
+
+    <!-- ================= MARKETS VIEW (live crypto) ================= -->
+    <div class="view" id="view-markets">
+      <div class="page-head">
+        <p class="page-eyebrow">Live data</p>
+        <h2 class="page-title">Markets</h2>
+        <p class="page-sub">Search any coin, track the live top 10, and drill into any chart.</p>
+      </div>
+
+    <!--
+      ================= LIVE CRYPTO MODULE =================
+      Data source: CoinGecko free/demo API (no key required)
+      Search: any coin via /search. Board: live top 10 by market cap.
+      Detail chart: click any row or search result to load it.
+    -->
+    <div class="cx-dash" id="cxDash">
+
+      <div class="cx-search-wrap">
+        <div class="cx-search-box">
+          <i class="cx-search-icon">&#128269;</i>
+          <input type="text" id="cxSearchInput" placeholder="Search any coin (e.g. Pepe, Chainlink, Avalanche)..." autocomplete="off" />
+        </div>
+        <div class="cx-search-results" id="cxSearchResults"></div>
+      </div>
+
+      <div class="cx-board" id="cxBoard">
+        <div class="cx-board-header">
+          <div class="cx-title"><span class="cx-dot"></span><span>Top 10 crypto</span></div>
+          <div class="cx-header-right">
+            <span id="cxBoardUpdated">Loading...</span>
+            <span class="cx-live-badge"><span class="cx-pulse"></span>LIVE</span>
+          </div>
+        </div>
+        <div class="cx-table-wrap">
+          <table class="cx-table">
+            <thead>
+              <tr>
+                <th class="cx-col-rank">#</th>
+                <th class="cx-col-name">Coin</th>
+                <th class="cx-col-price">Price</th>
+                <th class="cx-col-change">24h</th>
+                <th class="cx-col-cap">Market cap</th>
+                <th class="cx-col-spark">7d</th>
+              </tr>
+            </thead>
+            <tbody id="cxBoardBody">
+              <tr><td colspan="6" class="cx-loading-row">Loading top 10...</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="cx-detail" id="cxDetail">
+        <div class="cx-detail-header">
+          <div class="cx-detail-title">
+            <img id="cxDetailIcon" class="cx-detail-icon" src="" alt="" style="display:none;" />
+            <span id="cxDetailName">Bitcoin</span>
+            <span id="cxDetailSymbol" class="cx-detail-symbol">BTC</span>
+          </div>
+          <div class="cx-range">
+            <button class="cx-range-btn active" data-days="1">24H</button>
+            <button class="cx-range-btn" data-days="7">7D</button>
+            <button class="cx-range-btn" data-days="30">30D</button>
+          </div>
+        </div>
+        <div class="cx-price-row">
+          <div class="cx-price" id="cxDetailPrice">--</div>
+          <div class="cx-change" id="cxDetailChange">--</div>
+        </div>
+        <div class="cx-chart-wrap">
+          <canvas id="cxChart"></canvas>
+        </div>
+        <div class="cx-footer">
+          <span id="cxDetailUpdated">Loading...</span>
+        </div>
+      </div>
+
+    </div>
+    <!-- /cx-dash -->
+    </div>
+    <!-- /view-markets -->
+
+    <!-- ================= GLOBAL VIEW ================= -->
+    <div class="view" id="view-global">
+      <div class="page-head">
+        <p class="page-eyebrow">Context</p>
+        <h2 class="page-title">Global intelligence</h2>
+        <p class="page-sub">Weather, location and currency context for your dashboard.</p>
+      </div>
+      <div class="grid">
+        <div class="card">
+          <div class="card-head"><div class="card-title"><span class="sw"></span>Conditions</div><div class="card-tag">DEMO</div></div>
+          <div class="demo-list">
+            <div class="demo-row"><span class="k">Weather</span><span class="v">--</span></div>
+            <div class="demo-row"><span class="k">Location</span><span class="v">Detecting...</span></div>
+            <div class="demo-row"><span class="k">Currency</span><span class="v">USD</span></div>
+            <div class="demo-row"><span class="k">Local time</span><span class="v">--:--</span></div>
+          </div>
+        </div>
+      </div>
+      <p class="placeholder-note">Static placeholder — wire to a weather + geolocation API (e.g. Open-Meteo, IP geolocation) to make this live.</p>
+    </div>
+
+    <!-- ================= PRODUCTIVITY VIEW ================= -->
+    <div class="view" id="view-productivity">
+      <div class="page-head">
+        <p class="page-eyebrow">Tasks</p>
+        <h2 class="page-title">Productivity</h2>
+        <p class="page-sub">Today's focus, tracked in one place.</p>
+      </div>
+      <div class="card">
+        <div class="card-head"><div class="card-title"><span class="sw"></span>Task list</div><div class="card-tag">DEMO</div></div>
+        <div class="demo-list">
+          <div class="demo-row"><span class="k">Sample task — replace with your real list</span><span class="chip todo">To do</span></div>
+          <div class="demo-row"><span class="k">Another sample task</span><span class="chip done">Done</span></div>
+        </div>
+      </div>
+      <p class="placeholder-note">Static placeholder — connect local storage, a to-do API, or a calendar to make this live.</p>
+    </div>
+
+    <!-- ================= AI ASSISTANT VIEW ================= -->
+    <div class="view" id="view-ai">
+      <div class="page-head">
+        <p class="page-eyebrow">Assistant</p>
+        <h2 class="page-title">AI Assistant</h2>
+        <p class="page-sub">A chat entry point into your dashboard's data.</p>
+      </div>
+      <div class="card">
+        <div class="ai-thread">
+          <div class="ai-msg bot">Hi — this is a static demo thread. Wire this up to an LLM API to make it live.</div>
+          <div class="ai-msg user">Show me my portfolio summary</div>
+          <div class="ai-msg bot">This response is placeholder text.</div>
+        </div>
+        <div class="ai-input-row">
+          <input type="text" placeholder="Message Alpha AI... (not yet connected)" disabled />
+          <button disabled>Send</button>
+        </div>
+      </div>
+      <p class="placeholder-note">Static placeholder — connect this input to an LLM API to make it live.</p>
+    </div>
+
+    <!-- ================= SETTINGS VIEW ================= -->
+    <div class="view" id="view-settings">
+      <div class="page-head">
+        <p class="page-eyebrow">Preferences</p>
+        <h2 class="page-title">Settings</h2>
+        <p class="page-sub">Dashboard-wide preferences.</p>
+      </div>
+      <div class="card">
+        <div class="settings-row">
+          <div><div class="k">Auto-refresh live data</div><div class="d">Applies to Markets module</div></div>
+          <div class="toggle on"></div>
+        </div>
+        <div class="settings-row">
+          <div><div class="k">Reduced motion</div><div class="d">Disables the Alpha Core dial sweep animation</div></div>
+          <div class="toggle"></div>
+        </div>
+        <div class="settings-row">
+          <div><div class="k">Currency display</div><div class="d">Used across Wealth OS and Markets</div></div>
+          <span class="chip">USD</span>
+        </div>
+      </div>
+      <p class="placeholder-note">Static placeholder — these toggles aren't wired to functionality yet.</p>
+    </div>
+
+  </main>
 </div>
-<div>
-<h4>📍 Location</h4>
-<strong id="globalLocation">Detecting...</strong>
-</div>
-<div>
-<h4>💱 Currency</h4>
-<strong id="globalCurrency">USD</strong>
-</
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+  document.getElementById('menuBtn').addEventListener('click', () => {
+    document.getElementById('sidebar').classList.toggle('open');
+  });
+
+  // ---------- View routing ----------
+  const navItems = document.querySelectorAll('.nav-item[data-view]');
+  const views = document.querySelectorAll('.view');
+  let cryptoInitialized = false;
+
+  function showView(viewName) {
+    views.forEach(v => v.classList.toggle('active', v.id === 'view-' + viewName));
+    navItems.forEach(n => n.classList.toggle('active', n.dataset.view === viewName));
+    if (viewName === 'markets' && !cryptoInitialized) {
+      cryptoInitialized = true;
+      if (window.initCryptoModule) window.initCryptoModule();
+    } else if (viewName === 'markets' && window.cxChartInstance) {
+      window.cxChartInstance.resize();
+    }
+    // Collapse mobile sidebar after navigating
+    if (window.innerWidth <= 880) document.getElementById('sidebar').classList.remove('open');
+    window.scrollTo({ top: 0, behavior: 'instant' in window ? 'instant' : 'auto' });
+  }
+
+  navItems.forEach(item => {
+    item.addEventListener('click', () => showView(item.dataset.view));
+  });
+
+  document.querySelectorAll('[data-goto]').forEach(btn => {
+    btn.addEventListener('click', () => showView(btn.dataset.goto));
+  });
+</script>
+<script>
+window.initCryptoModule = function () {
+  const API_BASE = 'https://api.coingecko.com/api/v3';
+  const BOARD_REFRESH_MS = 45 * 1000;
+  const DETAIL_REFRESH_MS = 30 * 1000;
+  const SEARCH_DEBOUNCE_MS = 400;
+
+  let chart = null;
+  let selectedCoinId = 'bitcoin';
+  let currentDays = 1;
+  let searchTimer = null;
+
+  const searchInput = document.getElementById('cxSearchInput');
+  const searchResults = document.getElementById('cxSearchResults');
+  const boardBody = document.getElementById('cxBoardBody');
+  const boardUpdated = document.getElementById('cxBoardUpdated');
+  const detailName = document.getElementById('cxDetailName');
+  const detailSymbol = document.getElementById('cxDetailSymbol');
+  const detailIcon = document.getElementById('cxDetailIcon');
+  const detailPrice = document.getElementById('cxDetailPrice');
+  const detailChange = document.getElementById('cxDetailChange');
+  const detailUpdated = document.getElementById('cxDetailUpdated');
+  const rangeBtns = document.querySelectorAll('.cx-range-btn');
+
+  function formatPrice(p) {
+    return '$' + p.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: p < 1 ? 6 : 2 });
+  }
+  function formatCap(c) {
+    if (c >= 1e12) return '$' + (c / 1e12).toFixed(2) + 'T';
+    if (c >= 1e9) return '$' + (c / 1e9).toFixed(2) + 'B';
+    if (c >= 1e6) return '$' + (c / 1e6).toFixed(2) + 'M';
+    return '$' + c.toLocaleString();
+  }
+
+  function drawSparkline(canvas, data, isUp) {
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width = canvas.clientWidth * 2;
+    const h = canvas.height = canvas.clientHeight * 2;
+    ctx.clearRect(0, 0, w, h);
+    if (!data || data.length < 2) return;
+    const min = Math.min(...data);
+    const max = Math.max(...data);
+    const range = max - min || 1;
+    ctx.beginPath();
+    ctx.lineWidth = 3;
+    ctx.strokeStyle = isUp ? '#22c55e' : '#ef4444';
+    data.forEach((v, i) => {
+      const x = (i / (data.length - 1)) * w;
+      const y = h - ((v - min) / range) * h;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    });
+    ctx.stroke();
+  }
+
+  async function fetchTop10() {
+    const url = `${API_BASE}/coins/markets?vs_currency=usd&order=market_cap_desc&per_page=10&page=1&sparkline=true&price_change_percentage=24h`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('CoinGecko request failed: ' + res.status);
+    return res.json();
+  }
+
+  function renderBoard(coins) {
+    boardBody.innerHTML = '';
+    coins.forEach((coin, i) => {
+      const change = coin.price_change_percentage_24h_in_currency ?? coin.price_change_percentage_24h ?? 0;
+      const isUp = change >= 0;
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td class="cx-col-rank">${i + 1}</td>
+        <td class="cx-col-name">
+          <div class="cx-coin-cell">
+            <img class="cx-coin-icon" src="${coin.image}" alt="${coin.name}" loading="lazy" />
+            <span class="cx-coin-name">${coin.name}</span>
+            <span class="cx-coin-symbol">${coin.symbol.toUpperCase()}</span>
+          </div>
+        </td>
+        <td class="cx-col-price">${formatPrice(coin.current_price)}</td>
+        <td class="cx-col-change ${isUp ? 'cx-change-up' : 'cx-change-down'}">${isUp ? '+' : ''}${change.toFixed(2)}%</td>
+        <td class="cx-col-cap">${formatCap(coin.market_cap)}</td>
+        <td class="cx-col-spark"><canvas class="cx-spark-canvas" id="cxSpark-${coin.id}"></canvas></td>
+      `;
+      tr.addEventListener('click', () => selectCoin(coin.id, coin.name, coin.symbol.toUpperCase(), coin.image));
+      boardBody.appendChild(tr);
+      const canvas = tr.querySelector(`#cxSpark-${coin.id}`);
+      const sparkData = coin.sparkline_in_7d && coin.sparkline_in_7d.price;
+      requestAnimationFrame(() => drawSparkline(canvas, sparkData, isUp));
+    });
+  }
+
+  async function refreshBoard() {
+    try {
+      const coins = await fetchTop10();
+      renderBoard(coins);
+      boardUpdated.textContent = 'Updated ' + new Date().toLocaleTimeString();
+    } catch (err) {
+      boardBody.innerHTML = `<tr><td colspan="6" class="cx-error-row">Error: ${err.message}</td></tr>`;
+      console.error('Top 10 board error:', err);
+    }
+  }
+
+  async function searchCoins(query) {
+    const url = `${API_BASE}/search?query=${encodeURIComponent(query)}`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('Search failed: ' + res.status);
+    return res.json();
+  }
+
+  function renderSearchResults(coins) {
+    if (!coins.length) {
+      searchResults.innerHTML = `<div class="cx-search-empty">No coins found.</div>`;
+      searchResults.classList.add('open');
+      return;
+    }
+    searchResults.innerHTML = '';
+    coins.slice(0, 8).forEach(coin => {
+      const div = document.createElement('div');
+      div.className = 'cx-search-item';
+      div.innerHTML = `
+        <img src="${coin.thumb}" alt="${coin.name}" />
+        <span>${coin.name}</span>
+        <span class="sym">${coin.symbol.toUpperCase()}</span>
+      `;
+      div.addEventListener('click', () => {
+        selectCoin(coin.id, coin.name, coin.symbol.toUpperCase(), coin.large || coin.thumb);
+        searchResults.classList.remove('open');
+        searchInput.value = '';
+      });
+      searchResults.appendChild(div);
+    });
+    searchResults.classList.add('open');
+  }
+
+  searchInput.addEventListener('input', () => {
+    const q = searchInput.value.trim();
+    clearTimeout(searchTimer);
+    if (!q) { searchResults.classList.remove('open'); return; }
+    searchTimer = setTimeout(async () => {
+      try {
+        const data = await searchCoins(q);
+        renderSearchResults(data.coins || []);
+      } catch (err) {
+        searchResults.innerHTML = `<div class="cx-search-empty">Error: ${err.message}</div>`;
+        searchResults.classList.add('open');
+      }
+    }, SEARCH_DEBOUNCE_MS);
+  });
+
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.cx-search-wrap')) searchResults.classList.remove('open');
+  });
+
+  function renderChart(labels, prices, isUp) {
+    const canvas = document.getElementById('cxChart');
+    const lineColor = isUp ? '#22c55e' : '#ef4444';
+    const fillColor = isUp ? 'rgba(34,197,94,0.12)' : 'rgba(239,68,68,0.12)';
+    if (chart) {
+      chart.data.labels = labels;
+      chart.data.datasets[0].data = prices;
+      chart.data.datasets[0].borderColor = lineColor;
+      chart.data.datasets[0].backgroundColor = fillColor;
+      chart.update('none');
+      return;
+    }
+    chart = new Chart(canvas, {
+      type: 'line',
+      data: { labels, datasets: [{ data: prices, borderColor: lineColor, backgroundColor: fillColor, borderWidth: 2, fill: true, pointRadius: 0, tension: 0.25 }] },
+      options: {
+        responsive: true, maintainAspectRatio: false, animation: false,
+        plugins: { legend: { display: false }, tooltip: { mode: 'index', intersect: false } },
+        scales: {
+          x: { display: false },
+          y: { display: true, grid: { color: 'rgba(255,255,255,0.05)' }, ticks: { color: '#616B88', font: { size: 10 } } }
+        },
+        interaction: { mode: 'index', intersect: false }
+      }
+    });
+    window.cxChartInstance = chart;
+  }
+
+  async function fetchChartData(coinId, days) {
+    const url = `${API_BASE}/coins/${coinId}/market_chart?vs_currency=usd&days=${days}`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('CoinGecko request failed: ' + res.status);
+    return res.json();
+  }
+  async function fetchSimplePrice(coinId) {
+    const url = `${API_BASE}/simple/price?ids=${coinId}&vs_currencies=usd&include_24hr_change=true`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('CoinGecko request failed: ' + res.status);
+    return res.json();
+  }
+
+  async function refreshDetail() {
+    try {
+      const [chartData, priceData] = await Promise.all([
+        fetchChartData(selectedCoinId, currentDays),
+        fetchSimplePrice(selectedCoinId)
+      ]);
+      const prices = chartData.prices.map(p => p[1]);
+      const labels = chartData.prices.map(p => new Date(p[0]).toLocaleTimeString());
+      const info = priceData[selectedCoinId];
+      const change = info.usd_24h_change || 0;
+      const isUp = change >= 0;
+
+      detailPrice.textContent = formatPrice(info.usd);
+      detailChange.textContent = (isUp ? '+' : '') + change.toFixed(2) + '% (24h)';
+      detailChange.className = 'cx-change ' + (isUp ? 'up' : 'down');
+      renderChart(labels, prices, isUp);
+      detailUpdated.textContent = 'Updated ' + new Date().toLocaleTimeString();
+    } catch (err) {
+      detailUpdated.textContent = 'Error: ' + err.message;
+      console.error('Detail chart error:', err);
+    }
+  }
+
+  function selectCoin(id, name, symbol, icon) {
+    selectedCoinId = id;
+    detailName.textContent = name;
+    detailSymbol.textContent = symbol;
+    if (icon) { detailIcon.src = icon; detailIcon.style.display = 'inline-block'; }
+    refreshDetail();
+  }
+
+  rangeBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      rangeBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      currentDays = parseInt(btn.dataset.days, 10);
+      refreshDetail();
+    });
+  });
+
+  refreshBoard();
+  refreshDetail();
+  setInterval(refreshBoard, BOARD_REFRESH_MS);
+  setInterval(refreshDetail, DETAIL_REFRESH_MS);
+};
+</script>
+</body>
+</html>
