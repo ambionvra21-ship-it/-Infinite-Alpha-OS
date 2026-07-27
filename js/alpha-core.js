@@ -105,50 +105,38 @@ init(){
     this.updateInterface();
 
 
-    console.log(
+ console.log(
 
-        "🤖 Alpha Briefing:",
+    "🤖 Alpha Briefing:",
 
-        this.generateBriefing()
+    this.generateBriefing()
 
-    
+);
+
 },
 
-    },
+loadSettings(){
 
+    const saved =
 
+    localStorage.getItem(
+        "alphaSettings"
+    );
 
+    if(saved){
 
+        this.user =
 
-    loadSettings(){
+        JSON.parse(saved);
 
-
-        const saved =
-
-        localStorage.getItem(
-            "alphaSettings"
+        console.log(
+            "🌍 Settings Loaded",
+            this.user
         );
 
+    }
 
-        if(saved){
-
-
-            this.user =
-
-            JSON.parse(saved);
-
-
-            console.log(
-                "🌍 Settings Loaded",
-                this.user
-            );
-
-
-        }
-
-
-    },
-
+},
 
 
 
