@@ -1,1 +1,30 @@
+Infinity-Alpha/
 
+│
+├── index.html
+│
+├── assets/
+│   ├── images/
+│   ├── icons/
+│   └── logo/
+│
+├── css/
+│   ├── core/
+│   ├── modules/
+│   └── mobile/
+│
+├── js/
+│   ├── core/
+│   └── modules/
+│
+└── modules/
+    ├── dashboard/
+    ├── markets/
+    ├── weather/
+    ├── wealth/
+    ├── productivity/
+    ├── ai/
+    ├── health/
+    ├── calendar/
+    ├── email/
+    └── settings/
