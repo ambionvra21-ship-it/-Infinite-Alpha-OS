@@ -1,787 +1,151 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
-<meta name="viewport"
-content="width=device-width, initial-scale=1.0">
-
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Infinity Alpha X</title>
-
-<meta name="description"
-content="Infinity Alpha Operating System">
-
-<meta name="theme-color"
-content="#0b1120">
-
-<link rel="preconnect"
-href="https://fonts.googleapis.com">
-
-<link rel="preconnect"
-href="https://fonts.gstatic.com"
-crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
-rel="stylesheet">
-
-<link rel="stylesheet"
-href="style.css">
-
+<meta name="description" content="Infinity Alpha Operating System">
+<meta name="theme-color" content="#0b1120">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
-
 <body>
-
 <div class="alpha-os">
 
-<!-- ========================================= -->
 <!-- SIDEBAR -->
-<!-- ========================================= -->
-
 <aside class="alpha-sidebar">
-
 <div class="brand">
-
-<div class="brand-logo">
-
-∞
-
-</div>
-
+<div class="brand-logo">∞</div>
 <div>
-
 <h2>Infinity Alpha</h2>
-
 <p>X Operating System</p>
-
 </div>
-
 </div>
-
 <nav>
-
 <ul>
-
-<li class="active">
-🏠 Dashboard
-</li>
-
-<li>
-🧠 Alpha Core
-</li>
-
-<li>
-💰 Wealth OS
-</li>
-
-<li>
-📊 Markets
-</li>
-
-<li>
-🌍 Global
-</li>
-
-<li>
-⚡ Productivity
-</li>
-
-<li>
-🤖 AI Assistant
-</li>
-
-<li>
-⚙ Settings
-</li>
-
+<li class="active">🏠 Dashboard</li>
+<li>🧠 Alpha Core</li>
+<li>💰 Wealth OS</li>
+<li>📊 Markets</li>
+<li>🌍 Global</li>
+<li>⚡ Productivity</li>
+<li>🤖 AI Assistant</li>
+<li>⚙ Settings</li>
 </ul>
-
 </nav>
-
 <div class="sidebar-status">
-
 <div class="status-dot"></div>
-
 <div>
-
-<strong>
-
-ALPHA CORE
-
-</strong>
-
-<small>
-
-ONLINE
-
-</small>
-
+<strong>ALPHA CORE</strong>
+<small>ONLINE</small>
 </div>
-
 </div>
-
 </aside>
 
-<!-- ========================================= -->
 <!-- MAIN -->
-<!-- ========================================= -->
-
 <main class="alpha-main">
 
 <header class="alpha-header">
-
 <div>
-
-<h1>
-
-Infinity Alpha X
-
-</h1>
-
-<p id="greetingMessage">
-
-Initializing Alpha Core...
-
-</p>
-
+<h1>Infinity Alpha X</h1>
+<p id="greetingMessage">Initializing Alpha Core...</p>
 </div>
-
 <div class="alpha-tools">
-
-<input
-
-type="search"
-
-placeholder="Search Alpha..."
-
-id="globalSearch">
-
-<button id="themeToggle">
-
-🌙
-
-</button>
-
+<input type="search" placeholder="Search Alpha..." id="globalSearch">
+<button id="themeToggle">🌙</button>
 </div>
-
 </header>
 
-  </header>
-
-<!-- ========================================= -->
-<!-- 📈 LIVE MARKET RIBBON -->
-<!-- ========================================= -->
-
+<!-- LIVE MARKET RIBBON -->
 <section class="market-ribbon">
-
-<div
-id="marketTicker"
-class="market-track">
-
-    <span class="market-live">
-
-        🌍 Loading Global Markets...
-
-    </span>
-
+<div id="marketTicker" class="market-track">
+<span class="market-live">🌍 Loading Global Markets...</span>
 </div>
-
 </section>
 
-<!-- ========================================= -->
 <!-- COMMAND CENTER -->
-<!-- ========================================= -->
-
 <section class="alpha-command">
-
-<!-- ========================================= -->
-<!-- COMMAND CENTER -->
-<!-- ========================================= -->
-
-<section class="alpha-command">
-
 <div>
-
-<span class="alpha-badge">
-
-AI OPERATING SYSTEM
-
-</span>
-
-<h1>
-
-One Dashboard.
-
-Infinite Intelligence.
-
-</h1>
-
-<p>
-
-Manage wealth, productivity, markets,
-weather and AI from one intelligent operating system.
-
-</p>
-
+<span class="alpha-badge">AI OPERATING SYSTEM</span>
+<h1>One Dashboard. Infinite Intelligence.</h1>
+<p>Manage wealth, productivity, markets, weather and AI from one intelligent operating system.</p>
 <div class="hero-buttons">
-
-<button>
-
-Launch Alpha
-
-</button>
-
-<button>
-
-Documentation
-
-</button>
-
+<button>Launch Alpha</button>
+<button>Documentation</button>
 </div>
-
 </div>
-
 <div class="ai-orb">
-
 <div class="orb-ring"></div>
-
 <div class="orb-ring delay"></div>
-
-<div class="orb-core">
-
-🧠
-
+<div class="orb-core">🧠</div>
 </div>
-
-</div>
-
 </section>
 
-<!-- ========================================= -->
 <!-- DASHBOARD GRID -->
-<!-- ========================================= -->
-
 <section class="alpha-grid">
 
-  <!-- ========================================= -->
-<!-- 💰 WEALTH OS -->
-<!-- ========================================= -->
-
+<!-- WEALTH OS -->
 <section class="alpha-card wealth-card">
-
-    <div class="card-title">
-        💰 Wealth OS
-    </div>
-
-    <div class="money-display">
-
-        <small>Current Balance</small>
-
-        <h1 id="wealthBalance">$0.00</h1>
-
-        <p id="wealthStatus">
-
-            Waiting for financial analysis...
-
-        </p>
-
-    </div>
-
-    <div class="money-row">
-
-        <div>
-
-            <span>💵 Income</span>
-
-            <strong id="wealthIncome">$0.00</strong>
-
-        </div>
-
-        <div>
-
-            <span>💸 Expenses</span>
-
-            <strong id="wealthExpenses">$0.00</strong>
-
-        </div>
-
-    </div>
-
-    <div class="ai-score">
-
-        <div class="score-ring">
-
-            <span id="wealthScore">0</span>
-
-        </div>
-
-        <div>
-
-            <h3>Financial Health</h3>
-
-            <p>Alpha Score</p>
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- ========================================= -->
-<!-- 📊 ASSET INTELLIGENCE -->
-<!-- ========================================= -->
-
-<section class="alpha-card asset-card">
-
-     <div class="card-title">
-
-📊 Global Market Center
-
+<div class="card-title">💰 Wealth OS</div>
+<div class="money-display">
+<small>Current Balance</small>
+<h1 id="wealthBalance">$0.00</h1>
+<p id="wealthStatus">Waiting for financial analysis...</p>
 </div>
-
-<div class="market-header">
-
+<div class="money-row">
 <div>
+<span>💵 Income</span>
+<strong id="wealthIncome">$0.00</strong>
+</div>
+<div>
+<span>💸 Expenses</span>
+<strong id="wealthExpenses">$0.00</strong>
+</div>
+</div>
+<div class="ai-score">
+<div class="score-ring">
+<span id="wealthScore">0</span>
+</div>
+<div>
+<h3>Financial Health</h3>
+<p>Alpha Score</p>
+</div>
+</div>
+</section>
 
+<!-- ASSET INTELLIGENCE -->
+<section class="alpha-card asset-card">
+<div class="card-title">📊 Global Market Center</div>
+<div class="market-header">
+<div>
 <h3>Live Global Markets</h3>
-
 <p>Top cryptocurrencies & world markets</p>
-
 </div>
-
-<div id="marketLastUpdate">
-
-LIVE ●
-
+<div id="marketLastUpdate">LIVE ●</div>
 </div>
-
-</div>
-
 <div id="marketCenterGrid" class="market-center-grid">
-
 <div class="market-intelligence">
-
-    <div class="market-intelligence-title">
-
-        🧠 Alpha Market Intelligence
-
-    </div>
-
-    <div id="marketInsight">
-
-        Waiting for live market analysis...
-
-    </div>
-
+<div class="market-intelligence-title">🧠 Alpha Market Intelligence</div>
+<div id="marketInsight">Waiting for live market analysis...</div>
 </div>
-
+</div>
 </section>
 
-<!-- ========================================= -->
-<!-- 🌍 GLOBAL INTELLIGENCE -->
-<!-- ========================================= -->
-
+<!-- GLOBAL INTELLIGENCE -->
 <section class="alpha-card global-card">
-
-    <div class="card-title">
-
-        🌍 Global Intelligence
-
-    </div>
-
-    <div class="global-grid">
-
-        <div>
-
-            <h4>🌤 Weather</h4>
-
-            <strong id="globalWeather">
-
-                Loading...
-
-            </strong>
-
-        </div>
-
-        <div>
-
-            <h4>📍 Location</h4>
-
-            <strong id="globalLocation">
-
-                Detecting...
-
-            </strong>
-
-        </div>
-
-        <div>
-
-            <h4>💱 Currency</h4>
-
-            <strong id="globalCurrency">
-
-                USD
-
-            </strong>
-
-        </div>
-
-        <div>
-
-            <h4>🕒 Local Time</h4>
-
-            <strong id="globalTime">
-
-                --:--
-
-            </strong>
-
-        </div>
-
-    </div>
-
-</section>
-
-  <!-- ========================================= -->
-<!-- 🌍 WORLD MARKETS -->
-<!-- ========================================= -->
-
-<section class="alpha-card world-market-card">
-
-    <div class="card-title">
-
-        🌍 World Markets
-
-    </div>
-
-    <div
-        id="worldMarketGrid"
-        class="world-market-grid">
-
-        <div class="market-loading">
-
-            🌍 Connecting to World Markets...
-
-        </div>
-
-    </div>
-
-</section>
-
-  <!-- ========================================= -->
-<!-- ⚡ PRODUCTIVITY INTELLIGENCE -->
-<!-- ========================================= -->
-
-<section class="alpha-card productivity-card">
-
-    <div class="card-title">
-
-        ⚡ Productivity Intelligence
-
-    </div>
-
-    <div class="productivity-grid">
-
-        <div class="product-box">
-
-            <small>Focus Time</small>
-
-            <h2 id="focusTime">
-
-                25:00
-
-            </h2>
-
-        </div>
-
-        <div class="product-box">
-
-            <small>Tasks Completed</small>
-
-            <h2 id="taskCompleted">
-
-                0 / 0
-
-            </h2>
-
-        </div>
-
-        <div class="product-box">
-
-            <small>Notes</small>
-
-            <h2 id="notesCount">
-
-                0
-
-            </h2>
-
-        </div>
-
-        <div class="product-box">
-
-            <small>Productivity Score</small>
-
-            <h2 id="productivityScore">
-
-                0%
-
-            </h2>
-
-        </div>
-
-    </div>
-
-</section>
-
-<!-- ========================================= -->
-<!-- 🤖 ALPHA AI COMMAND CENTER -->
-<!-- ========================================= -->
-
-<section class="alpha-card alpha-ai-card">
-
-    <div class="card-title">
-
-        🤖 Alpha AI Command Center
-
-    </div>
-
-    <div
-        id="alphaAssistantResponse"
-        class="alpha-response">
-
-        👋 Welcome to
-        <strong>Infinity Alpha X</strong>
-
-        <br><br>
-
-        Alpha Core is online.
-
-        <br><br>
-
-        Waiting for live systems...
-
-    </div>
-
-    <div class="alpha-input">
-
-        <input
-
-            type="text"
-
-            id="alphaCommandInput"
-
-            placeholder="Ask Alpha anything..."
-
-            autocomplete="off">
-
-        <button
-
-            id="alphaAskBtn"
-
-            onclick="askAlpha()">
-
-            🚀 Ask
-
-        </button>
-
-    </div>
-
-</section>
-
-<!-- ========================================= -->
-<!-- 🌤 LIVE ENVIRONMENT -->
-<!-- ========================================= -->
-
-<section class="alpha-card environment-card">
-
-    <div class="card-title">
-
-        🌤 Live Environment
-
-    </div>
-
-    <div class="environment-grid">
-
-        <div>
-
-            <small>Temperature</small>
-
-            <h2 id="weatherTemp">
-
-                --°C
-
-            </h2>
-
-        </div>
-
-        <div>
-
-            <small>Condition</small>
-
-            <h2 id="weatherDesc">
-
-                Loading...
-
-            </h2>
-
-        </div>
-
-        <div>
-
-            <small>Humidity</small>
-
-            <h2 id="humidity">
-
-                --%
-
-            </h2>
-
-        </div>
-
-        <div>
-
-            <small>Wind</small>
-
-            <h2 id="wind">
-
-                -- km/h
-
-            </h2>
-
-        </div>
-
-    </div>
-
-</section>
-
-  <!-- ========================================= -->
-<!-- 📡 SYSTEM STATUS -->
-<!-- ========================================= -->
-
-<section class="alpha-card system-card">
-
-    <div class="card-title">
-
-        📡 System Status
-
-    </div>
-
-    <div class="system-grid">
-
-        <div class="system-item">
-
-            <span>🧠 Alpha Core</span>
-
-            <strong id="coreStatus">
-
-                ONLINE
-
-            </strong>
-
-        </div>
-
-        <div class="system-item">
-
-            <span>🌐 Live Engine</span>
-
-            <strong id="liveStatus">
-
-                CONNECTED
-
-            </strong>
-
-        </div>
-
-        <div class="system-item">
-
-            <span>💰 Wealth Engine</span>
-
-            <strong id="wealthEngineStatus">
-
-                READY
-
-            </strong>
-
-        </div>
-
-        <div class="system-item">
-
-            <span>☀️ Weather</span>
-
-            <strong id="weatherStatus">
-
-                ACTIVE
-
-            </strong>
-
-        </div>
-
-        <div class="system-item">
-
-            <span>⚡ Productivity</span>
-
-            <strong id="productivityStatus">
-
-                READY
-
-            </strong>
-
-        </div>
-
-        <div class="system-item">
-
-            <span>🤖 AI</span>
-
-            <strong id="aiStatus">
-
-                LISTENING
-
-            </strong>
-
-        </div>
-
-    </div>
-
-</section>
-
-</section>
-
-</main>
-
+<div class="card-title">🌍 Global Intelligence</div>
+<div class="global-grid">
+<div>
+<h4>🌤 Weather</h4>
+<strong id="globalWeather">Loading...</strong>
 </div>
-
-<!-- ========================================= -->
-<!-- JAVASCRIPT -->
-<!-- ========================================= -->
-
-<script src="js/alpha-core.js"></script>
-<script src="js/alpha-live.js"></script>
-<script src="js/wealth-engine.js"></script>
-
-<script src="js/greeting.js"></script>
-<script src="js/pomodoro.js"></script>
-<script src="js/calculator.js"></script>
-<script src="js/currency.js"></script>
-<script src="js/notes.js"></script>
-<script src="js/tasks.js"></script>
-<script src="js/finance.js"></script>
-<script src="js/weather.js"></script>
-
-<script src="js/alpha.js"></script>
-<script src="js/alpha-ui.js"></script>
-
-<script src="js/app.js"></script>
-<script src="js/config.js"></script>
-
-<script src="js/market-engine.js"></script>
-
-<script src="js/world-market-engine.js"></script>
- <script src="js/world-market-engine.js"></script>
- <script src="js/market-engine.js"></script>
-  
-</body>
-</html>
-  
+<div>
+<h4>📍 Location</h4>
+<strong id="globalLocation">Detecting...</strong>
+</div>
+<div>
+<h4>💱 Currency</h4>
+<strong id="globalCurrency">USD</strong>
+</
