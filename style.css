@@ -1838,3 +1838,66 @@ border-bottom:1px solid rgba(255,255,255,.05);
 border:none;
 
 }
+
+/* ===========================================
+   WORLD MARKETS
+=========================================== */
+
+.world-market-grid{
+
+    display:grid;
+
+    grid-template-columns:
+    repeat(auto-fit,minmax(220px,1fr));
+
+    gap:18px;
+
+}
+
+.world-market-item{
+
+    padding:18px;
+
+    border-radius:18px;
+
+    background:rgba(255,255,255,.05);
+
+    border:1px solid rgba(255,255,255,.08);
+
+    transition:.30s;
+
+}
+
+.world-market-item:hover{
+
+    transform:translateY(-6px);
+
+    border-color:#4f8cff;
+
+}
+
+.world-market-name{
+
+    font-size:16px;
+
+    font-weight:700;
+
+}
+
+.world-market-price{
+
+    font-size:24px;
+
+    font-weight:800;
+
+    margin-top:12px;
+
+}
+
+.world-market-change{
+
+    margin-top:8px;
+
+    font-weight:700;
+
+}
